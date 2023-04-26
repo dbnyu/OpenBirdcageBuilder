@@ -2,9 +2,15 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Birdcage Builder v0.0.0</title>
+    <title>Birdcage Builder v0.0.1</title>
 
-    <script src="main_test000.js"></script>
+    <!-- scripts must be included in reverse order of call stack -->
+
+    <!--  <script src="main_test000.js"></script> -->
+
+    <!--  <script src="inductance.js"></script> -->
+    <script src="main2.js"></script>
+
 
   <!-- Birdcage Builder -->
   <!-- v0.0.0 GUI Test only -->
@@ -52,6 +58,7 @@
           <li>
             <label for="er_tube">Tubular</label>
             <input type="radio" id="er_tube" name="er_type" value="er_tube" />
+<!-- TODO: need a popup/grayed out box for tube inner/outer radius!!!  -->
           </li>
         </ul>
       </fieldset>
@@ -112,9 +119,12 @@
 
     <p id="output_test1">This field intentionally blank.</p>
 
+    <hr>
+    <h2>Debug</h2>
+    <p id="debug1"></p>
+
 
   </body>
 
 
 </html>
-
