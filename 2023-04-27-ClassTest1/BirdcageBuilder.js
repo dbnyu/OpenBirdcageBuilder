@@ -21,6 +21,7 @@ class BirdcageBuilder {
 		this.r_shield = rs; // radius of shield TODO units
 		
 		// these are set in the set_legs_... functions below 
+		// TODO separate class for legs?
 		// TODO subclass for rect/tube legs (ie. extendable to other geometries?)
 		//leg_shape_rect = true; // leg shape (true=rectangle or false=tubular)
 		//leg_length; 
@@ -40,6 +41,7 @@ class BirdcageBuilder {
 		this.leg_shield_y = new Array(n);
 
 		this.init_legs(this.n_legs, this.r_coil);
+		this.leg_mutual_inductance = this.calc_leg_mutual_inductance();
 	}
 
 	set_legs_rect(l, w) {
@@ -47,7 +49,6 @@ class BirdcageBuilder {
 		this.leg_length = l;
 		this.leg_width = w;
 		this.leg_self_inductance = this.calc_leg_self_inductance_rect(this.leg_length, this.leg_width);
-		// TODO mutual inductance
 	}
 
 	set_legs_tube(l, ir, or) {
@@ -56,10 +57,11 @@ class BirdcageBuilder {
 		this.leg_r_inner = ir;
 		this.leg_r_outer = or;
 		this.leg_self_inductance = this.calc_leg_self_inductance_tube(this.leg_length, this.leg_r_inner, this.leg_r_outer);
-
-		// TODO mutual inductance
 	}
 
+	/* LEGS */
+	// TODO make a leg class?
+	// NOTE - trying to keep function inputs/outputs as much as possible to make unit testing easier
 
 	init_legs(n, r) {
 		/* Initialize leg arrays
@@ -123,14 +125,66 @@ class BirdcageBuilder {
 	
 		if (r_in > 0) { 
 			var ratio = r_in / r_out;
-			k = 0.1493 * Math.pow(ratio,3) - 0.3606 * Math.pow(ratio,2) - 0.0405 * ratio + 0.2526;
-			return 2 * len * (Math.log(4*len/r_out) + k - 1);
+			var c = 0.1493*Math.pow(ratio,3) - 0.3606*Math.pow(ratio,2) - 0.0405*ratio + 0.2526;
+			return 2 * len * (Math.log(4*len/r_out) + c - 1);
 		}
 		else {
 			return 2 * len * (Math.log(4*len/r_out) - 0.75);
 		}
 	
 	}
+
+	helper_Lmn(len, d) {
+		/* Calculate Lmn subpart for Mutual Inductance of Legs 
+		 *
+		 * BC2J.96
+		 * */
+
+		var a = (len/d) + Math.sqrt(1 + Math.pow(len/d, 2)); 
+		var b = Math.sqrt(1. + Math.pow(d/len, 2));
+
+		console.log(a);
+		console.log(b);
+
+		var Lmn = 2. * len * Math.log(a - b + d/len);
+		return Lmn;
+	}
+
+
+	calc_leg_mutual_inductance(si, len) {
+		/* Return the mutual inducantce between the legs 
+		 *
+		 * si = self inductance (scalar) TODO units
+		 * len = leg length
+		 *
+		 *
+		 * BC2J.92
+		 * */
+
+		// TODO... balance between testable functions w/ explicit and I/O that are arrays...
+		// TODO - the arrays are read-only in this case it seems, so they could be inputs...
+
+		var mi = si; // mutual inductance
+		var x0 = this.leg_x[0]; // TODO make these inputs?
+		var y0 = this.leg_y[0];
+
+		for (var k=1; k < this.n_legs; k++) {
+			// distance between legs:
+			var d = Math.sqrt( Math.pow(this.leg_x[k]-x0, 2) + Math.pow(this.leg_y[k] - y0, 2) );
+
+			//var a = (len/d) + Math.sqrt(1 + Math.pow(len/d, 2)); 
+			//var b = Math.sqrt(1. + Math.pow(d/len, 2) + d/len); THIS IS WRONG (last d/len should be oustide sqrt)
+			//var Lmn = 2. * len * Math.log(a - b);
+			var Lmn = this.helper_Lmn(len, d);
+
+			mi += Lmn * this.leg_currents[k] / this.leg_currents[0];
+		}
+
+		return mi;
+	}
+
+
+	// TODO - start at line 102 BCJ
 
 
 }
