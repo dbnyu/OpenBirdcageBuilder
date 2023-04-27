@@ -28,12 +28,14 @@
       assert.equal(    bb.calc_leg_self_inductance_rect(1, 2), 1);
     });
 
+
     QUnit.test('Tubular Self Inductance (R_inner = 0)', function(assert) {
       var bb = new BirdcageBuilder(16, 128e6, 10, 12);
 
       assert.equal(    bb.calc_leg_self_inductance_tube(1, 0, 4), -1.5);
       assert.deepEqual(bb.calc_leg_self_inductance_tube(0, 0, 4), NaN);
     });
+
 
     QUnit.test('Tubular Self Inductance (R_inner > 0)', function(assert) {
       var bb = new BirdcageBuilder(16, 128e6, 10, 12);
@@ -46,6 +48,17 @@
 
 			var c = 2*(0.1493 - 0.3606 - 0.0405 + 0.2526 - 1); // hack 
       assert.equal(bb.calc_leg_self_inductance_tube(1, 4, 4), c);
+    });
+
+
+    QUnit.test('Mutual Inductance', function(assert) {
+      var bb = new BirdcageBuilder(1, 128e6, 1, 2);
+
+      // TODO is this really a bug, or is a loose tolerance assertion ok for this?
+      // why isn't it exact?
+      assert.equal(bb.helper_Lmn(1., 1.), 2*Math.log(2));
+
+      // TODO continue tests
     });
 
 
