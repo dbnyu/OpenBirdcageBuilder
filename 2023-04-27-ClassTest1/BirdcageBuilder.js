@@ -20,6 +20,8 @@ class BirdcageBuilder {
 		this.r_coil = rc;	// radius of the birdcage TODO - units = meters?
 		this.r_shield = rs; // radius of shield TODO units
 		
+		// these are set in the set_legs_... functions below 
+		// TODO subclass for rect/tube legs (ie. extendable to other geometries?)
 		//leg_shape_rect = true; // leg shape (true=rectangle or false=tubular)
 		//leg_length; 
 		//leg_width;
@@ -40,12 +42,11 @@ class BirdcageBuilder {
 		this.init_legs(this.n_legs, this.r_coil);
 	}
 
-	// TODO subclass for rect/tube legs (ie. extendable to other geometries?)
 	set_legs_rect(l, w) {
 		this.leg_shape = 'rect';
 		this.leg_length = l;
 		this.leg_width = w;
-		this.leg_self_inductance = calc_leg_self_inductance_rect(this.leg_length, this.leg_width);
+		this.leg_self_inductance = this.calc_leg_self_inductance_rect(this.leg_length, this.leg_width);
 		// TODO mutual inductance
 	}
 
@@ -54,7 +55,9 @@ class BirdcageBuilder {
 		this.leg_length = l;
 		this.leg_r_inner = ir;
 		this.leg_r_outer = or;
-		this.leg_self_inductance = calc_leg_self_inductance_tube(this.leg_length, this.leg_r_inner, this.leg_r_outer);
+		this.leg_self_inductance = this.calc_leg_self_inductance_tube(this.leg_length, this.leg_r_inner, this.leg_r_outer);
+
+		// TODO mutual inductance
 	}
 
 
@@ -77,7 +80,7 @@ class BirdcageBuilder {
 			var a = 2*Math.PI*k/n;
 
 			this.leg_currents[k] = Math.cos(a + b);
-			this.leg_x[k] = r * leg_currents[k];
+			this.leg_x[k] = r * this.leg_currents[k];
 			this.leg_y[k] = r * Math.sin(a + b);
 	
 			//from Birdcage.java (slightly edited) TODO can delete
