@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Test Suite</title>
+<link rel="stylesheet" href="../../qunit-2.19.4/qunit-2.19.4.css">
+<!-- <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.19.4.css"> -->
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <!-- <script src="https://code.jquery.com/qunit/qunit-2.19.4.js"></script> -->
+  <script src="../../qunit-2.19.4/qunit-2.19.4.js"></script>
+  <script src="BirdcageBuilder.js"></script>
+
+  <!-- see https://www.smashingmagazine.com/2012/06/introduction-to-javascript-unit-testing/ -->
+
+
+  <script>
+  QUnit.module('Birdcage Legs', function() {
+
+    // TODO - double check all NaN results are correct; try to make some better/more meaningful tests
+
+    QUnit.test('Rectangular Self Inductance', function(assert) {
+      var bb = new BirdcageBuilder(16, 128e6, 10, 12);
+
+      assert.equal(bb.n_legs, 16);
+
+      // TODO equal vs. deepEqual; also == vs ===?
+      assert.deepEqual(bb.calc_leg_self_inductance_rect(0, 1), NaN);
+      assert.equal(    bb.calc_leg_self_inductance_rect(1, 2), 1);
+    });
+
+    QUnit.test('Tubular Self Inductance (R_inner = 0)', function(assert) {
+      var bb = new BirdcageBuilder(16, 128e6, 10, 12);
+
+      assert.equal(    bb.calc_leg_self_inductance_tube(1, 0, 4), -1.5);
+      assert.deepEqual(bb.calc_leg_self_inductance_tube(0, 0, 4), NaN);
+    });
+
+    QUnit.test('Tubular Self Inductance (R_inner > 0)', function(assert) {
+      var bb = new BirdcageBuilder(16, 128e6, 10, 12);
+
+      // TODO need better tests with the k/ratio factor
+      // TODO can't easily force k to a nice number...
+      //assert.equal(bb.calc_leg_self_inductance_tube(1 0, 4), -1.5);
+      assert.deepEqual(bb.calc_leg_self_inductance_tube(1, 2, 0), NaN);
+      assert.deepEqual(bb.calc_leg_self_inductance_tube(0, 2, 0), NaN);
+
+			var c = 2*(0.1493 - 0.3606 - 0.0405 + 0.2526 - 1); // hack 
+      assert.equal(bb.calc_leg_self_inductance_tube(1, 4, 4), c);
+    });
+
+
+  }); // end Birdcage Legs tests
+
+  </script>
+
+
+</body>
