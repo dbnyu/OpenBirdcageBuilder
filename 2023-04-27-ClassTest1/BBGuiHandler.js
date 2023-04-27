@@ -1,6 +1,6 @@
 /* Birdcage Builder
- *
- * GUI Handler
+ * 
+ * Main functinality
  *
  * Doug Brantner
  * 27 April 2023
@@ -10,124 +10,189 @@
  * Based on Android implementation of BirdcageBuilder by Giuseppe Carluccio & Christopher Collins.
  */
 
+// v0.0.2 - Testing Class based functionality separated from GUI handling (2 files)
+
+// TODO - how to split this up? one file? 
+// GUI parser/translation separate from math code?
+// how to structure this???
 
 
-class BirdcageBuilder {
-
-	constructor(n, f, rc, rs) {
-		this.n_legs = n;	// number of legs
-		this.freq = f;		// target frequency (Hz)
-		this.r_coil = rc;	// radius of the birdcage TODO - units = meters?
-		this.r_shield = rs; // radius of shield TODO units
-		
-		//leg_shape_rect = true; // leg shape (true=rectangle or false=tubular)
-		//leg_length; 
-		//leg_width;
-		//leg_r_inner; // inner radius of tubular leg
-		//leg_r_outer; // outer radius of tubular leg
-
-		this.leg_self_inductance = -1;
-		this.leg_mutual_inductance = -1;
-		
-		this.leg_currents = new Array(n);
-		this.leg_x = new Array(n);
-		this.leg_y = new Array(n);
-
-		this.leg_shield_currents = new Array(n);
-		this.leg_shield_x = new Array(n);
-		this.leg_shield_y = new Array(n);
-
-		this.init_legs(this.n_legs, this.r_coil);
-	}
-
-	// TODO subclass for rect/tube legs (ie. extendable to other geometries?)
-	set_legs_rect(l, w) {
-		this.leg_shape = 'rect';
-		this.leg_length = l;
-		this.leg_width = w;
-		this.leg_self_inductance = calc_leg_self_inductance_rect(this.leg_length, this.leg_width);
-		// TODO mutual inductance
-	}
-
-	set_legs_tube(l, ir, or) {
-		this.leg_shape_rect = 'tube';
-		this.leg_length = l;
-		this.leg_r_inner = ir;
-		this.leg_r_outer = or;
-		this.leg_self_inductance = calc_leg_self_inductance_tube(this.leg_length, this.leg_r_inner, this.leg_r_outer);
-	}
+/* Debug Options */
+// these are declared in debug.js but set here
+DEBUG_ENABLE = true; // bool; enable or disable debug printing to DOM
+DEBUG_ID = 'debug1'; // DOM ID for debug output
 
 
-	init_legs(n, r) {
-		/* Initialize leg arrays
-		 *		n = number of legs
-		 *		r = radius of birdcage coil TODO units
-		 *
-		 *	This directly modifies the global arrays:
-		 *		leg_currents
-		 *		leg_x
-		 *		leg_y
-		 *
-		 *	BC2J.67
-		 */
+/* User Inputs from HTML DOM */
+//var n_legs;		// number of legs
+//var freq;	// target frequency (Hz)
+//var r_coil; // radius of the birdcage TODO - units = meters?
+//var r_shield; // radius of shield TODO units
+//
+//var leg_shape_rect = true; // leg shape (true=rectangle or false=tubular)
+//var leg_length; 
+//var leg_width;
+//var leg_r_inner; // inner radius of tubular leg
+//var leg_r_outer; // outer radius of tubular leg
+
+
+/* Internal Vars */
+//var leg_r_ratio; // ratio of tubular leg inner/outer radius
+
+//var leg_self_inductance;
+//var leg_mutual_inductance;
+//
+//const leg_currents = [];
+//const leg_x = [];
+//const leg_y = [];
+//
+//const leg_shield_currents = [];
+//const leg_shield_x = [];
+//const leg_shield_y = [];
+
+
+
+
+
+
+
+
+/********************
+ *  MAIN FUNCTIONS  *
+ ********************/
+
+
+// TODO change name to 'main' or something?
+function calculate() {
+	document.getElementById("output_test1").innerHTML = "Working on it...<br>";
 	
-		var b = (2*Math.PI)/(2*n); // TODO do the 2's cancel out?
-	
-		for (var k=0; k < n; k++) {
-			var a = 2*Math.PI*k/n;
+	BB = get_gui_args();
+	console.log('n_legs = ' + n_legs);
 
-			this.leg_currents[k] = Math.cos(a + b);
-			this.leg_x[k] = r * leg_currents[k];
-			this.leg_y[k] = r * Math.sin(a + b);
-	
-			//from Birdcage.java (slightly edited) TODO can delete
-			//ILeg[k] =     (float)Math.cos(2*Math.PI*k/n + 2*Math.PI/(2*n));
-			//Ix[k] = Rcoil*(float)Math.cos(2*Math.PI*k/n + 2*Math.PI/(2*n));
-			//Iy[k] = Rcoil*(float)Math.sin(2*Math.PI*k/n + 2*Math.PI/(2*n));
-		}
-	
-	}
+	debug("n_legs = " + BB.n_legs);
 
+	//init_legs(n_legs, r_coil);
+	//if (leg_shape_rect) {
+	//	leg_self_ind = calc_leg_self_inductance_rect(leg_length, leg_width);
+	//	}
+	//else {
+	//	leg_self_ind = calc_leg_self_inductance_tube(leg_length, leg_r_inner, leg_r_outer);
+	//}
 
-	calc_leg_self_inductance_rect(len, width) {
-		/* Calculate self-inductance of Rectangular leg
-		 *
-		 * len = leg length TODO units
-		 * width = leg width
-		 *
-		 * Returns self inductance value TODO units
-		 * BC2J.78
-		 */
-	
-		// TODO - java & javascript both seem to use natural log as default - double check this!
-		return 2.0 * len * (Math.log(2.0 * len/width) + 0.5);
-	}
-	
-	
-	calc_leg_self_inductance_tube(len, r_in, r_out) {
-		/* Calculate self-inductance of Tubular leg
-		 *
-		 * len = leg length TODO units
-		 * r_in = inner radius of tube  TODO what does zero mean see below?
-		 * r_out = outer radius of tube 
-		 *
-		 * Returns self inductance value TODO units
-		 * BC2J.81
-		 */
-	
-		// TODO - if inner radius is zero, does that mean a solid core conductor/wire?
-		// TODO what are these constants in r>0 case? can they be expanded for better precision?
-	
-		if (r_in > 0) { 
-			var ratio = r_in / r_out;
-			k = 0.1493 * Math.pow(ratio,3) - 0.3606 * Math.pow(ratio,2) - 0.0405 * ratio + 0.2526;
-			return 2 * len * (Math.log(4*len/r_out) + k - 1);
-		}
-		else {
-			return 2 * len * (Math.log(4*len/r_out) - 0.75);
-		}
-	
-	}
-
-
+	debug('Leg Self Inductance: ' + BB.leg_self_ind);
 }
+
+
+
+function get_gui_args() {
+	/* Parse DOM and populate global vars
+	 */
+
+	// TODO - input sanitize & sanity check
+	// TODO - ideally this would be baked into the HTML so user can't submit invalid values
+	//		- and highlight wrong inputs in red or something so they can fix it
+
+	// TODO fix units/convert to internal units
+	// TODO var or let?
+	var n_legs = document.getElementById('num_legs').value; // TODO cast to number?
+
+	var freq = document.getElementById('center_freq').value;
+	var r_coil = document.getElementById('coil_radius').value; 
+	var r_shield = document.getElementById('shield_radius').value;
+	var 
+	var leg_shape_rect = true; // leg shape (true=rectangle or false=tubular) TODO
+	var leg_length = document.getElementById('leg_len').value;
+	var leg_width = document.getElementById('leg_width').value;
+	//leg_r_inner; // inner radius of tubular leg TODO - need to add DOM flexibility
+	//leg_r_outer; // outer radius of tubular leg TODO
+	
+	bb = new BirdcageBuilder(n_legs, freq, r_coil, r_shield);
+	
+	if (leg_shape_rect) {
+		bb.set_legs_rect(leg_length, leg_width);
+	}
+	else {
+		bb.set_legs_tube(leg_length, leg_r_inner, leg_r_outer);
+	}
+
+	return bb;
+}
+
+
+
+
+
+/********************
+ * Leg Calculations *
+ ********************/
+
+
+//function init_legs(n, r) {
+//	/* Initialize leg arrays
+//	 *		n = number of legs
+//	 *		r = radius of birdcage coil TODO units
+//	 *
+//	 *	This directly modifies the global arrays:
+//	 *		leg_currents
+//	 *		leg_x
+//	 *		leg_y
+//	 *
+//	 *	BC2J.67
+//	 */
+//
+//	var b = (2*Math.PI)/(2*n); // TODO do the 2's cancel out?
+//
+//	for (var k=0; k < n; k++) {
+//		var a = 2*Math.PI*k/n;
+//		leg_currents[k] = Math.cos(a + b);
+//		leg_x[k] = r * leg_currents[k];
+//		leg_y[k] = r * Math.sin(a + b);
+//
+//		//from Birdcage.java (slightly edited) TODO can delete
+//		//ILeg[k] =     (float)Math.cos(2*Math.PI*k/n + 2*Math.PI/(2*n));
+//		//Ix[k] = Rcoil*(float)Math.cos(2*Math.PI*k/n + 2*Math.PI/(2*n));
+//		//Iy[k] = Rcoil*(float)Math.sin(2*Math.PI*k/n + 2*Math.PI/(2*n));
+//	}
+//
+//}
+
+
+//function calc_leg_self_inductance_rect(len, width) {
+//	/* Calculate self-inductance of Rectangular leg
+//	 *
+//	 * len = leg length TODO units
+//	 * width = leg width
+//	 *
+//	 * Returns self inductance value TODO units
+//	 * BC2J.78
+//	 */
+//
+//	// TODO - java & javascript both seem to use natural log as default - double check this!
+//	return 2.0 * len * (Math.log(2.0 * len/width) + 0.5);
+//}
+//
+//
+//function calc_leg_self_inductance_tube(len, r_in, r_out) {
+//	/* Calculate self-inductance of Tubular leg
+//	 *
+//	 * len = leg length TODO units
+//	 * r_in = inner radius of tube  TODO what does zero mean see below?
+//	 * r_out = outer radius of tube 
+//	 *
+//	 * Returns self inductance value TODO units
+//	 * BC2J.81
+//	 */
+//
+//	// TODO - if inner radius is zero, does that mean a solid core conductor/wire?
+//	// TODO what are these constants in r>0 case? can they be expanded for better precision?
+//
+//	if (r_in > 0) { 
+//		var ratio = r_in / r_out;
+//		k = 0.1493 * Math.pow(ratio,3) - 0.3606 * Math.pow(ratio,2) - 0.0405 * ratio + 0.2526;
+//		return 2 * len * (Math.log(4*len/r_out) + k - 1);
+//	}
+//	else {
+//		return 2 * len * (Math.log(4*len/r_out) - 0.75);
+//	}
+//
+//}
