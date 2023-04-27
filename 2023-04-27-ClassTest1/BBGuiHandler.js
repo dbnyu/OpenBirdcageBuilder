@@ -50,6 +50,7 @@ function calculate() {
 	//}
 
 	debug('Leg Self Inductance: ' + BB.leg_self_inductance);
+	debug('Leg Mutual Inductance: ' + BB.leg_mutual_inductance);
 }
 
 
