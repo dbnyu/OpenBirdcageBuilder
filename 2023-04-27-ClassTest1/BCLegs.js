@@ -272,7 +272,4 @@ class BCLegs {
 		return mi;
 	}
 
-	// TODO - START HERE line 131 BCJ (probably a new class for endrings)
-	//
-	//
 }
