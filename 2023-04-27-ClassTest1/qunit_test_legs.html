@@ -8,6 +8,9 @@
   <div id="qunit-fixture"></div>
   <!-- <script src="https://code.jquery.com/qunit/qunit-2.19.4.js"></script> -->
   <script src="../../qunit-2.19.4/qunit-2.19.4.js"></script>
+  <script src="../../qunit-assert-close-git/qunit-assert-close/qunit-assert-close.js"></script>
+
+
   <script src="BirdcageBuilder.js"></script>
 
   <!-- see https://www.smashingmagazine.com/2012/06/introduction-to-javascript-unit-testing/ -->
@@ -56,7 +59,8 @@
 
       // TODO is this really a bug, or is a loose tolerance assertion ok for this?
       // why isn't it exact?
-      assert.equal(bb.helper_Lmn(1., 1.), 2*Math.log(2));
+      assert.close(bb.helper_Lmn(1., 1.), 2*Math.log(2), 1e-15);
+      //assert.equal(bb.helper_Lmn(1., 1.), 2*Math.log(2));  // TODO - why isn't this exact? just flotaing point error???
 
       // TODO continue tests
     });
