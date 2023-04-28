@@ -1,6 +1,6 @@
 /* Birdcage Builder
  * 
- * Main functinality
+ * GUI Handler
  *
  * Doug Brantner
  * 27 April 2023
@@ -31,6 +31,7 @@ DEBUG_ID = 'debug1'; // DOM ID for debug output
 /********************
  *  MAIN FUNCTIONS  *
  ********************/
+//debug('BBGuiHandler loaded.');
 
 
 // TODO change name to 'main' or something?
@@ -49,8 +50,8 @@ function calculate() {
 	//	leg_self_ind = calc_leg_self_inductance_tube(leg_length, leg_r_inner, leg_r_outer);
 	//}
 
-	debug('Leg Self Inductance: ' + BB.leg_self_inductance);
-	debug('Leg Mutual Inductance: ' + BB.leg_mutual_inductance);
+	debug('Leg Self Inductance: ' + BB.legs.leg_self_inductance);
+	debug('Leg Mutual Inductance: ' + BB.legs.leg_mutual_inductance);
 }
 
 
@@ -59,6 +60,8 @@ function get_gui_args() {
 	/* Parse DOM and populate global vars
 	 *
 	 * This version initializes & returns a BirdcageBuilder class object
+	 *
+	 * TODO - returns populated BB object now - does that make sense?
 	 *
 	 */
 
@@ -79,15 +82,20 @@ function get_gui_args() {
 	var leg_width = document.getElementById('leg_width').value;
 	//leg_r_inner; // inner radius of tubular leg TODO - need to add DOM flexibility
 	//leg_r_outer; // outer radius of tubular leg TODO
+	//
+	
+	debug('hello');
 	
 	bb = new BirdcageBuilder(n_legs, freq, r_coil, r_shield);
+	debug(bb.to_string());
 	
 	if (leg_shape_rect) {
-		bb.set_legs_rect(leg_length, leg_width);
+		bb.legs.set_legs_rect(leg_length, leg_width);
 	}
 	else {
-		bb.set_legs_tube(leg_length, leg_r_inner, leg_r_outer);
+		bb.legs.set_legs_tube(leg_length, leg_r_inner, leg_r_outer);
 	}
+
 
 	return bb;
 }
