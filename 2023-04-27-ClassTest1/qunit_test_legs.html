@@ -22,6 +22,8 @@
   QUnit.module('Birdcage Legs', function() {
 
     // TODO - double check all NaN results are correct; try to make some better/more meaningful tests
+    // TODO - use Number.NEGATIVE_INFINITY and Inifinity to check those cases properly
+    // TODO - replace all deepEqual NaN checks with assert.true( isNaN(...))
 
     QUnit.test('Rectangular Self Inductance', function(assert) {
       var bb = new BirdcageBuilder(16, 128e6, 10, 12);

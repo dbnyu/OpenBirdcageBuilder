@@ -255,8 +255,6 @@ class BCEndRings {
 
 
 
-	// TODO START HERE BCJ 300 (main file?)
-
 
 
 
