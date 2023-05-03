@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Test Suite</title>
+<link rel="stylesheet" href="../../qunit-2.19.4/qunit-2.19.4.css">
+<!-- <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.19.4.css"> -->
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <!-- <script src="https://code.jquery.com/qunit/qunit-2.19.4.js"></script> -->
+  <script src="../../qunit-2.19.4/qunit-2.19.4.js"></script>
+  <script src="../../qunit-assert-close-git/qunit-assert-close/qunit-assert-close.js"></script>
+
+
+  <script src="debug.js"></script>
+  <script src="helpers.js"></script>
+  <script src="BCLegs.js"></script>
+  <script src="BCEndRings.js"></script>
+  <script src="BirdcageBuilder.js"></script>
+
+  <!-- see https://www.smashingmagazine.com/2012/06/introduction-to-javascript-unit-testing/ -->
+
+
+  <script>
+  QUnit.module('Test Complete Workflow', function() {
+
+    // TODO - double check all NaN results are correct; try to make some better/more meaningful tests
+
+    QUnit.test('App Defaults Tests', function(assert) {
+      /* Test that outputs match closely to Android app with default inputs */
+
+	    bb = new BirdcageBuilder(8, 21.28e6, 0.1, 0);
+		  bb.legs.set_legs_rect(0.1, 0.02);
+		  bb.endrings.set_endrings_rect(0.01);
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+      // ToDO type = lowpass
+
+    // TODO - what to do about output units?
+      assert.step('TODO - Output Units???');
+      assert.close(bb.legs.leg_self_inductance,    56.0517, 1e-5);
+      assert.close(bb.endrings.er_self_inductance, 51.1163, 1e-5);
+      assert.close(bb.legs.leg_mutual_inductance,  60.3136, 1e-5);
+      assert.close(bb.endrings.er_self_inductance, 62.2339, 1e-5);
+      assert.step('TODO - Capacitor Value');
+     // TODO final cap value  assert.close(..., 205.0515, 1e-5);
+    });
+
+    // TODO repeat -  go through all combinations/defaults in app!
+
+
+
+  }); // end all tests
+
+  </script>
+
+
+</body>
