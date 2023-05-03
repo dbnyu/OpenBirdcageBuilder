@@ -50,8 +50,12 @@ function calculate() {
 	//	leg_self_ind = calc_leg_self_inductance_tube(leg_length, leg_r_inner, leg_r_outer);
 	//}
 
-	debug('Leg Self Inductance: ' + BB.legs.leg_self_inductance);
-	debug('Leg Mutual Inductance: ' + BB.legs.leg_mutual_inductance);
+	// Mocking output from the Android app for debugging:
+	debug('Leg Self Inductance       (nH): ' + BB.legs.leg_self_inductance);
+	debug('EndRing Self Inductance   (nH): ' + BB.endrings.er_self_inductance);
+	debug('Leg Mutual Inductance     (nH): ' + BB.legs.leg_mutual_inductance);
+	debug('EndRing Mutual Inductance (nH): ' + BB.endrings.er_mutual_inductance);
+
 }
 
 
@@ -82,7 +86,11 @@ function get_gui_args() {
 	var leg_width = document.getElementById('leg_width').value;
 	//leg_r_inner; // inner radius of tubular leg TODO - need to add DOM flexibility
 	//leg_r_outer; // outer radius of tubular leg TODO
-	//
+
+	
+	var endring_width = document.getElementById('er_width').value;
+	//var endring_r_inner = // TODO
+	//var endring_r_outer = // TODO
 	
 	debug('hello');
 	
@@ -91,11 +99,14 @@ function get_gui_args() {
 	
 	if (leg_shape_rect) {
 		bb.legs.set_legs_rect(leg_length, leg_width);
+		bb.endrings.set_endrings_rect(endring_width);
 	}
 	else {
 		bb.legs.set_legs_tube(leg_length, leg_r_inner, leg_r_outer);
+		bb.endrings.set_endrings_tube(endring_r_inner, endring_r_outer);
 	}
 
+	bb.endrings.calc_er_mutual_inductance(bb.legs);
 
 	return bb;
 }
