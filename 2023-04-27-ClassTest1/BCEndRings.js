@@ -135,11 +135,125 @@ class BCEndRings {
 		else {
 			return 2 * arclen * (Math.log(4*arclen/r_out) - 0.75);
 		}
-
 	}
 
+	calc_er_mutual_inductance(legs) {
+		/* TODO - this is mostly transliterated directly from the Java code (ie. black box)
+		 *
+		 *
+		 * legs = BCLegs object (must be fully setup!)
+		 *
+		 * Starting on BCJ.195 - BCJ.294
+		 *
+		 * Directly modifies this.er_mutual_inductance
+		 */
 
-	// TODO START HERE BCJ 195
+		assert(this.n_legs == legs.n_legs, 'BCEndRings: calc_er_mutual_inductance: # of legs must match!');
+
+		// TODO descriptions???
+		var d, m1, l1, R1, ang1, Mnext, Mprev, Lop, Ladj, Lnadj, M, L, R3, R4, R2, a2, ang, p, mu, v, t1, t2, t3, t4, s1, s2, s3, s4;
+		var k1;
+		var lmu = new Array(this.n_legs);
+		var z, z1;
+		
+		var k=0;
+		for (k=0; k<n;k++){
+
+			//Mutual Inductance of Opposite Rings
+			d = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n/2)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n/2)%n],2));
+			Lop = 0;
+			if (Math.abs(this.er_currents[k%n])>(1/10000)) {
+				Lop = 2*this.er_arclen*(Math.log(this.er_arclen/d+Math.sqrt(1+Math.pow(this.er_arclen/d, 2)))-Math.sqrt(1+Math.pow(d/this.er_arclen,2))+d/this.er_arclen);
+			
+			}
+			
+		
+			//Mutual Inductance of Adjacent Rings
+			m1 = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n)%n],2));
+			l1 = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+2)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+2)%n],2));
+			R1 = Math.sqrt(Math.pow(legs.leg_x[(k+2)%n]-legs.leg_x[(k)%n],2)+Math.pow(legs.leg_y[(k+2)%n]-legs.leg_y[(k)%n],2));
+			
+			ang1 = (Math.pow(l1,2)+Math.pow(m1,2)-Math.pow(R1,2))/(2*l1*m1);
+
+			Mnext = Math.abs(2*ang1*(l1*Harct(m1/(l1+R1))+m1*Harct(m1/(m1+R1)) ));
+			
+			m1 = Math.sqrt(Math.pow(legs.leg_x[(k)%n]-legs.leg_x[(k+n-1)%n],2)+Math.pow(legs.leg_y[(k)%n]-legs.leg_y[(k+n-1)%n],2));
+			l1 = Math.sqrt(Math.pow(legs.leg_x[(k)%n]-legs.leg_x[(k+1)%n],2)+Math.pow(legs.leg_y[(k)%n]-legs.leg_y[(k+1)%n],2));
+			R1 = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n-1)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n-1)%n],2));
+			
+
+			ang1 = (Math.pow(l1,2)+Math.pow(m1,2)-Math.pow(R1,2))/(2*l1*m1);
+			Mprev = Math.abs(2*ang1*(l1*Harct(m1/(l1+R1))+m1*Harct(m1/(m1+R1)) ));	
+			
+
+			Ladj=0;
+			if (Math.abs(this.er_currents[k%n])>(1/100000)) {
+				Ladj = (Mnext*this.er_currents[(k+1)%n]+Mprev*this.er_currents[(k+n-1)%n])/this.er_currents[k%n];
+			}
+			
+
+			//Mutual Inductance of Non Adjacent Rings
+			Lnadj = 0;
+			for (k1 = 3; k1<n; k1++) {
+			
+				M = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k)%n],2));
+				L = Math.sqrt(Math.pow(legs.leg_x[(k+k1)%n]-legs.leg_x[(k+k1-1)%n],2)+Math.pow(legs.leg_y[(k+k1)%n]-legs.leg_y[(k+k1-1)%n],2));
+				R3 = (Math.pow(legs.leg_x[(k)%n]-legs.leg_x[(k+k1-1)%n],2)+Math.pow(legs.leg_y[(k)%n]-legs.leg_y[(k+k1-1)%n],2));
+				R4 = (Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+k1-1)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+k1-1)%n],2));
+				R2 = (Math.pow(legs.leg_x[(k)%n]-legs.leg_x[(k+k1)%n],2)+Math.pow(legs.leg_y[(k)%n]-legs.leg_y[(k+k1)%n],2));
+				R1 = (Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+k1)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+k1)%n],2));
+				
+				a2 = R4 - R3 + R2 - R1;	
+				
+				ang = a2/(L*M);
+			
+				p = 4*Math.pow(L,2)*Math.pow(M,2)-Math.pow(a2,2);
+				if (p==0) {
+					mu = 0;
+					v = 0;
+				} else {
+					mu = L*(2*Math.pow(M,2)*(R2-R3-Math.pow(L,2))+a2*(R4-R3-Math.pow(M,2)))/(4*Math.pow(L,2)*Math.pow(M,2)-Math.pow(a2,2));
+					v = M*(2*Math.pow(L,2)*(R4-R3-Math.pow(M,2))+a2*(R2-R3-Math.pow(L,2)))/(4*Math.pow(L,2)*Math.pow(M,2)-Math.pow(a2,2));
+				}
+			
+				t4 = Math.sqrt(R4);
+				t3 = Math.sqrt(R3);
+				t2 = Math.sqrt(R2);			
+				t1 = Math.sqrt(R1);
+				s1 = (mu+L)*Harct(M/(t1+t2));
+				s2 = (v+M)*Harct(L/(t1+t4));
+				s3 = (mu)*Harct(M/(t3+t4));
+				s4 = (v)*Harct(L/(t3+t2));
+				lmu[k1] = ang*(s1+s2-s3-s4);
+				if (k1==(n/2+1)) {
+					lmu[k1]=0;
+				}
+				
+				
+				if (Math.abs(this.er_currents[k%n])>(1/100000)) {
+					Lnadj = Lnadj + lmu[k1]*Math.abs(this.er_currents[(k+k1-1)%n]/this.er_currents[k%n]);		
+				}
+			
+			
+			
+			}
+		
+
+			this.er_mutual_inductance[k] = Lnadj + this.er_self_inductance + Lop + Ladj;
+		
+		
+		}
+			
+		this.er_self_inductance = this.er_self_inductance*1e-7;
+		for (k=0;k<n;k++) {
+			this.er_mutual_inductance[k] = this.er_mutual_inductance[k]*1e-7;		
+		}
+		
+	}	
+
+
+
+	// TODO START HERE BCJ 300 (main file?)
 
 
 
