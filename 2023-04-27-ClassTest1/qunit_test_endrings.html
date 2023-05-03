@@ -12,78 +12,99 @@
 
 
   <script src="debug.js"></script>
-  <script src="BCLegs.js"></script>
+  <!-- <script src="BCLegs.js"></script> -->
+  <script src="BCEndRings.js"></script>
   <script src="BirdcageBuilder.js"></script>
 
   <!-- see https://www.smashingmagazine.com/2012/06/introduction-to-javascript-unit-testing/ -->
 
 
   <script>
-  QUnit.module('Birdcage Legs', function() {
+  QUnit.module('Birdcage End Rings', function() {
 
     // TODO - double check all NaN results are correct; try to make some better/more meaningful tests
 
+    QUnit.test('General Math', function(assert) {
+      /* Confirming general Javascript Math/IEEE-754 assumptions */
+
+      assert.equal(Math.log(1), 0);
+      assert.equal(Math.log(0), Number.NEGATIVE_INFINITY);
+      assert.equal(Math.log(0) + 0.5, Number.NEGATIVE_INFINITY);
+      assert.equal(2*Math.log(0), Number.NEGATIVE_INFINITY);
+      assert.equal(2*Math.log(0) + 0.5, Number.NEGATIVE_INFINITY);
+      assert.true(Number.isNaN(0 * Infinity)); // inf * 0 is NaN
+
+    });
+
+    QUnit.test('Harct', function(assert) {
+      var er = new BCEndRings(16);
+
+      assert.equal(er.n_legs, 16);
+
+      assert.equal(er.harct(0), 0);
+      assert.equal(er.harct(-1), Number.NEGATIVE_INFINITY);
+    });
+
+
     QUnit.test('Rectangular Self Inductance', function(assert) {
-      var bb = new BirdcageBuilder(16, 128e6, 10, 12);
-  // TODO - change to new BCLegs subclass if only testing legs (search/replace all if possible)
+      //var bb = new BirdcageBuilder(16, 128e6, 10, 12);
+      // TODO - change to new BCLegs subclass if only testing legs (search/replace all if possible)
+      var er = new BCEndRings(16);
 
-      assert.equal(bb.n_legs, 16);
-
-      // TODO equal vs. deepEqual; also == vs ===?
-      assert.deepEqual(bb.legs.calc_leg_self_inductance_rect(0, 1), NaN);
-      assert.equal(    bb.legs.calc_leg_self_inductance_rect(1, 2), 1);
+      assert.true(Number.isNaN(er.calc_er_self_inductance_rect(0, 1)));
+      assert.equal(er.calc_er_self_inductance_rect(1, 2), 1);
     });
 
 
     QUnit.test('Tubular Self Inductance (R_inner = 0)', function(assert) {
-      var bb = new BirdcageBuilder(16, 128e6, 10, 12);
+      var er = new BCEndRings(16);
 
-      assert.equal(    bb.legs.calc_leg_self_inductance_tube(1, 0, 4), -1.5);
-      assert.deepEqual(bb.legs.calc_leg_self_inductance_tube(0, 0, 4), NaN);
+      assert.equal(er.calc_er_self_inductance_tube(1, 0, 4), -1.5);
+      assert.true(Number.isNaN(er.calc_er_self_inductance_tube(0, 0, 4)));
     });
 
 
-    QUnit.test('Tubular Self Inductance (R_inner > 0)', function(assert) {
-      var bb = new BirdcageBuilder(16, 128e6, 10, 12);
+    //QUnit.test('Tubular Self Inductance (R_inner > 0)', function(assert) {
+    //  var bb = new BirdcageBuilder(16, 128e6, 10, 12);
 
-      // TODO need better tests with the k/ratio factor
-      // TODO can't easily force k to a nice number...
-      //assert.equal(bb.calc_leg_self_inductance_tube(1 0, 4), -1.5);
-      assert.deepEqual(bb.legs.calc_leg_self_inductance_tube(1, 2, 0), NaN);
-      assert.deepEqual(bb.legs.calc_leg_self_inductance_tube(0, 2, 0), NaN);
+    //  // TODO need better tests with the k/ratio factor
+    //  // TODO can't easily force k to a nice number...
+    //  //assert.equal(bb.calc_leg_self_inductance_tube(1 0, 4), -1.5);
+    //  assert.deepEqual(bb.legs.calc_leg_self_inductance_tube(1, 2, 0), NaN);
+    //  assert.deepEqual(bb.legs.calc_leg_self_inductance_tube(0, 2, 0), NaN);
 
-			var c = 2*(0.1493 - 0.3606 - 0.0405 + 0.2526 - 1); // hack 
-      assert.equal(bb.legs.calc_leg_self_inductance_tube(1, 4, 4), c);
-    });
-
-
-    QUnit.test('Leg Mutual Inductance', function(assert) {
-      var bb = new BirdcageBuilder(1, 128e6, 1, 2);
-      bb.legs.set_legs_rect(1, 1); // TODO
-
-      // TODO is this really a bug, or is a loose tolerance assertion ok for this?
-      // why isn't it exact?
-      assert.close(bb.legs.helper_Lmn(1., 1.), 2*Math.log(2), 1e-15);
-      //assert.equal(bb.helper_Lmn(1., 1.), 2*Math.log(2));  // TODO - why isn't this exact? just flotaing point error???
-      //assert.equal(bb.
-
-      // TODO continue tests
-      // TODO test final mutual inductance result
-    });
-
-    QUnit.test('Shield Mutual Inductance', function(assert) {
-      var bb = new BirdcageBuilder(1, 128e6, 1, 2);
-
-      // TODO is this really a bug, or is a loose tolerance assertion ok for this?
-      // why isn't it exact?
-      assert.close(bb.legs.helper_Lmn(1., 1.), 2*Math.log(2), 1e-15);
-
-      // TODO continue tests
-      // TODO test final mutual inductance result
-    });
+		//	var c = 2*(0.1493 - 0.3606 - 0.0405 + 0.2526 - 1); // hack 
+    //  assert.equal(bb.legs.calc_leg_self_inductance_tube(1, 4, 4), c);
+    //});
 
 
-  }); // end Birdcage Legs tests
+    //QUnit.test('Leg Mutual Inductance', function(assert) {
+    //  var bb = new BirdcageBuilder(1, 128e6, 1, 2);
+    //  bb.legs.set_legs_rect(1, 1); // TODO
+
+    //  // TODO is this really a bug, or is a loose tolerance assertion ok for this?
+    //  // why isn't it exact?
+    //  assert.close(bb.legs.helper_Lmn(1., 1.), 2*Math.log(2), 1e-15);
+    //  //assert.equal(bb.helper_Lmn(1., 1.), 2*Math.log(2));  // TODO - why isn't this exact? just flotaing point error???
+    //  //assert.equal(bb.
+
+    //  // TODO continue tests
+    //  // TODO test final mutual inductance result
+    //});
+
+    //QUnit.test('Shield Mutual Inductance', function(assert) {
+    //  var bb = new BirdcageBuilder(1, 128e6, 1, 2);
+
+    //  // TODO is this really a bug, or is a loose tolerance assertion ok for this?
+    //  // why isn't it exact?
+    //  assert.close(bb.legs.helper_Lmn(1., 1.), 2*Math.log(2), 1e-15);
+
+    //  // TODO continue tests
+    //  // TODO test final mutual inductance result
+    //});
+
+
+  }); // end Birdcage End Rings tests
 
   </script>
 
