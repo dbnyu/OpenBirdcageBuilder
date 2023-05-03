@@ -28,21 +28,23 @@
     QUnit.test('App Defaults Tests', function(assert) {
       /* Test that outputs match closely to Android app with default inputs */
 
-	    bb = new BirdcageBuilder(8, 21.28e6, 0.1, 0);
+	    bb = new BirdcageBuilder(8, 21.28e6, 0.1, 0, 'lowpass');
 		  bb.legs.set_legs_rect(0.1, 0.02);
 		  bb.endrings.set_endrings_rect(0.01);
 	    bb.endrings.calc_er_mutual_inductance(bb.legs);
-      // ToDO type = lowpass
 
-    // TODO - what to do about output units?
-      assert.step('TODO - Output Units???');
-      assert.close(bb.legs.leg_self_inductance,    56.0517, 1e-5);
-      assert.close(bb.endrings.er_self_inductance, 51.1163, 1e-5);
-      assert.close(bb.legs.leg_mutual_inductance,  60.3136, 1e-5);
-      assert.close(bb.endrings.er_self_inductance, 62.2339, 1e-5);
+      // TODO - NOTE: the units are manually adjusted here, to reflect the app output values:
+      //assert.step('TO DO - Output Units???');
+      var TEST_TOL = 5e-5; // allowing 0.5 rounding error for 4-digit app outputs
+      assert.close(1e9 * bb.legs.leg_self_inductance,       56.0517, TEST_TOL);
+      assert.close(1e9 * bb.endrings.er_self_inductance,    51.1163, TEST_TOL);
+      assert.close(1e9 * bb.legs.leg_mutual_inductance[2],  60.3136, TEST_TOL); // TODO unhardcode index?
+      assert.close(1e9 * bb.endrings.er_self_inductance,    62.2339, TEST_TOL);
       //assert.step('TO DO - Capacitor Value');
-      assert.close(bb.calc_capacitor(), 205.0515, 1e-5);
+      assert.close(1e12 * bb.calc_capacitor(), 205.0515, TEST_TOL);
     });
+
+
 
     // TODO repeat -  go through all combinations/defaults in app!
 
