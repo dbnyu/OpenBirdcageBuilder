@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Test Suite</title>
+<link rel="stylesheet" href="../../qunit-2.19.4/qunit-2.19.4.css">
+<!-- <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.19.4.css"> -->
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <!-- <script src="https://code.jquery.com/qunit/qunit-2.19.4.js"></script> -->
+  <script src="../../qunit-2.19.4/qunit-2.19.4.js"></script>
+  <script src="../../qunit-assert-close-git/qunit-assert-close/qunit-assert-close.js"></script>
+
+
+  <script src="debug.js"></script>
+  <script src="helpers.js"></script>
+  <!-- <script src="BCLegs.js"></script> -->
+  <script src="BCEndRings.js"></script>
+  <script src="BirdcageBuilder.js"></script>
+
+  <!-- see https://www.smashingmagazine.com/2012/06/introduction-to-javascript-unit-testing/ -->
+
+
+  <script>
+  QUnit.module('Helper Functions', function() {
+
+    // TODO - double check all NaN results are correct; try to make some better/more meaningful tests
+
+    QUnit.test('Unit Conversion', function(assert) {
+      /* Confirming general Javascript Math/IEEE-754 assumptions */
+
+      assert.equal(cm2meters(100), 1);
+      assert.equal(cm2meters(10),  0.1);
+      assert.equal(cm2meters(1.5), 0.015);
+
+      assert.equal(mhz2hz(1),     1000000);
+      assert.equal(mhz2hz(1.357), 1357000);
+      assert.equal(mhz2hz(23.5), 23500000);
+
+    });
+
+    // TODO keep this here or leave it in Endrings?
+    QUnit.test('General Math', function(assert) {
+      /* Confirming general Javascript Math/IEEE-754 assumptions */
+
+      assert.equal(Math.log(1), 0);
+      assert.equal(Math.log(0), Number.NEGATIVE_INFINITY);
+      assert.equal(Math.log(0) + 0.5, Number.NEGATIVE_INFINITY);
+      assert.equal(2*Math.log(0), Number.NEGATIVE_INFINITY);
+      assert.equal(2*Math.log(0) + 0.5, Number.NEGATIVE_INFINITY);
+      assert.true(Number.isNaN(0 * Infinity)); // inf * 0 is NaN
+
+    });
+
+
+
+  }); // end all tests
+
+  </script>
+
+
+</body>
