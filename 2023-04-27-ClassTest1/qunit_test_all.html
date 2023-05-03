@@ -40,8 +40,8 @@
       assert.close(bb.endrings.er_self_inductance, 51.1163, 1e-5);
       assert.close(bb.legs.leg_mutual_inductance,  60.3136, 1e-5);
       assert.close(bb.endrings.er_self_inductance, 62.2339, 1e-5);
-      assert.step('TODO - Capacitor Value');
-     // TODO final cap value  assert.close(..., 205.0515, 1e-5);
+      //assert.step('TO DO - Capacitor Value');
+      assert.close(bb.calc_capacitor(), 205.0515, 1e-5);
     });
 
     // TODO repeat -  go through all combinations/defaults in app!
