@@ -43,22 +43,29 @@ function calculate() {
 
 	debug("n_legs = " + BB.n_legs);
 
-	//init_legs(n_legs, r_coil);
-	//if (leg_shape_rect) {
-	//	leg_self_ind = calc_leg_self_inductance_rect(leg_length, leg_width);
-	//	}
-	//else {
-	//	leg_self_ind = calc_leg_self_inductance_tube(leg_length, leg_r_inner, leg_r_outer);
-	//}
+	// TODO are the units only changed for the output? - should I keep the internals the same?
+	
+	append_main_output('Leg Self Inductance       (nH): ' + 1e9 * BB.legs.leg_self_inductance);
+	append_main_output('EndRing Self Inductance   (nH): ' + 1e9 * BB.endrings.er_self_inductance);
+	append_main_output('Leg Mutual Inductance     (nH): ' + 1e9 * BB.legs.leg_mutual_inductance);
+	append_main_output('EndRing Mutual Inductance (nH): ' + 1e9 * BB.endrings.er_mutual_inductance[BB.n_legs/4]);
+	append_main_output('Calculated Capacitance    (pF): ' + 1e12 * cap);
+
+	document.getElementById('output_test1').innerHTML = 'Done.';
+
+
 
 	// Mocking output from the Android app for debugging:
-	debug('Leg Self Inductance       (nH): ' + BB.legs.leg_self_inductance);
-	debug('EndRing Self Inductance   (nH): ' + BB.endrings.er_self_inductance);
-	debug('Leg Mutual Inductance     (nH): ' + BB.legs.leg_mutual_inductance);
-	debug('EndRing Mutual Inductance (nH): ' + BB.endrings.er_mutual_inductance);
-	debug('Calculated Capacitance    (pF): ' + cap);
+	debug('Leg Self Inductance       (H?): ' + BB.legs.leg_self_inductance);
+	debug('EndRing Self Inductance   (H?): ' + BB.endrings.er_self_inductance);
+	debug('Leg Mutual Inductance     (H?): ' + BB.legs.leg_mutual_inductance);
+	debug('EndRing Mutual Inductance (H?): ' + BB.endrings.er_mutual_inductance);
+	debug('Calculated Capacitance    (F?): ' + cap);
 
 	debug(''); // keep a blank line at the end
+
+
+
 }
 
 
@@ -68,15 +75,15 @@ function get_gui_args() {
 	 *
 	 * This version initializes & returns a BirdcageBuilder class object
 	 *
-	 * TODO - returns populated BB object now - does that make sense?
+	 * Returns populated BB object.
+	 * // TODO - rename?
 	 *
 	 */
 
 	// TODO - input sanitize & sanity check
-	// TODO - ideally this would be baked into the HTML so user can't submit invalid values
-	//		- and highlight wrong inputs in red or something so they can fix it
+	// TODO		- ideally this would be baked into the HTML so user can't submit invalid values
+	// TODO		- and highlight wrong inputs in red or something so they can fix it
 
-	// TODO fix units/convert to internal units
 	// TODO var or let?
 	var n_legs = document.getElementById('num_legs').value; // TODO cast to number?
 
@@ -105,6 +112,7 @@ function get_gui_args() {
 
 	
 	// convert units (BCJ.MA)
+	// TODO double check all unit conversions
 	freq = mhz2hz(freq);
 	r_coil = cm2meters(r_coil);
 	r_shield = cm2meters(r_shield);
@@ -197,4 +205,13 @@ function get_endring_geom() {
 		return 'INVALID';
 	}
 
+}
+
+
+function append_main_output(s) {
+	/* Append a string to the output_main DOM paragraph.
+	 * Adds a <br> at the end.
+	 */
+
+	document.getElementById('output_main').innerHTML += s + '<br>';
 }
