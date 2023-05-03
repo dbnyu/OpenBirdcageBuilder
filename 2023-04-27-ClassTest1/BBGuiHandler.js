@@ -39,6 +39,7 @@ function calculate() {
 	document.getElementById("output_test1").innerHTML = "Working on it...<br>";
 	
 	BB = get_gui_args();
+	cap = BB.calc_capacitor();
 
 	debug("n_legs = " + BB.n_legs);
 
@@ -55,7 +56,9 @@ function calculate() {
 	debug('EndRing Self Inductance   (nH): ' + BB.endrings.er_self_inductance);
 	debug('Leg Mutual Inductance     (nH): ' + BB.legs.leg_mutual_inductance);
 	debug('EndRing Mutual Inductance (nH): ' + BB.endrings.er_mutual_inductance);
+	debug('Calculated Capacitance    (pF): ' + cap);
 
+	debug(''); // keep a blank line at the end
 }
 
 
@@ -81,7 +84,7 @@ function get_gui_args() {
 	var r_coil = document.getElementById('coil_radius').value; 
 	var r_shield = document.getElementById('shield_radius').value;
 
-	var leg_shape_rect = true; // leg shape (true=rectangle or false=tubular) TODO implement this!
+	//var leg_shape_rect = true; // leg shape (true=rectangle or false=tubular) TODO can probably delete!
 	var leg_length = document.getElementById('leg_len').value;
 	var leg_width = document.getElementById('leg_width').value;
 	var leg_r_inner; // inner radius of tubular leg TODO - need to add DOM flexibility
@@ -91,6 +94,14 @@ function get_gui_args() {
 	var endring_width = document.getElementById('er_width').value;
 	var endring_r_inner; // = TODO
 	var endring_r_outer; // = TODO
+
+	var coil_config = get_coil_config();
+	var leg_geom = get_leg_geom();
+	var endring_geom = get_endring_geom();
+
+	debug('coil_config: '  + coil_config);
+	debug('leg_geom: '     + leg_geom);
+	debug('endring_geom: ' + endring_geom);
 
 	
 	// convert units (BCJ.MA)
@@ -109,18 +120,23 @@ function get_gui_args() {
 	
 	debug('hello');
 	
-	bb = new BirdcageBuilder(n_legs, freq, r_coil, r_shield);
+	bb = new BirdcageBuilder(n_legs, freq, r_coil, r_shield, coil_config);
 	debug(bb.to_string());
 	
-	if (leg_shape_rect) {
+	//if (leg_shape_rect) {
+	if (leg_geom == 'rect') {
 		bb.legs.set_legs_rect(leg_length, leg_width);
 		bb.endrings.set_endrings_rect(endring_width);
 	}
-	else {
+	else if (leg_geom == 'tube') {
 		bb.legs.set_legs_tube(leg_length, leg_r_inner, leg_r_outer);
 		bb.endrings.set_endrings_tube(endring_r_inner, endring_r_outer);
 	}
+	else {
+		console.log('BBGuiHandler: invalid leg_geom');
+	}
 
+	// TODO make another 'finish_setup' function in BB that does this (abstract from user?)
 	bb.endrings.calc_er_mutual_inductance(bb.legs);
 
 	return bb;
@@ -128,5 +144,57 @@ function get_gui_args() {
 
 
 
+function get_coil_config() {
+	/* Return the value (str) of the Coil Config Radio Buttons
+	 * (Hi/Low/Bandpass)
+	 */
 
+	if (document.getElementById('config_lp').checked) {
+		return 'lowpass';
+	}
+	else if (document.getElementById('config_hp').checked) {
+		return 'highpass';
+	}
+	else if (document.getElementById('config_bp').checked) {
+		return 'bandpass';
+	}
+	else {
+		return 'INVALID';
+	}
+}
 
+function get_leg_geom() {
+	/* Get Leg Geometry Type 
+	 *
+	 * Returns string.
+	 */
+
+	if (document.getElementById('leg_rect').checked) {
+		return 'rect';
+	}
+	else if (document.getElementById('leg_tube').checked) {
+		return 'tube';
+	}
+	else {
+		return 'INVALID';
+	}
+
+}
+
+function get_endring_geom() {
+	/* Get Endring Geometry Type 
+	 *
+	 * Returns string.
+	 */
+
+	if (document.getElementById('er_rect').checked) {
+		return 'rect';
+	}
+	else if (document.getElementById('er_tube').checked) {
+		return 'tube';
+	}
+	else {
+		return 'INVALID';
+	}
+
+}
