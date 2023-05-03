@@ -21,6 +21,17 @@ class BirdcageBuilder {
 		this.r_shield = rs; // radius of shield TODO units
 
 		this.legs = new BCLegs(this.n_legs, this.r_coil, this.r_shield);
+		this.endrings = new BCEndRings(this.n_legs);
+
+		this.endrings.init_endrings(this.legs); // only needs leg currents to be set up
+
+		// USER must call:
+		//	legs.set_legs_<geom>
+		// 	endrings.set_endrings_<geom>
+		//  endrings.set_mutual_inductance(this.legs);
+		// before continuing
+		// (these all have dependence on the steps before them)
+
 		
 	}
 
