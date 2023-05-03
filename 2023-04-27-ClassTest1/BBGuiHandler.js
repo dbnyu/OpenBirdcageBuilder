@@ -84,13 +84,28 @@ function get_gui_args() {
 	var leg_shape_rect = true; // leg shape (true=rectangle or false=tubular) TODO implement this!
 	var leg_length = document.getElementById('leg_len').value;
 	var leg_width = document.getElementById('leg_width').value;
-	//leg_r_inner; // inner radius of tubular leg TODO - need to add DOM flexibility
-	//leg_r_outer; // outer radius of tubular leg TODO
+	var leg_r_inner; // inner radius of tubular leg TODO - need to add DOM flexibility
+	var leg_r_outer; // outer radius of tubular leg TODO
 
 	
 	var endring_width = document.getElementById('er_width').value;
-	//var endring_r_inner = // TODO
-	//var endring_r_outer = // TODO
+	var endring_r_inner; // = TODO
+	var endring_r_outer; // = TODO
+
+	
+	// convert units (BCJ.MA)
+	freq = mhz2hz(freq);
+	r_coil = cm2meters(r_coil);
+	r_shield = cm2meters(r_shield);
+	leg_length = cm2meters(leg_length);
+	leg_width = cm2meters(leg_width);
+	leg_r_inner = cm2meters(leg_r_inner); // inner radius of tubular leg
+	leg_r_outer = cm2meters(leg_r_outer); // outer radius of tubular leg
+	endring_width = cm2meters(endring_width);
+	endring_r_inner = cm2meters(endring_r_inner);
+	endring_r_outer = cm2meters(endring_r_outer);
+	// TODO stopped after BCJ.MA.280
+	// TODO Predetermined Band Pass Cap value
 	
 	debug('hello');
 	

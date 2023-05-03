@@ -6,7 +6,9 @@
 
     <!-- scripts must be included in reverse order of call stack for scope visibility -->
     <script src="debug.js"></script>
+    <script src="helpers.js"></script>
     <script src="BCLegs.js"></script>
+    <script src="BCEndRings.js"></script>
     <script src="BirdcageBuilder.js"></script>
     <script src="BBGuiHandler.js"></script>
 
@@ -85,7 +87,7 @@
       <label for="num_legs">Number of Legs:</label>
       <select name="num_legs" id="num_legs">
         <option value="4">4</option>
-        <option value="8">8</option>
+        <option selected="selected" value="8">8</option>
         <option value="16">16</option>
         <option value="32">32</option>
         <option value="64">64</option>
@@ -95,12 +97,13 @@
       </select>
       </fieldset>
 
-      <input type="number" id="center_freq" step="any" value="0.0"> Frequency (MHz)</input><br>
-      <input type="number" id="coil_radius" step="any" value="0.0"> Coil Radius (cm)</input><br>
-      <input type="number" id="shield_radius" step="any" value="0.0"> Shield Radius (cm)</input><br>
-      <input type="number" id="leg_len" step="any" value="0.0"> Leg Length (cm)</input><br>
-      <input type="number" id="leg_width" step="any" value="0.0"> Leg Width (cm)</input><br>
-      <input type="number" id="er_width" step="any" value="0.0"> End Ring Width (cm)</input><br>
+      <!-- Defaults set to match Android app for quick testing -->
+      <input type="number" id="center_freq" step="any" value="21.28"> Frequency (MHz)</input><br>
+      <input type="number" id="coil_radius" step="any" value="10"> Coil Radius (cm)</input><br>
+      <input type="number" id="shield_radius" step="any" value="0"> Shield Radius (cm)</input><br>
+      <input type="number" id="leg_len" step="any" value="10"> Leg Length (cm)</input><br>
+      <input type="number" id="leg_width" step="any" value="2"> Leg Width (cm)</input><br>
+      <input type="number" id="er_width" step="any" value="1"> End Ring Width (cm)</input><br>
 
       <!-- TODO input verification regex -->
       <!-- TODO input verification min/max (maybe just min=0?) -->
