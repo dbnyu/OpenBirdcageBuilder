@@ -77,7 +77,7 @@ class BCEndRings {
 		this.er_width = w;
 
 		//this.er_self_inductance = 2 * this.er_arclen * (Math.log(2*this.er_arclen/this.er_width) + 0.5);
-		this.er_self_inductance = calc_er_self_inductance_rect(this.er_arclen, this.er_width);
+		this.er_self_inductance = this.calc_er_self_inductance_rect(this.er_arclen, this.er_width);
 	}
 
 
@@ -93,7 +93,7 @@ class BCEndRings {
 		this.er_r_inner = ir;
 		this.er_r_outer = or;
 
-		this.er_self_inductance = calc_er_self_inductance_tube(this.er_arclen, this.er_r_inner, this.er_r_outer);
+		this.er_self_inductance = this.calc_er_self_inductance_tube(this.er_arclen, this.er_r_inner, this.er_r_outer);
 
 	}
 
@@ -148,16 +148,18 @@ class BCEndRings {
 		 * Directly modifies this.er_mutual_inductance
 		 */
 
-		assert(this.n_legs == legs.n_legs, 'BCEndRings: calc_er_mutual_inductance: # of legs must match!');
+		console.assert(this.n_legs == legs.n_legs, 'BCEndRings: calc_er_mutual_inductance: # of legs must match!');
 
 		// TODO descriptions???
+		var n = this.n_legs;
 		var d, m1, l1, R1, ang1, Mnext, Mprev, Lop, Ladj, Lnadj, M, L, R3, R4, R2, a2, ang, p, mu, v, t1, t2, t3, t4, s1, s2, s3, s4;
 		var k1;
-		var lmu = new Array(this.n_legs);
+		var lmu = new Array(n);
 		var z, z1;
 		
+
 		var k=0;
-		for (k=0; k<n;k++){
+		for (k=0; k < n; k++){
 
 			//Mutual Inductance of Opposite Rings
 			d = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n/2)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n/2)%n],2));
@@ -175,7 +177,7 @@ class BCEndRings {
 			
 			ang1 = (Math.pow(l1,2)+Math.pow(m1,2)-Math.pow(R1,2))/(2*l1*m1);
 
-			Mnext = Math.abs(2*ang1*(l1*Harct(m1/(l1+R1))+m1*Harct(m1/(m1+R1)) ));
+			Mnext = Math.abs(2*ang1*(l1*this.harct(m1/(l1+R1))+m1*this.harct(m1/(m1+R1)) ));
 			
 			m1 = Math.sqrt(Math.pow(legs.leg_x[(k)%n]-legs.leg_x[(k+n-1)%n],2)+Math.pow(legs.leg_y[(k)%n]-legs.leg_y[(k+n-1)%n],2));
 			l1 = Math.sqrt(Math.pow(legs.leg_x[(k)%n]-legs.leg_x[(k+1)%n],2)+Math.pow(legs.leg_y[(k)%n]-legs.leg_y[(k+1)%n],2));
@@ -183,7 +185,7 @@ class BCEndRings {
 			
 
 			ang1 = (Math.pow(l1,2)+Math.pow(m1,2)-Math.pow(R1,2))/(2*l1*m1);
-			Mprev = Math.abs(2*ang1*(l1*Harct(m1/(l1+R1))+m1*Harct(m1/(m1+R1)) ));	
+			Mprev = Math.abs(2*ang1*(l1*this.harct(m1/(l1+R1))+m1*this.harct(m1/(m1+R1)) ));	
 			
 
 			Ladj=0;
@@ -220,10 +222,10 @@ class BCEndRings {
 				t3 = Math.sqrt(R3);
 				t2 = Math.sqrt(R2);			
 				t1 = Math.sqrt(R1);
-				s1 = (mu+L)*Harct(M/(t1+t2));
-				s2 = (v+M)*Harct(L/(t1+t4));
-				s3 = (mu)*Harct(M/(t3+t4));
-				s4 = (v)*Harct(L/(t3+t2));
+				s1 = (mu+L)*this.harct(M/(t1+t2));
+				s2 = (v+M)*this.harct(L/(t1+t4));
+				s3 = (mu)*this.harct(M/(t3+t4));
+				s4 = (v)*this.harct(L/(t3+t2));
 				lmu[k1] = ang*(s1+s2-s3-s4);
 				if (k1==(n/2+1)) {
 					lmu[k1]=0;
