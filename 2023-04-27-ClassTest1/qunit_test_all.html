@@ -21,7 +21,7 @@
 
 
   <script>
-  QUnit.module('Test Complete Workflow', function() {
+  QUnit.module('Full Workflow Tests', function() {
 
     // TODO - double check all NaN results are correct; try to make some better/more meaningful tests
 
@@ -45,8 +45,32 @@
     });
 
 
-
     // TODO repeat -  go through all combinations/defaults in app!
+
+    var PAPER_TEST_TOL = 5e-3; // paper results only have 2 digits after decimal
+    // TODO some have 0 or 1 digits (after decimal)
+
+    QUnit.test('BirdcageBuilder 2002-A', function(assert) {
+      /* Test against Table 1 results from 2002 Birdcage Builder paper 
+       *
+       * Chin, Collins, et al. MRM Vol 15(2) 156-163. 2002.
+       */
+
+	    //           constructor(n,        f,     rc,     rs,   config) 
+	    bb = new BirdcageBuilder(12, 21.25e6, 3.8e-2, 100e-2, 'lowpass');
+      assert.step('NOTE - Custom endring arclength');
+		  bb.legs.set_legs_rect(10e-2, 0.6e-2); // TODO assuming rectangular? 'a' superscript?
+      bb.endrings.er_arclen = 1.98e-2;
+		  bb.endrings.set_endrings_rect(0.6e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+
+      // TODO - NOTE: the units are manually adjusted here, to reflect the app output values:
+      assert.close(1e12 * bb.calc_capacitor(), 269.54, TEST_TOL);
+
+      assert.verifySteps(['NOTE - Custom endring arclength']);
+    });
+
+
 
 
 
