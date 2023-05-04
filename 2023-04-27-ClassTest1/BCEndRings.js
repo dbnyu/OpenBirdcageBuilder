@@ -25,12 +25,18 @@ class BCEndRings {
 		// TODO units for all!
 
 		// for rectangular end ring copper:
-		this.er_arclen = 0.1;	// arc length of each endring segment (circumference/N) TODO units
-		this.er_width = 0.02;	// TODO what is this? thickness of the copper?
+		// TODO delete arbitrary defaults?
+		//this.er_arclen = 0.1;	// arc length of each endring segment (circumference/N) TODO units
+		//this.er_width = 0.02;	// TODO what is this? thickness of the copper?
+		this.er_arclen = -1;	// arc length of each endring segment (circumference/N) TODO units
+		this.er_width = -1;	// TODO what is this? thickness of the copper?
 
 		// for tubular endrings:
-		this.er_r_inner = 0;	// tube endring inner radius
-		this.er_r_outer = 0.02;	// tube endring outer radius
+		// TODO delete arbitrary defaults?
+		//this.er_r_inner = 0;	// tube endring inner radius
+		//this.er_r_outer = 0.02;	// tube endring outer radius
+		this.er_r_inner = -1;	// tube endring inner radius
+		this.er_r_outer = -1;	// tube endring outer radius
 
 		this.er_self_inductance = -1;
 		this.er_mutual_inductance = new Array(n);
@@ -41,7 +47,9 @@ class BCEndRings {
 		//this.er_y = new Array(n);
 
 		// USER MUST CALL:
-		// init_endrings()
+		// init_endrings() (called automatically in BircageBuilder constructor
+		// NOTE: if user wants to specify custom endring arclength values, do it AFTER 
+		//		BirdcageBuilder constructor and before anything else!)
 		// set_legs_<geom>
 
 	}
