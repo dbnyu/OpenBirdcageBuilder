@@ -166,6 +166,7 @@ class BCEndRings {
 		var z, z1;
 		
 
+		// TODO - source starts at 0 but should this start at 1?
 		var k=0;
 		for (k=0; k < n; k++){
 
@@ -177,23 +178,55 @@ class BCEndRings {
 			
 			}
 			
+			debug('k: ' + k);
+			debug('--------');
+			debug('d: ' + d);
+			debug('Lop: ' + Lop);
 		
 			//Mutual Inductance of Adjacent Rings
+			// TODO m1 is zero when k=1 in app default value test
 			m1 = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n)%n],2));
 			l1 = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+2)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+2)%n],2));
 			R1 = Math.sqrt(Math.pow(legs.leg_x[(k+2)%n]-legs.leg_x[(k)%n],2)+Math.pow(legs.leg_y[(k+2)%n]-legs.leg_y[(k)%n],2));
+
+			debug('m1 first calc:');
+			debug('Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n)%n],2): ' + Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n)%n],2));
+		    debug('Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n)%n],2): ' + Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n)%n],2));
+			debug('m1: ' + m1);
+			debug('l1: ' + l1);
+			debug('R1: ' + R1);
 			
 			ang1 = (Math.pow(l1,2)+Math.pow(m1,2)-Math.pow(R1,2))/(2*l1*m1);
+
+			debug('Math.pow(l1,2): ' + Math.pow(l1,2));
+			debug('Math.pow(m1,2): ' + Math.pow(m1,2));
+			debug('Math.pow(R1,2): ' + Math.pow(R1,2));
+			debug('(2*l1*m1): ' +      (2*l1*m1));
+			debug('ang1: ' + ang1);
 
 			Mnext = Math.abs(2*ang1*(l1*this.harct(m1/(l1+R1))+m1*this.harct(m1/(m1+R1)) ));
 			
+			// TODO m1 is zero when k=1 in app default value test (zero appears in first one above too)
 			m1 = Math.sqrt(Math.pow(legs.leg_x[(k)%n]-legs.leg_x[(k+n-1)%n],2)+Math.pow(legs.leg_y[(k)%n]-legs.leg_y[(k+n-1)%n],2));
+
 			l1 = Math.sqrt(Math.pow(legs.leg_x[(k)%n]-legs.leg_x[(k+1)%n],2)+Math.pow(legs.leg_y[(k)%n]-legs.leg_y[(k+1)%n],2));
 			R1 = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n-1)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n-1)%n],2));
-			
 
-			ang1 = (Math.pow(l1,2)+Math.pow(m1,2)-Math.pow(R1,2))/(2*l1*m1);
+			debug('Mnext: ' + Mnext);
+			debug('m1: ' + m1);
+			debug('l1: ' + l1);
+			debug('R1: ' + R1);
+			
+			ang1 = (Math.pow(l1,2) + Math.pow(m1,2) - Math.pow(R1,2))/(2*l1*m1);
 			Mprev = Math.abs(2*ang1*(l1*this.harct(m1/(l1+R1))+m1*this.harct(m1/(m1+R1)) ));	
+
+			debug('ang1: ' + ang1);
+			debug('Mprev: ' + Mprev);
+
+
+
+
+
 			
 
 			Ladj=0;
@@ -252,7 +285,8 @@ class BCEndRings {
 			this.er_mutual_inductance[k] = Lnadj + this.er_self_inductance + Lop + Ladj;
 		
 		
-		}
+			debug('');
+		} // end of loop
 			
 		this.er_self_inductance = this.er_self_inductance*1e-7;
 		for (k=0;k<n;k++) {
