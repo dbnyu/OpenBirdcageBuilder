@@ -58,6 +58,9 @@
       assert.equal(mod(10, 8),  2);
       assert.equal(mod(0,  8), 0)
       assert.equal(mod(13, 9), 4)
+      assert.equal(mod(1+1, 8), 2)
+      assert.equal(mod(-1, 8), 7); // TODO not sure if this is correct - GT is to test against Java
+
 
       // TODO - do some tests in Java & compare output
       // TODO - make sure to include negative numbers

@@ -68,7 +68,8 @@ class BCEndRings {
 
 		this.er_currents[0] = legs.leg_currents[0];
 
-		for (var k = 1; k < this.n_legs; k++) {
+		var k;
+		for (k = 1; k < this.n_legs; k++) {
 			this.er_currents[k] = legs.leg_currents[k] + this.er_currents[k-1];
 		}
 	}
@@ -161,39 +162,62 @@ class BCEndRings {
 		// TODO descriptions???
 		var n = this.n_legs;
 		var d, m1, l1, R1, ang1, Mnext, Mprev, Lop, Ladj, Lnadj, M, L, R3, R4, R2, a2, ang, p, mu, v, t1, t2, t3, t4, s1, s2, s3, s4;
-		var k1;
 		var lmu = new Array(n);
 		var z, z1;
-		
+		var idx1, idxN, idx2, idxK, iKN2N, iKN1N;
+		var iKpK1N, iKpK1m1N;
+
+
+		debug('n = ' + n);
+		debug('n_legs = ' + this.n_legs);
+
 
 		// TODO - source starts at 0 but should this start at 1?
-		var k=0;
+		var k, k1;
 		for (k=0; k < n; k++){
 
+			debug('k: ' + k);
+			debug('--------');
+
+			// pre-compute modulo indexes (NOTE javascript % operator does NOT behave as expected)
+			// see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder
+			idx1 = mod(k+1, n);
+			idxN = mod(k+n, n);
+			debug('k = ' + k);
+			debug('n = ' + n);
+			debug('k+1 = ' + (k+1));
+			debug('idx1: (k+1) mod n: ' + idx1);
+			debug('test idx1        : ' + mod(k+1, n));
+			debug('test idx1-2      : ' + mod(1, 8));
+			debug('idxN: mod(k+n, n): ' + idxN);
+			debug('test idxN:       : ' + mod(k+n, n));
+			debug('test idxN-2      : ' + mod(8, 8));
+
+			idx2 = mod(k+2, n);
+			idxK = mod(k, n);
+			iKN2N = mod(k+n/2, n);
+			iKN1N = mod(k+n-1, n);
+
 			//Mutual Inductance of Opposite Rings
-			d = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n/2)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n/2)%n],2));
+			d = Math.sqrt(Math.pow(legs.leg_x[idx1]-legs.leg_x[iKN2N],2)+Math.pow(legs.leg_y[idx1]-legs.leg_y[iKN2N],2));
 			Lop = 0;
-			if (Math.abs(this.er_currents[k%n])>(1/10000)) {
+			if (Math.abs(this.er_currents[idxK])>(1/10000)) {
 				Lop = 2*this.er_arclen*(Math.log(this.er_arclen/d+Math.sqrt(1+Math.pow(this.er_arclen/d, 2)))-Math.sqrt(1+Math.pow(d/this.er_arclen,2))+d/this.er_arclen);
 			
 			}
 			
-			debug('k: ' + k);
-			debug('--------');
 			debug('d: ' + d);
 			debug('Lop: ' + Lop);
 		
 			//Mutual Inductance of Adjacent Rings
 			// TODO m1 is zero when k=1 in app default value test
-			m1 = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n)%n],2));
-			l1 = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+2)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+2)%n],2));
-			R1 = Math.sqrt(Math.pow(legs.leg_x[(k+2)%n]-legs.leg_x[(k)%n],2)+Math.pow(legs.leg_y[(k+2)%n]-legs.leg_y[(k)%n],2));
+			m1 = Math.sqrt(Math.pow(legs.leg_x[idx1]-legs.leg_x[idxN],2)+Math.pow(legs.leg_y[idx1]-legs.leg_y[idxN],2));
+			l1 = Math.sqrt(Math.pow(legs.leg_x[idx1]-legs.leg_x[idx2],2)+Math.pow(legs.leg_y[idx1]-legs.leg_y[idx2],2));
+			R1 = Math.sqrt(Math.pow(legs.leg_x[idx2]-legs.leg_x[idxK],2)+Math.pow(legs.leg_y[idx2]-legs.leg_y[idxK],2));
 
 			debug('m1 first calc:');
-			debug('(k+2)%n: ' + (k+1)%n)
-			debug('(k+n)%n: ' + (k+n)%n)
-			debug('Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n)%n],2): ' + Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n)%n],2));
-		    debug('Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n)%n],2): ' + Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n)%n],2));
+			debug('Math.pow(legs.leg_x[idx1]-legs.leg_x[idxN],2): ' + Math.pow(legs.leg_x[idx1]-legs.leg_x[idxN],2));
+		    debug('Math.pow(legs.leg_y[idx1]-legs.leg_y[idxN],2): ' + Math.pow(legs.leg_y[idx1]-legs.leg_y[idxN],2));
 			debug('m1: ' + m1);
 			debug('l1: ' + l1);
 			debug('R1: ' + R1);
@@ -209,10 +233,10 @@ class BCEndRings {
 			Mnext = Math.abs(2*ang1*(l1*this.harct(m1/(l1+R1))+m1*this.harct(m1/(m1+R1)) ));
 			
 			// TODO m1 is zero when k=1 in app default value test (zero appears in first one above too)
-			m1 = Math.sqrt(Math.pow(legs.leg_x[(k)%n]-legs.leg_x[(k+n-1)%n],2)+Math.pow(legs.leg_y[(k)%n]-legs.leg_y[(k+n-1)%n],2));
+			m1 = Math.sqrt(Math.pow(legs.leg_x[idxK]-legs.leg_x[iKN1N],2)+Math.pow(legs.leg_y[idxK]-legs.leg_y[iKN1N],2));
 
-			l1 = Math.sqrt(Math.pow(legs.leg_x[(k)%n]-legs.leg_x[(k+1)%n],2)+Math.pow(legs.leg_y[(k)%n]-legs.leg_y[(k+1)%n],2));
-			R1 = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n-1)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n-1)%n],2));
+			l1 = Math.sqrt(Math.pow(legs.leg_x[idxK]-legs.leg_x[idx1],2)+Math.pow(legs.leg_y[idxK]-legs.leg_y[idx1],2));
+			R1 = Math.sqrt(Math.pow(legs.leg_x[idx1]-legs.leg_x[iKN1N],2)+Math.pow(legs.leg_y[idx1]-legs.leg_y[iKN1N],2));
 
 			debug('Mnext: ' + Mnext);
 			debug('m1: ' + m1);
@@ -232,21 +256,27 @@ class BCEndRings {
 			
 
 			Ladj=0;
-			if (Math.abs(this.er_currents[k%n])>(1/100000)) {
-				Ladj = (Mnext*this.er_currents[(k+1)%n]+Mprev*this.er_currents[(k+n-1)%n])/this.er_currents[k%n];
+			if (Math.abs(this.er_currents[idxK])>(1/100000)) {
+				Ladj = (Mnext*this.er_currents[idx1]+Mprev*this.er_currents[iKN1N])/this.er_currents[idxK];
 			}
 			
+
 
 			//Mutual Inductance of Non Adjacent Rings
 			Lnadj = 0;
 			for (k1 = 3; k1<n; k1++) {
+
+				// pre-compute modulo indexes (see above, do NOT use % operator)
+				
+				iKpK1N = mod(k+k1, n);
+				iKpK1m1N = mod(k+k1-1, n);
 			
-				M = Math.sqrt(Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k)%n],2));
-				L = Math.sqrt(Math.pow(legs.leg_x[(k+k1)%n]-legs.leg_x[(k+k1-1)%n],2)+Math.pow(legs.leg_y[(k+k1)%n]-legs.leg_y[(k+k1-1)%n],2));
-				R3 = (Math.pow(legs.leg_x[(k)%n]-legs.leg_x[(k+k1-1)%n],2)+Math.pow(legs.leg_y[(k)%n]-legs.leg_y[(k+k1-1)%n],2));
-				R4 = (Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+k1-1)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+k1-1)%n],2));
-				R2 = (Math.pow(legs.leg_x[(k)%n]-legs.leg_x[(k+k1)%n],2)+Math.pow(legs.leg_y[(k)%n]-legs.leg_y[(k+k1)%n],2));
-				R1 = (Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+k1)%n],2)+Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+k1)%n],2));
+				M = Math.sqrt(Math.pow(legs.leg_x[idx1]-legs.leg_x[idxK],2)+Math.pow(legs.leg_y[idx1]-legs.leg_y[idxK],2));
+				L = Math.sqrt(Math.pow(legs.leg_x[iKpK1N]-legs.leg_x[iKpK1m1N],2)+Math.pow(legs.leg_y[iKpK1N]-legs.leg_y[iKpK1m1N],2));
+				R3 = (Math.pow(legs.leg_x[idxK]-legs.leg_x[iKpK1m1N],2)+Math.pow(legs.leg_y[idxK]-legs.leg_y[iKpK1m1N],2));
+				R4 = (Math.pow(legs.leg_x[idx1]-legs.leg_x[iKpK1m1N],2)+Math.pow(legs.leg_y[idx1]-legs.leg_y[iKpK1m1N],2));
+				R2 = (Math.pow(legs.leg_x[idxK]-legs.leg_x[iKpK1N],2)+Math.pow(legs.leg_y[idxK]-legs.leg_y[iKpK1N],2));
+				R1 = (Math.pow(legs.leg_x[idx1]-legs.leg_x[iKpK1N],2)+Math.pow(legs.leg_y[idx1]-legs.leg_y[iKpK1N],2));
 				
 				a2 = R4 - R3 + R2 - R1;	
 				
@@ -275,8 +305,8 @@ class BCEndRings {
 				}
 				
 				
-				if (Math.abs(this.er_currents[k%n])>(1/100000)) {
-					Lnadj = Lnadj + lmu[k1]*Math.abs(this.er_currents[(k+k1-1)%n]/this.er_currents[k%n]);		
+				if (Math.abs(this.er_currents[idxK])>(1/100000)) {
+					Lnadj = Lnadj + lmu[k1]*Math.abs(this.er_currents[iKpK1m1N]/this.er_currents[idxK]);		
 				}
 			
 			
@@ -306,7 +336,10 @@ class BCEndRings {
 	/*** Helper Functions ***/
 	
 	harct(x) {
-		/* TODO ?
+		/* Inverse Hyperbolic Tangent (arctan)
+		 * https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions
+		 *
+		 * Supported on -1 < x < 1
 		 *
 		 * BCJ.357
 		 */

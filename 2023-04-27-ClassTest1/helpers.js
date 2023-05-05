@@ -40,6 +40,9 @@ function mhz2hz(mhz) {
 
 function mod(n, d) {
 	/* Modulo operator
+	 *
+	 * Compute expected n % d	(% in the modulo sense here, not the javascript sense)
+	 *
 	 * Implementation Details:
 	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder
 	 *
