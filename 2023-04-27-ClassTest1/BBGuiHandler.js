@@ -50,6 +50,7 @@ function calculate() {
 	append_main_output('Leg Mutual Inductance     (nH): ' + 1e9 * BB.legs.leg_mutual_inductance);
 	append_main_output('EndRing Mutual Inductance (nH): ' + 1e9 * BB.endrings.er_mutual_inductance[BB.n_legs/4]);
 	append_main_output('Calculated Capacitance    (pF): ' + 1e12 * cap);
+	append_main_output('');
 
 	document.getElementById('output_test1').innerHTML = 'Done.';
 
@@ -214,4 +215,9 @@ function append_main_output(s) {
 	 */
 
 	document.getElementById('output_main').innerHTML += s + '<br>';
+}
+
+function output_clear() {
+	/* Clear the DEBUG_ID field */
+	document.getElementById('output_main').innerHTML = '';
 }
