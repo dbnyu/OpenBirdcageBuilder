@@ -190,6 +190,8 @@ class BCEndRings {
 			R1 = Math.sqrt(Math.pow(legs.leg_x[(k+2)%n]-legs.leg_x[(k)%n],2)+Math.pow(legs.leg_y[(k+2)%n]-legs.leg_y[(k)%n],2));
 
 			debug('m1 first calc:');
+			debug('(k+2)%n: ' + (k+1)%n)
+			debug('(k+n)%n: ' + (k+n)%n)
 			debug('Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n)%n],2): ' + Math.pow(legs.leg_x[(k+1)%n]-legs.leg_x[(k+n)%n],2));
 		    debug('Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n)%n],2): ' + Math.pow(legs.leg_y[(k+1)%n]-legs.leg_y[(k+n)%n],2));
 			debug('m1: ' + m1);
