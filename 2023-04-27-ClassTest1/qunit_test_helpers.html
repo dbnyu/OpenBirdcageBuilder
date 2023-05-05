@@ -51,6 +51,19 @@
 
     });
 
+    QUnit.test('Modulo Math', function(assert) {
+      /* Javascript % is not the same as Java (?) - test workaround function here */
+
+      assert.equal(mod( 2, 8),  2);
+      assert.equal(mod(10, 8),  2);
+      assert.equal(mod(0,  8), 0)
+      assert.equal(mod(13, 9), 4)
+
+      // TODO - do some tests in Java & compare output
+      // TODO - make sure to include negative numbers
+      // TODO - test specific cases where JS% and mod() are different & make sure they are different?
+
+    });
 
 
   }); // end all tests
