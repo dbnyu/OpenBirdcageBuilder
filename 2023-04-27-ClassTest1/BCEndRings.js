@@ -16,7 +16,7 @@ class BCEndRings {
 	//constructor(n, legs) {
 	constructor(n) {
 		// TODO is n input redundant? since we require BCLegs to be setup already?
-		this.n_legs = n; // TODO is this the number of legs or number of ring segments?
+		this.n_legs = Number(n); // TODO is this the number of legs or number of ring segments?
 		//this.legs = legs; // BCLegs object (MUST be fully set up!)
 		// NOTE for now keeping the objects separate; functions that require leg info must be passed the leg object as an input arg
 
@@ -83,7 +83,7 @@ class BCEndRings {
 		 */
 
 		this.er_shape = 'rect';
-		this.er_width = w;
+		this.er_width = Number(w);
 
 		//this.er_self_inductance = 2 * this.er_arclen * (Math.log(2*this.er_arclen/this.er_width) + 0.5);
 		this.er_self_inductance = this.calc_er_self_inductance_rect(this.er_arclen, this.er_width);
@@ -99,8 +99,8 @@ class BCEndRings {
 		 */
 
 		this.er_shape = 'tube';
-		this.er_r_inner = ir;
-		this.er_r_outer = or;
+		this.er_r_inner = Number(ir);
+		this.er_r_outer = Number(or);
 
 		this.er_self_inductance = this.calc_er_self_inductance_tube(this.er_arclen, this.er_r_inner, this.er_r_outer);
 
@@ -116,6 +116,9 @@ class BCEndRings {
 		 *
 		 * BCJ.183
 		 */
+
+		arclen = Number(arclen);
+		width = Number(width);
 
 		return 2 * arclen * (Math.log(2*arclen/width) + 0.5);
 	}
@@ -133,6 +136,9 @@ class BCEndRings {
 		 * BCJ.185
 		 */
 
+		arclen = Number(arclen);
+		r_in = Number(r_in);
+		r_out = Number(r_out);
 
 
 		if (r_in > 0) {
@@ -183,15 +189,18 @@ class BCEndRings {
 			// see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder
 			idx1 = mod(k+1, n);
 			idxN = mod(k+n, n);
+
 			debug('k = ' + k);
 			debug('n = ' + n);
 			debug('k+1 = ' + (k+1));
 			debug('idx1: (k+1) mod n: ' + idx1);
 			debug('test idx1        : ' + mod(k+1, n));
-			debug('test idx1-2      : ' + mod(1, 8));
+			//debug('test idx1-2      : ' + mod(1, 8));
+			debug('');
 			debug('idxN: mod(k+n, n): ' + idxN);
 			debug('test idxN:       : ' + mod(k+n, n));
-			debug('test idxN-2      : ' + mod(8, 8));
+			//debug('test idxN-2      : ' + mod(8, 8));
+			debug('');
 
 			idx2 = mod(k+2, n);
 			idxK = mod(k, n);
@@ -343,6 +352,8 @@ class BCEndRings {
 		 *
 		 * BCJ.357
 		 */
+
+		x = Number(x);
 
 		return Math.log((1+x)/(1-x)) / 2;
 	}
