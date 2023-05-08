@@ -31,6 +31,13 @@ function debug(s) {
 	}
 }
 
+function debug1 (s) {
+	/* print 1 debug statement with NO newline at the end */
+	if (DEBUG_ENABLE) {
+		document.getElementById(DEBUG_ID).innerHTML += s;
+	}
+}
+
 
 function debug_clear() {
 	/* Clear the DEBUG_ID field */
