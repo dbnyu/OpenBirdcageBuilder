@@ -52,5 +52,9 @@ function mod(n, d) {
 
 	// TODO UNIT TESTS - compare with actual Java output to confirm expected behavior!!!
 
+	//debug('mod: ' + n + ', ' + d);
+	//debug('typeof n: ' + typeof(n));
+	//debug('typeof d: ' + typeof(d));
+
 	return ((n % d) + d) % d;
 }
