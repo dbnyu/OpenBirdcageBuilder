@@ -36,12 +36,13 @@
       // TODO - NOTE: the units are manually adjusted here, to reflect the app output values:
       //assert.step('TO DO - Output Units???');
       var TEST_TOL = 5e-5; // allowing 0.5 rounding error for 4-digit app outputs
-      assert.close(1e9 * bb.legs.leg_self_inductance,       56.0517, TEST_TOL);
-      assert.close(1e9 * bb.endrings.er_self_inductance,    51.1163, TEST_TOL);
-      assert.close(1e9 * bb.legs.leg_mutual_inductance[2],  60.3136, TEST_TOL); // TODO unhardcode index?
-      assert.close(1e9 * bb.endrings.er_self_inductance,    62.2339, TEST_TOL);
+      assert.close(1e9 * bb.legs.leg_self_inductance,       56.0517, TEST_TOL, 'Leg Self Inductance');
+      assert.close(1e9 * bb.endrings.er_self_inductance,    51.1163, TEST_TOL, 'EndRing Self Inductance');
+      assert.close(1e9 * bb.legs.leg_mutual_inductance,     60.3136, TEST_TOL, 'Leg Mutual Inductance'); // TODO unhardcode index?
+      assert.close(1e9 * bb.endrings.er_mutual_inductance[2], 62.2339, TEST_TOL, 'EndRing Mutual Inductance [k=2]');
       //assert.step('TO DO - Capacitor Value');
-      assert.close(1e12 * bb.calc_capacitor(), 205.0515, TEST_TOL);
+      assert.close(1e12 * bb.calc_capacitor(), 205.0515, TEST_TOL, 'Capacitor');
+      assert.true(bb.calc_capacitor() > 0, 'Sign of Capacitor');
     });
 
 
@@ -65,7 +66,7 @@
 	    bb.endrings.calc_er_mutual_inductance(bb.legs);
 
       // TODO - NOTE: the units are manually adjusted here, to reflect the app output values:
-      assert.close(1e12 * bb.calc_capacitor(), 269.54, TEST_TOL);
+      assert.close(1e12 * bb.calc_capacitor(), 269.54, PAPER_TEST_TOL, 'Paper Capacitor A');
 
       assert.verifySteps(['NOTE - Custom endring arclength']);
     });
