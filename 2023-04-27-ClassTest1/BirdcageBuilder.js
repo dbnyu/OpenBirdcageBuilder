@@ -15,13 +15,13 @@
 class BirdcageBuilder {
 
 	constructor(n, f, rc, rs, config) {
-		this.n_legs = n;	// number of legs
-		this.freq = f;		// target frequency (Hz)
-		this.r_coil = rc;	// radius of the birdcage TODO - units = meters?
-		this.r_shield = rs; // radius of shield TODO units
+		this.n_legs = Number(n);	// number of legs
+		this.freq = Number(f);		// target frequency (Hz)
+		this.r_coil = Number(rc);	// radius of the birdcage TODO - units = meters?
+		this.r_shield = Number(rs); // radius of shield TODO units
 		this.coil_config = config; // string: 'highpass', 'lowpass', 'bandpass_leg', or 'bandpass_er'
-			// bandpass_<capacitor location>
 
+		// TODO force type of arrays? item by item or whole array?
 		this.legs = new BCLegs(this.n_legs, this.r_coil, this.r_shield);
 		this.endrings = new BCEndRings(this.n_legs);
 
