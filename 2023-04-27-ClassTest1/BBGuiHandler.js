@@ -86,20 +86,20 @@ function get_gui_args() {
 	// TODO		- and highlight wrong inputs in red or something so they can fix it
 
 	// TODO var or let?
-	var n_legs = document.getElementById('num_legs').value; // TODO cast to number?
+	var n_legs = Number(document.getElementById('num_legs').value);
 
-	var freq = document.getElementById('center_freq').value;
-	var r_coil = document.getElementById('coil_radius').value; 
-	var r_shield = document.getElementById('shield_radius').value;
+	var freq = Number(document.getElementById('center_freq').value);
+	var r_coil = Number(document.getElementById('coil_radius').value); 
+	var r_shield = Number(document.getElementById('shield_radius').value);
 
 	//var leg_shape_rect = true; // leg shape (true=rectangle or false=tubular) TODO can probably delete!
-	var leg_length = document.getElementById('leg_len').value;
-	var leg_width = document.getElementById('leg_width').value;
+	var leg_length = Number(document.getElementById('leg_len').value);
+	var leg_width = Number(document.getElementById('leg_width').value);
 	var leg_r_inner; // inner radius of tubular leg TODO - need to add DOM flexibility
 	var leg_r_outer; // outer radius of tubular leg TODO
 
 	
-	var endring_width = document.getElementById('er_width').value;
+	var endring_width = Number(document.getElementById('er_width').value);
 	var endring_r_inner; // = TODO
 	var endring_r_outer; // = TODO
 
