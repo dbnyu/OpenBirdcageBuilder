@@ -81,6 +81,40 @@
 
     });
 
+    QUnit.test('App Defaults (Varying Shield Radius)', function(assert) {
+      /* Test that outputs match closely to Android app with default inputs */
+
+	    //           constructor(n,       f,  rc,  rs,   config) 
+	    bb = new BirdcageBuilder(8, 21.28e6, 0.1, 0.12, 'lowpass');  // 12 cm shield radius (other defaults stay the same)
+		  bb.legs.set_legs_rect(0.1, 0.02);
+		  bb.endrings.set_endrings_rect(0.01);
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+
+      var TEST_TOL = 5e-5; // allowing 0.5 rounding error for 4-digit app outputs
+      assert.close(1e9 * bb.legs.leg_self_inductance,       56.0517, TEST_TOL, 'Leg Self Inductance (rs = 12cm (LSI stays same))');
+      assert.close(1e9 * bb.endrings.er_self_inductance,    51.1163, TEST_TOL, 'EndRing Self Inductance (rs = 12cm)');
+      assert.close(1e9 * bb.legs.leg_mutual_inductance,     39.3792, TEST_TOL, 'Leg Mutual Inductance (rs = 12cm)'); // TODO unhardcode index?
+      assert.close(1e9 * bb.endrings.er_mutual_inductance[2], 62.2339, TEST_TOL, 'EndRing Mutual Inductance [k=2] (rs = 12cm)');
+      assert.close(1e12 * bb.calc_capacitor(), 222.0952, TEST_TOL, 'Capacitor (rs = 12cm)');
+      assert.true(bb.calc_capacitor() > 0, 'Sign of Capacitor (rs = 12cm)');
+
+
+	    //           constructor(n,       f,  rc,  rs,   config) 
+	    bb = new BirdcageBuilder(8, 21.28e6, 0.1, 0.15, 'lowpass');  // 15 cm shield radius (other defaults stay the same)
+		  bb.legs.set_legs_rect(0.1, 0.02);
+		  bb.endrings.set_endrings_rect(0.01);
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+
+      var TEST_TOL = 5e-5; // allowing 0.5 rounding error for 4-digit app outputs
+      assert.close(1e9 * bb.legs.leg_self_inductance,       56.0517, TEST_TOL, 'Leg Self Inductance (rs = 15cm (LSI stays same))');
+      assert.close(1e9 * bb.endrings.er_self_inductance,    51.1163, TEST_TOL, 'EndRing Self Inductance (rs = 15cm)');
+      assert.close(1e9 * bb.legs.leg_mutual_inductance,     52.2265, TEST_TOL, 'Leg Mutual Inductance (rs = 15cm)'); // TODO unhardcode index?
+      assert.close(1e9 * bb.endrings.er_mutual_inductance[2], 62.2339, TEST_TOL, 'EndRing Mutual Inductance [k=2] (rs = 15cm)');
+      assert.close(1e12 * bb.calc_capacitor(), 211.3160, TEST_TOL, 'Capacitor (rs = 15cm)');
+      assert.true(bb.calc_capacitor() > 0, 'Sign of Capacitor (rs = 15cm)');
+
+    });
+
 
     // TODO repeat -  go through all combinations/defaults in app!
 
