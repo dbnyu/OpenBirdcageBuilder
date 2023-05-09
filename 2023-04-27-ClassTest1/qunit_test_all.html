@@ -45,6 +45,42 @@
       assert.true(bb.calc_capacitor() > 0, 'Sign of Capacitor');
     });
 
+    QUnit.test('App Defaults (Varying Coil Radius)', function(assert) {
+      /* Test that outputs match closely to Android app with default inputs */
+
+	    //           constructor(n,       f,  rc,rs,   config) 
+	    bb = new BirdcageBuilder(8, 21.28e6, 0.12, 0, 'lowpass');  // 12 cm radius (other defaults stay the same)
+		  bb.legs.set_legs_rect(0.1, 0.02);
+		  bb.endrings.set_endrings_rect(0.01);
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+
+      var TEST_TOL = 5e-5; // allowing 0.5 rounding error for 4-digit app outputs
+      assert.close(1e9 * bb.legs.leg_self_inductance,       56.0517, TEST_TOL, 'Leg Self Inductance (rc = 12cm (LSI stays same))');
+      assert.close(1e9 * bb.endrings.er_self_inductance,    64.7763, TEST_TOL, 'EndRing Self Inductance (rc = 12cm)');
+      assert.close(1e9 * bb.legs.leg_mutual_inductance,     59.9066, TEST_TOL, 'Leg Mutual Inductance (rc = 12cm)'); // TODO unhardcode index?
+      assert.close(1e9 * bb.endrings.er_mutual_inductance[2], 78.1174, TEST_TOL, 'EndRing Mutual Inductance [k=2] (rc = 12cm)');
+      assert.close(1e12 * bb.calc_capacitor(), 171.2614, TEST_TOL, 'Capacitor (rc = 12cm)');
+      assert.true(bb.calc_capacitor() > 0, 'Sign of Capacitor (rc = 12cm)');
+
+
+	    //           constructor(n,       f,  rc,rs,   config) 
+	    bb = new BirdcageBuilder(8, 21.28e6, 1.23, 0, 'lowpass');  // 123 cm radius (other defaults stay the same)
+		  bb.legs.set_legs_rect(0.1, 0.02);
+		  bb.endrings.set_endrings_rect(0.01);
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+
+      var TEST_TOL = 5e-5; // allowing 0.5 rounding error for 4-digit app outputs
+      assert.close(1e9 * bb.legs.leg_self_inductance,       56.0517, TEST_TOL, 'Leg Self Inductance (rc = 123cm (LSI stays same))');
+      assert.close(1e9 * bb.endrings.er_self_inductance,    1113.6057, 10*TEST_TOL, 'EndRing Self Inductance (rc = 123cm) ADJUSTED TOLERANCE');
+      assert.close(1e9 * bb.legs.leg_mutual_inductance,     56.5239, TEST_TOL, 'Leg Mutual Inductance (rc = 123cm)'); // TODO unhardcode index?
+      assert.close(1e9 * bb.endrings.er_mutual_inductance[2], 1250.3521, TEST_TOL, 'EndRing Mutual Inductance [k=2] (rc = 123cm)');
+      assert.close(1e12 * bb.calc_capacitor(), 12.9319, TEST_TOL, 'Capacitor (rc = 123cm)');
+      assert.true(bb.calc_capacitor() > 0, 'Sign of Capacitor (rc = 123cm)');
+
+      // TODO would be interesting to graph these... like multiple graphs for different changing variables to see the different dependencies
+
+    });
+
 
     // TODO repeat -  go through all combinations/defaults in app!
 
