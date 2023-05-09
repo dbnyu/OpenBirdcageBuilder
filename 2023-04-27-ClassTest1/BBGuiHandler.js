@@ -66,7 +66,10 @@ function calculate() {
 	debug(''); // keep a blank line at the end
 
 
-
+	// Plots
+	plotly_leg_currents(BB.legs, 'plotly_ILegs');
+	plotly_cross_section(BB.legs, 'plotly_crossSection');
+	plotly_endring_currents(BB.legs, BB.endrings, 'plotly_Iendrings');
 }
 
 
@@ -220,4 +223,116 @@ function append_main_output(s) {
 function output_clear() {
 	/* Clear the DEBUG_ID field */
 	document.getElementById('output_main').innerHTML = '';
+}
+
+
+
+
+
+/*** Plotly Plots ***/
+
+function plotly_cross_section(legs, div) {
+	/* Plot leg & shield cross section (leg x,y positions)
+	 *
+	 */
+
+	
+	var data = [{x: legs.leg_x, 
+				 y: legs.leg_y,
+				 mode: "lines+markers",
+				 name: "Leg Positions"
+			    },
+				{x: legs.shield_x,
+				 y: legs.shield_y,
+				 mode: "lines+markers",
+				 name: "Shield Positions"
+				},
+				{x: [0, legs.leg_x[0]],
+				 y: [0, legs.leg_y[0]],
+				 mode: "lines",
+				 name: "Leg 0"
+				}
+	];
+
+	var layout = {xaxis: {title: "X Position (m?)"},
+				  yaxis: {title: "Y Position (m?)", scaleanchor: "x", scaleratio: 1.0},
+				  title: "Leg & Shield Positions (n=" + legs.n_legs + ")"
+				 };
+
+	Plotly.newPlot(div, data, layout);
+}
+
+
+function plotly_leg_currents(legs, div) {
+	/* Plot Leg Currents vs. leg angle
+	 *
+	 * legs = fully populated BCLegs object
+	 * div = string, name of the HTML div to plot in
+	 *
+	 * See https://www.w3schools.com/js/tryit.asp?filename=tryai_plotly_scatter
+	 */
+
+	var data = [{x: legs.theta, 
+				 y: legs.leg_currents, 
+				 mode: "lines+markers",
+				 name: "Leg Currents"
+			    },
+				{x: legs.theta,
+				 y: legs.shield_currents,
+				 mode: "lines+markers",
+				 name: "Shield Currents"
+				}
+
+	];
+
+	var layout = {xaxis: {title: "Angle (rad)"},
+				  yaxis: {title: "Current (A?)"},
+				  title: "Leg & Shield Currents (n=" + legs.n_legs + ")"
+				 };
+
+	Plotly.newPlot(div, data, layout);
+}
+
+
+function plotly_endring_currents(legs, er, div) {
+	/* Plot endring currents & mutual inductance
+	 *
+	 *  legs = BCLegs object, fully populated (for angles)
+	 *	er = BCEndrings object, fully populated
+	 *	div = string div id for the plot
+	 *
+	 */
+
+	// TODO - do we need to offset the endring segments by 1/2 arclen (1/2 theta step) for correct visualizatin?
+
+
+	var data = [{x: legs.theta,
+				 y: er.er_currents,
+				 mode: "lines+markers",
+				 name: "EndRing Currents"
+			    },
+				{x: legs.theta,
+				 y: er.er_mutual_inductance,
+				 yaxis:"y2",
+				 mode: "lines+markers",
+				 name: "EndRing Mutual Inductance"
+				}
+
+	];
+
+
+	var layout = {xaxis: {title: "Angle (rad)"},
+				  yaxis: {title: "Current (A?)"}, // TODO inductance
+				  yaxis2: {title: "Inductance (H?)",  
+					      titlefont: {color: 'rgb(148, 103, 189)'},
+					      tickfont: {color: 'rgb(148, 103, 189)'},
+					      overlaying: 'y',
+					      side: 'right'
+						  },
+				  title: "EndRing Currents TBD (n=" + legs.n_legs + ")"
+				 };
+	// TODO adjust overlapping legend & 2nd yaxis
+
+
+	Plotly.newPlot(div, data, layout);
 }

@@ -2,7 +2,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Birdcage Builder v0.0.2</title>
+    <title>Birdcage Builder v0.0.3</title>
 
     <!-- scripts must be included in reverse order of call stack for scope visibility -->
     <script src="debug.js"></script>
@@ -11,6 +11,8 @@
     <script src="BCEndRings.js"></script>
     <script src="BirdcageBuilder.js"></script>
     <script src="BBGuiHandler.js"></script>
+    <script src="../../plotly/v1.58.5/plotly-latest.min.js"></script>
+
 
 
   <!-- Birdcage Builder -->
@@ -27,10 +29,10 @@
 
   <body>
     <h1>Birdcage Builder</h1>
-    v0.0.2<br>
+    v0.0.3<br>
     <br>
 
-    <h2>Code Porting Test</h2>
+    <h2>Plotly Test & Leg M.I. Troubleshooting</h2>
 
     <form> 
 
@@ -122,6 +124,19 @@
 
     <p id="output_test1">This field intentionally blank.</p>
     <p id="output_main"></p>
+
+    <hr>
+    <h2>Plotly Tests</h2>
+    <h3>Leg & Shield Positions</h3>
+    TODO: Seems like shield radius is wrong (too far from center?)<br>
+    <div id="plotly_crossSection" style="width:100%;max-width:700px"></div>
+
+    <h3>Leg & Shield Currents</h3>
+    <div id="plotly_ILegs" style="width:100%;max-width:700px"></div>
+
+    <h3>End Ring Currents & Mutual Inductance</h3>
+    <div id="plotly_Iendrings" style="width:100%;max-width:700px"></div>
+
 
     <hr>
     <h2>Debug</h2>

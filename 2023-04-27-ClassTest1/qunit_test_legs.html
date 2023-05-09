@@ -37,6 +37,27 @@
       assert.equal(    bb.legs.calc_leg_self_inductance_rect(1, 2), 1);
     });
 
+    QUnit.test('Leg & Shield Positions', function(assert) {
+      var n = 16;
+      var rc = 10;
+      var rs = 12;
+      var bb = new BirdcageBuilder(n, 128e6, rc, rs);
+      
+      // TODO do these need float tolerance (assert.close?)
+
+      var k;
+      for (k = 0; k < n; k++) {
+        assert.equal(Math.sqrt(Math.pow(bb.legs.leg_x[k], 2) + Math.pow(bb.legs.leg_y[k], 2)), rc, 'Leg Radius i=' + k);
+
+      }
+
+
+      for (k = 0; k < n; k++) {
+        assert.equal(Math.sqrt(Math.pow(bb.legs.shield_x[k], 2) + Math.pow(bb.legs.shield_y[k], 2)), rs, 'Shield Radius i=' + k);
+      }
+
+    });
+
 
     QUnit.test('Tubular Self Inductance (R_inner = 0)', function(assert) {
       var bb = new BirdcageBuilder(16, 128e6, 10, 12);

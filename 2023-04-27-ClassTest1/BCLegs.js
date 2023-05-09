@@ -19,7 +19,7 @@ class BCLegs {
 		this.r_coil = Number(rc);	// radius of the birdcage TODO - units = meters?
 		this.r_shield = Number(rs); // radius of shield TODO units
 
-
+		this.theta = new Array(n); // angles of legs (radians)
 
 		this.leg_currents = new Array(n);
 		this.leg_x = new Array(n);
@@ -91,11 +91,19 @@ class BCLegs {
 		var b = (2*Math.PI)/(2*n); // TODO do the 2's cancel out?
 	
 		for (var k=0; k < n; k++) {
+
+
 			var a = 2*Math.PI*k/n;
 
-			this.leg_currents[k] = Math.cos(a + b);
+			this.theta[k] = a + b;
+
+			this.leg_currents[k] = Math.cos(this.theta[k]);
 			this.leg_x[k] = r * this.leg_currents[k];
-			this.leg_y[k] = r * Math.sin(a + b);
+			this.leg_y[k] = r * Math.sin(this.theta[k]);
+
+			//this.leg_currents[k] = Math.cos(a + b);
+			//this.leg_x[k] = r * this.leg_currents[k];
+			//this.leg_y[k] = r * Math.sin(a + b);
 	
 			//from Birdcage.java (slightly edited) TODO can delete
 			//ILeg[k] =     (float)Math.cos(2*Math.PI*k/n + 2*Math.PI/(2*n));
@@ -127,14 +135,20 @@ class BCLegs {
 		 * 	BC2J.104
 		 */
 
+		// TODO something seems wrong with the shield positions, possibly due to the ratio?
+		// since we're adding to both the X & Y components, should there be some dependence on the angle of the spoke?
+
 		var ratio_image = Math.pow(rs, 2) / rc;
 
 		for (var k=0; k < n; k++) {
 			this.shield_currents[k] = -this.leg_currents[k];
 
-			var theta = 2*Math.PI*k/n + 2*Math.PI/(2*n); // TODO do 2's cancel in 2nd term?
-			this.shield_x[k] = ratio_image * Math.cos(theta);
-			this.shield_y[k] = ratio_image * Math.sin(theta);
+			this.shield_x[k] = ratio_image * Math.cos(this.theta[k]);
+			this.shield_y[k] = ratio_image * Math.sin(this.theta[k]);
+
+			//var theta = 2*Math.PI*k/n + 2*Math.PI/(2*n); // TODO do 2's cancel in 2nd term?
+			//this.shield_x[k] = ratio_image * Math.cos(theta);
+			//this.shield_y[k] = ratio_image * Math.sin(theta);
 		}
 
 	}
@@ -273,6 +287,9 @@ class BCLegs {
 		 *
 		 * BCJ.114
 		 */
+
+		// TODO DELETE THIS! just testing:
+		//if (this.r_shield == 0) return 0;
 
 		var d; // distance from leg 0 to each shield segment
 		var Lmn; // helper value
