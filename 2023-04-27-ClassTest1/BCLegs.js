@@ -139,11 +139,16 @@ class BCLegs {
 
 	}
 
+
 	set_mutual_inductance() {
 		/* set this object's mutual inductance & sets correct units on SELF AND Mutual inductance
 		 * Assumes legs, shields, and self-inductance are already set
 		 *
 		 */
+		//debug('this.leg_mutual_inductance: ' + this.leg_mutual_inductance); // not set yet
+		debug('this.leg_self_inductance: ' + this.leg_self_inductance);
+		debug('this.calc_leg_mutual_inductance(this.leg_length): ' + this.calc_leg_mutual_inductance(this.leg_length));
+		debug('this.calc_shield_mutual_inductance(this.leg_length): ' + this.calc_shield_mutual_inductance(this.leg_length))
 
 
 		this.leg_mutual_inductance = this.leg_self_inductance + this.calc_leg_mutual_inductance(this.leg_length) + this.calc_shield_mutual_inductance(this.leg_length);
@@ -206,10 +211,17 @@ class BCLegs {
 		var a = (len/d) + Math.sqrt(1 + Math.pow(len/d, 2)); 
 		var b = Math.sqrt(1. + Math.pow(d/len, 2));
 
-		console.log(a);
-		console.log(b);
+		//debug('a: ' + a);
+		//debug('b: ' + b);
 
 		var Lmn = 2. * len * Math.log(a - b + d/len);
+
+		//debug('Lmn: ' + Lmn);
+
+		//debug('type a: ' + typeof(a));
+		//debug('type b: ' + typeof(b));
+		//debug('type Lmn: ' + typeof(Lmn));
+
 		return Lmn;
 	}
 
@@ -226,21 +238,25 @@ class BCLegs {
 		 * */
 
 		// TODO... balance between testable functions w/ explicit and I/O that are arrays...
-		// TODO - the arrays are read-only in this case it seems, so they could be inputs...
+		// TODO - the arrays are read-only in this case it seems, so they could be input args...
 
 		//var mi = si; // mutual inductance
-		var mi = 0;
-		var x0 = this.leg_x[0]; // TODO make these inputs?
+		var mi = 0; // NOTE original code starts with self inductance, not zero
+		var x0 = this.leg_x[0];
 		var y0 = this.leg_y[0];
 		var d;   // distance between legs
 		var Lmn; // helper function value
 
 		for (var k=1; k < this.n_legs; k++) {
+			//debug('k: ' + k);
 			d = Math.sqrt( Math.pow(this.leg_x[k]-x0, 2) + Math.pow(this.leg_y[k] - y0, 2) );
 
 			Lmn = this.helper_Lmn(len, d);
+			//debug('Lmn: ' + Lmn);
 
 			mi += Lmn * this.leg_currents[k] / this.leg_currents[0];
+			//debug('mi: ' + mi);
+			//debug('');
 		}
 
 		return mi;
@@ -263,10 +279,15 @@ class BCLegs {
 		var mi = 0; // shield portion of mutual inductance
 
 		for (var k = 0; k < this.n_legs; k++) {
+			//debug('k: ' + k);
+
+
 			d = Math.sqrt(Math.pow(this.shield_x[k]-this.leg_x[0], 2) + Math.pow(this.shield_y[k]-this.leg_y[0], 2));
 			Lmn = this.helper_Lmn(len, d);
 			mi += mi + Lmn * this.shield_currents[k] / this.leg_currents[0];
 			// TODO NOTE in above formula in Reverse.doc, the shield current is negative; is this taken care of by negating the leg currents in init_shield?
+			//debug('mi: ' + mi);
+			//debug('');
 		}
 
 		return mi;
