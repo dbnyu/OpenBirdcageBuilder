@@ -67,15 +67,23 @@ class BirdcageBuilder {
 		console.log('coil_config: ' + this.coil_config);
 
 		debug('calc_capacitor k index: ' + k);
+		debug('');
 
 		debug('Leg Currents:');
 		debug(this.legs.leg_currents);
+		debug('');
+
+		debug('Shield Currents:');
+		debug(this.legs.shield_currents);
+		debug('');
 
 		debug('Endring Currents');
 		debug(this.endrings.er_currents);
+		debug('');
 
 		debug('Endring Mutual Inductance');
 		debug(this.endrings.er_mutual_inductance);
+		debug('');
 
 		// TODO START HERE
 		// TODO ER mutual inductance [k = 1] is NaN and 2 is Inf; WHY?
