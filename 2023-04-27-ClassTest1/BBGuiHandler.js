@@ -70,6 +70,7 @@ function calculate() {
 	plotly_leg_currents(BB.legs, 'plotly_ILegs');
 	plotly_cross_section(BB.legs, 'plotly_crossSection');
 	plotly_endring_currents(BB.legs, BB.endrings, 'plotly_Iendrings');
+	plotly_leg_inductance(BB.legs, 'plotly_leg_inductance');
 }
 
 
@@ -333,6 +334,45 @@ function plotly_endring_currents(legs, er, div) {
 				 };
 	// TODO adjust overlapping legend & 2nd yaxis
 
+
+	Plotly.newPlot(div, data, layout);
+}
+
+
+function plotly_leg_inductance(legs, div) {
+	/* Plot each component of the leg & shield mutual inductance
+	 * (using specially stored arrays, of each part of the summation)
+	 *
+	 * legs = fully populated BCLegs with extra inductance arrays
+	 * div = HTML div name
+	 *
+	 */
+
+	var data = [{x: legs.theta,
+				 y: legs._leg_mutual_inductances,
+				 mode: "lines+markers",
+				 name: "Leg Mutual Inductance"
+			    },
+				{x: legs.theta,
+				 y: legs._shield_mutual_inductances,
+				 //yaxis:"y2",
+				 mode: "lines+markers",
+				 name: "Shield Mutual Inductance"
+				}
+
+	];
+
+
+	var layout = {xaxis: {title: "Angle (rad)"},
+				  yaxis: {title: "Inductance (H?)"}, // TODO inductance
+				//  yaxis2: {title: "Inductance (H?)",  
+				//	      titlefont: {color: 'rgb(148, 103, 189)'},
+				//	      tickfont: {color: 'rgb(148, 103, 189)'},
+				//	      overlaying: 'y',
+				//	      side: 'right'
+				//		  },
+				  title: "Leg Mutual Inductance Components (n=" + legs.n_legs + ")"
+				 };
 
 	Plotly.newPlot(div, data, layout);
 }
