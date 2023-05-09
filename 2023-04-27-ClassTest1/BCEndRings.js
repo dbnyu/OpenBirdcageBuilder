@@ -174,33 +174,33 @@ class BCEndRings {
 		var iKpK1N, iKpK1m1N;
 
 
-		debug('n = ' + n);
-		debug('n_legs = ' + this.n_legs);
+		//debug('n = ' + n);
+		//debug('n_legs = ' + this.n_legs);
 
 
 		// TODO - source starts at 0 but should this start at 1?
 		var k, k1;
 		for (k=0; k < n; k++){
 
-			debug('k: ' + k);
-			debug('--------');
+			//debug('k: ' + k);
+			//debug('--------');
 
 			// pre-compute modulo indexes (NOTE javascript % operator does NOT behave as expected)
 			// see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder
 			idx1 = mod(k+1, n);
 			idxN = mod(k+n, n);
 
-			debug('k = ' + k);
-			debug('n = ' + n);
-			debug('k+1 = ' + (k+1));
-			debug('idx1: (k+1) mod n: ' + idx1);
-			debug('test idx1        : ' + mod(k+1, n));
-			//debug('test idx1-2      : ' + mod(1, 8));
-			debug('');
-			debug('idxN: mod(k+n, n): ' + idxN);
-			debug('test idxN:       : ' + mod(k+n, n));
-			//debug('test idxN-2      : ' + mod(8, 8));
-			debug('');
+			//debug('k = ' + k);
+			//debug('n = ' + n);
+			//debug('k+1 = ' + (k+1));
+			//debug('idx1: (k+1) mod n: ' + idx1);
+			//debug('test idx1        : ' + mod(k+1, n));
+			////debug('test idx1-2      : ' + mod(1, 8));
+			//debug('');
+			//debug('idxN: mod(k+n, n): ' + idxN);
+			//debug('test idxN:       : ' + mod(k+n, n));
+			////debug('test idxN-2      : ' + mod(8, 8));
+			//debug('');
 
 			idx2 = mod(k+2, n);
 			idxK = mod(k, n);
@@ -215,8 +215,8 @@ class BCEndRings {
 			
 			}
 			
-			debug('d: ' + d);
-			debug('Lop: ' + Lop);
+			//debug('d: ' + d);
+			//debug('Lop: ' + Lop);
 		
 			//Mutual Inductance of Adjacent Rings
 			// TODO m1 is zero when k=1 in app default value test
@@ -224,20 +224,20 @@ class BCEndRings {
 			l1 = Math.sqrt(Math.pow(legs.leg_x[idx1]-legs.leg_x[idx2],2)+Math.pow(legs.leg_y[idx1]-legs.leg_y[idx2],2));
 			R1 = Math.sqrt(Math.pow(legs.leg_x[idx2]-legs.leg_x[idxK],2)+Math.pow(legs.leg_y[idx2]-legs.leg_y[idxK],2));
 
-			debug('m1 first calc:');
-			debug('Math.pow(legs.leg_x[idx1]-legs.leg_x[idxN],2): ' + Math.pow(legs.leg_x[idx1]-legs.leg_x[idxN],2));
-		    debug('Math.pow(legs.leg_y[idx1]-legs.leg_y[idxN],2): ' + Math.pow(legs.leg_y[idx1]-legs.leg_y[idxN],2));
-			debug('m1: ' + m1);
-			debug('l1: ' + l1);
-			debug('R1: ' + R1);
+			//debug('m1 first calc:');
+			//debug('Math.pow(legs.leg_x[idx1]-legs.leg_x[idxN],2): ' + Math.pow(legs.leg_x[idx1]-legs.leg_x[idxN],2));
+		    //debug('Math.pow(legs.leg_y[idx1]-legs.leg_y[idxN],2): ' + Math.pow(legs.leg_y[idx1]-legs.leg_y[idxN],2));
+			//debug('m1: ' + m1);
+			//debug('l1: ' + l1);
+			//debug('R1: ' + R1);
 			
 			ang1 = (Math.pow(l1,2)+Math.pow(m1,2)-Math.pow(R1,2))/(2*l1*m1);
 
-			debug('Math.pow(l1,2): ' + Math.pow(l1,2));
-			debug('Math.pow(m1,2): ' + Math.pow(m1,2));
-			debug('Math.pow(R1,2): ' + Math.pow(R1,2));
-			debug('(2*l1*m1): ' +      (2*l1*m1));
-			debug('ang1: ' + ang1);
+			//debug('Math.pow(l1,2): ' + Math.pow(l1,2));
+			//debug('Math.pow(m1,2): ' + Math.pow(m1,2));
+			//debug('Math.pow(R1,2): ' + Math.pow(R1,2));
+			//debug('(2*l1*m1): ' +      (2*l1*m1));
+			//debug('ang1: ' + ang1);
 
 			Mnext = Math.abs(2*ang1*(l1*this.harct(m1/(l1+R1))+m1*this.harct(m1/(m1+R1)) ));
 			
@@ -247,16 +247,16 @@ class BCEndRings {
 			l1 = Math.sqrt(Math.pow(legs.leg_x[idxK]-legs.leg_x[idx1],2)+Math.pow(legs.leg_y[idxK]-legs.leg_y[idx1],2));
 			R1 = Math.sqrt(Math.pow(legs.leg_x[idx1]-legs.leg_x[iKN1N],2)+Math.pow(legs.leg_y[idx1]-legs.leg_y[iKN1N],2));
 
-			debug('Mnext: ' + Mnext);
-			debug('m1: ' + m1);
-			debug('l1: ' + l1);
-			debug('R1: ' + R1);
+			//debug('Mnext: ' + Mnext);
+			//debug('m1: ' + m1);
+			//debug('l1: ' + l1);
+			//debug('R1: ' + R1);
 			
 			ang1 = (Math.pow(l1,2) + Math.pow(m1,2) - Math.pow(R1,2))/(2*l1*m1);
 			Mprev = Math.abs(2*ang1*(l1*this.harct(m1/(l1+R1))+m1*this.harct(m1/(m1+R1)) ));	
 
-			debug('ang1: ' + ang1);
-			debug('Mprev: ' + Mprev);
+			//debug('ang1: ' + ang1);
+			//debug('Mprev: ' + Mprev);
 
 
 
@@ -326,7 +326,7 @@ class BCEndRings {
 			this.er_mutual_inductance[k] = Lnadj + this.er_self_inductance + Lop + Ladj;
 		
 		
-			debug('');
+			//debug('');
 		} // end of loop
 			
 		this.er_self_inductance = this.er_self_inductance*1e-7;
