@@ -52,9 +52,11 @@
       }
 
 
-      for (k = 0; k < n; k++) {
-        assert.equal(Math.sqrt(Math.pow(bb.legs.shield_x[k], 2) + Math.pow(bb.legs.shield_y[k], 2)), rs, 'Shield Radius i=' + k);
-      }
+      // TODO - using method of images; shield "legs" do not fall on shield radius
+      // TODO - instead, need to test if the E-field is 0 at the shield radius... how?
+      //for (k = 0; k < n; k++) {
+      //  assert.equal(Math.sqrt(Math.pow(bb.legs.shield_x[k], 2) + Math.pow(bb.legs.shield_y[k], 2)), rs, 'Shield Radius i=' + k);
+      //}
 
     });
 
