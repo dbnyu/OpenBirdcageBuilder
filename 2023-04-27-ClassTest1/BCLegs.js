@@ -47,6 +47,11 @@ class BCLegs {
 		// --> this must call set_mutual_inductance
 
 
+
+		// debugging:
+		this._leg_mutual_inductances = new Array(n); // store each mutual inductance component for plotting
+		this._shield_mutual_inductances = new Array(n);
+
 	}
 
 	set_legs_rect(l, w) {
@@ -135,10 +140,15 @@ class BCLegs {
 		 * 	BC2J.104
 		 */
 
+
+		if (rs == 0) debug('WARNING: Shield radius = 0');
+		else if (rs <= rc) debug('WARNING: Shield radius <= coil radius');
+
+
 		// TODO something seems wrong with the shield positions, possibly due to the ratio?
 		// since we're adding to both the X & Y components, should there be some dependence on the angle of the spoke?
-
 		var ratio_image = Math.pow(rs, 2) / rc;
+		//var ratio_image = rs; // TODO hack to try to correct the shield radius
 
 		for (var k=0; k < n; k++) {
 			this.shield_currents[k] = -this.leg_currents[k];
@@ -159,13 +169,17 @@ class BCLegs {
 		 * Assumes legs, shields, and self-inductance are already set
 		 *
 		 */
-		//debug('this.leg_mutual_inductance: ' + this.leg_mutual_inductance); // not set yet
+
+		var leg_mi = this.calc_leg_mutual_inductance(this.leg_length);
+		var shield_mi = this.calc_shield_mutual_inductance(this.leg_length);
+
 		debug('this.leg_self_inductance: ' + this.leg_self_inductance);
-		debug('this.calc_leg_mutual_inductance(this.leg_length): ' + this.calc_leg_mutual_inductance(this.leg_length));
-		debug('this.calc_shield_mutual_inductance(this.leg_length): ' + this.calc_shield_mutual_inductance(this.leg_length))
+		debug('this.calc_leg_mutual_inductance(this.leg_length): ' + leg_mi);
+		debug('this.calc_shield_mutual_inductance(this.leg_length): ' + shield_mi);
 
 
-		this.leg_mutual_inductance = this.leg_self_inductance + this.calc_leg_mutual_inductance(this.leg_length) + this.calc_shield_mutual_inductance(this.leg_length);
+		this.leg_mutual_inductance = this.leg_self_inductance + leg_mi + shield_mi;
+		//this.leg_mutual_inductance = this.leg_self_inductance + this.calc_leg_mutual_inductance(this.leg_length) + this.calc_shield_mutual_inductance(this.leg_length);
 
 
 		// set correct units TODO double check this
@@ -261,6 +275,8 @@ class BCLegs {
 		var d;   // distance between legs
 		var Lmn; // helper function value
 
+		debug('Leg MI Loop:');
+
 		for (var k=1; k < this.n_legs; k++) {
 			//debug('k: ' + k);
 			d = Math.sqrt( Math.pow(this.leg_x[k]-x0, 2) + Math.pow(this.leg_y[k] - y0, 2) );
@@ -268,10 +284,19 @@ class BCLegs {
 			Lmn = this.helper_Lmn(len, d);
 			//debug('Lmn: ' + Lmn);
 
+
+
 			mi += Lmn * this.leg_currents[k] / this.leg_currents[0];
 			//debug('mi: ' + mi);
 			//debug('');
+			
+			// debuggin only:
+			this._leg_mutual_inductances[k] = Lmn * this.leg_currents[k] / this.leg_currents[0];
+			debug('k: ' + k + ', d: ' + d + ', Lmn: ' + Lmn + ', cr:  ' + (this.leg_currents[k] / this.leg_currents[0]) + ', mip: ' + this._leg_mutual_inductances[k] + ', mia: ' + mi);
+
 		}
+
+		//debug('Leg Mutual Inductances: ' + this._leg_mutual_inductances);
 
 		return mi;
 	}
@@ -288,12 +313,14 @@ class BCLegs {
 		 * BCJ.114
 		 */
 
-		// TODO DELETE THIS! just testing:
+		// TODO DELETE THIS! just testing - or include it? but probably needs to be worked in better?
 		//if (this.r_shield == 0) return 0;
 
 		var d; // distance from leg 0 to each shield segment
 		var Lmn; // helper value
 		var mi = 0; // shield portion of mutual inductance
+
+		debug('Shield MI Loop:');
 
 		for (var k = 0; k < this.n_legs; k++) {
 			//debug('k: ' + k);
@@ -301,11 +328,26 @@ class BCLegs {
 
 			d = Math.sqrt(Math.pow(this.shield_x[k]-this.leg_x[0], 2) + Math.pow(this.shield_y[k]-this.leg_y[0], 2));
 			Lmn = this.helper_Lmn(len, d);
-			mi += mi + Lmn * this.shield_currents[k] / this.leg_currents[0];
-			// TODO NOTE in above formula in Reverse.doc, the shield current is negative; is this taken care of by negating the leg currents in init_shield?
+
+			// debugging only:
+			this._shield_mutual_inductances[k] = Lmn * this.shield_currents[k] / this.leg_currents[0];
+			//this._shield_mutual_inductances[k] = mi + Lmn * this.shield_currents[k] / this.leg_currents[0];
+
+			// TODO double check LMN again; maybe it's different? check indexes too...
+
+			// TODO NOTE in below formula in Reverse.doc, the shield current is negative; is this taken care of by negating the leg currents in init_shield?
+			// TODO try -shield currents???
+			//
+			//mi += mi + Lmn * this.shield_currents[k] / this.leg_currents[0]; // WRONG! += and adding mi = adding mi to itself twice!!!!
+			mi += Lmn * this.shield_currents[k] / this.leg_currents[0];
+
 			//debug('mi: ' + mi);
 			//debug('');
+			debug('k: ' + k + ', d: ' + d + ', Lmn: ' + Lmn + ', cr: ' + (this.shield_currents[k] / this.leg_currents[0])  + ', mip: ' + this._shield_mutual_inductances[k] + ', mia: ' + mi);
+
 		}
+
+		//debug('Legs: Shield Mutual Inductances: ' + this._shield_mutual_inductances);
 
 		return mi;
 	}
