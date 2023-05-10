@@ -271,7 +271,7 @@ function plotly_cross_section(legs, div) {
 				{x: legs.shield_x,
 				 y: legs.shield_y,
 				 mode: "lines+markers",
-				 name: "Shield Positions"
+				 name: "Shield Image Positions"
 				},
 
 				{x: legs_gt[0],
@@ -291,7 +291,7 @@ function plotly_cross_section(legs, div) {
 				 line: {color: 'gray',
 						dash: "dash"
 						},
-				 name: "Expected Shield Radius"
+				 name: "Shield Radius (E-field should be 0 here)"
 				},
 				// TODO label rungs w/ index
 				//{x: [0, legs.leg_x[0]], // draw a line to first rung (k=0)

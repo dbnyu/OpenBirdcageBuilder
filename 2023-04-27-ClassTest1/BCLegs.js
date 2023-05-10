@@ -144,11 +144,11 @@ class BCLegs {
 		if (rs == 0) debug('WARNING: Shield radius = 0');
 		else if (rs <= rc) debug('WARNING: Shield radius <= coil radius');
 
-
-		// TODO something seems wrong with the shield positions, possibly due to the ratio?
-		// since we're adding to both the X & Y components, should there be some dependence on the angle of the spoke?
 		var ratio_image = Math.pow(rs, 2) / rc;
-		//var ratio_image = rs; // TODO hack to try to correct the shield radius
+		// Using the Method of Images, the "virtual legs" of the shield image
+		// are NOT at the shield radius, they are farther out.
+		// Instead, the Electric Field should be zero at the shield radius, by this method.
+		// See https://en.wikipedia.org/wiki/Method_of_images
 
 		for (var k=0; k < n; k++) {
 			this.shield_currents[k] = -this.leg_currents[k];

@@ -128,7 +128,9 @@
     <hr>
     <h2>Plotly Tests</h2>
     <h3>Leg & Shield Positions</h3>
-    TODO: Seems like shield radius is wrong (too far from center?)<br>
+    <s>TODO: Seems like shield radius is wrong (too far from center?)</s><br>
+    The "legs" of the "shield" are using the Method of Images [1], and <i>should</i> be farther out than the shield radius.<br>
+    The <b>Electric Field</b> should be zero at the shield radius, negated by the image of the shield "virtual legs".<br>
     <div id="plotly_crossSection" style="width:100%;max-width:700px"></div>
 
     <h3>Leg & Shield Currents</h3>
@@ -149,6 +151,9 @@
     <p id="debug1"></p>
     <!-- TODO - add 'clear' button -->
 
+    <hr>
+    <h2>References</h2>
+    1. <a href="https://en.wikipedia.org/wiki/Method_of_images">Method of Images</a><br>
 
   </body>
 
