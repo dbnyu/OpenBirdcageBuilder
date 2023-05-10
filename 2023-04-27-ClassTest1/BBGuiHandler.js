@@ -232,27 +232,73 @@ function output_clear() {
 
 /*** Plotly Plots ***/
 
+function circle(r) {
+	/* Return an x, y array of a circle of points with radius r.
+	 *
+	 * TODO - input # of points etc.
+	 *
+	 */
+
+	var n = 100; // # of points	
+	const x = new Array(n);
+	const y = new Array(n);
+	
+	var i, theta;
+	for (i = 0; i < n; i++) {
+		theta = i*2*Math.PI/n;
+		x[i] = r*Math.cos(theta);
+		y[i] = r*Math.sin(theta);
+	}
+
+	return [x, y];
+}
+
+
 function plotly_cross_section(legs, div) {
 	/* Plot leg & shield cross section (leg x,y positions)
 	 *
 	 */
 
-	
+	legs_gt = circle(legs.r_coil);
+	shield_gt = circle(legs.r_shield);
+
 	var data = [{x: legs.leg_x, 
 				 y: legs.leg_y,
 				 mode: "lines+markers",
 				 name: "Leg Positions"
 			    },
+
 				{x: legs.shield_x,
 				 y: legs.shield_y,
 				 mode: "lines+markers",
 				 name: "Shield Positions"
 				},
-				{x: [0, legs.leg_x[0]],
-				 y: [0, legs.leg_y[0]],
+
+				{x: legs_gt[0],
+				 y: legs_gt[1],
 				 mode: "lines",
-				 name: "Leg 0"
-				}
+				 //marker: {color: 'black'},
+				 line: {color: 'gray',
+						dash: "dot"
+						},
+				 name: "Expected Coil Radius"
+				},
+
+				{x: shield_gt[0],
+				 y: shield_gt[1],
+				 mode: "lines",
+				 //marker: {color: 'black'},
+				 line: {color: 'gray',
+						dash: "dash"
+						},
+				 name: "Expected Shield Radius"
+				},
+				// TODO label rungs w/ index
+				//{x: [0, legs.leg_x[0]], // draw a line to first rung (k=0)
+				// y: [0, legs.leg_y[0]],
+				// mode: "lines",
+				// name: "Leg 0"
+				//}
 	];
 
 	var layout = {xaxis: {title: "X Position (m?)"},
