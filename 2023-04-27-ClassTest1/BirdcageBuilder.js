@@ -20,6 +20,7 @@ class BirdcageBuilder {
 		this.r_coil = Number(rc);	// radius of the birdcage TODO - units = meters?
 		this.r_shield = Number(rs); // radius of shield TODO units
 		this.coil_config = config; // string: 'highpass', 'lowpass', 'bandpass_leg', or 'bandpass_er'
+		this.predcap = -1; // predetermined capacitor for bandpass coils (not used for LP/HP)
 
 		// TODO force type of arrays? item by item or whole array?
 		this.legs = new BCLegs(this.n_legs, this.r_coil, this.r_shield);
@@ -31,10 +32,12 @@ class BirdcageBuilder {
 		//	legs.set_legs_<geom>
 		// 	endrings.set_endrings_<geom>
 		//  endrings.set_mutual_inductance(this.legs); // TODO - can this have a wrapper here to make it more transparent to user?
+		//
 		// before continuing
 		// (these all have dependence on the steps before them)
-
-		
+		//
+		//  If coil type is bandpass, user must also set predcap
+		//  before calling calc_capacitor().
 	}
 
 	to_string() {
@@ -60,7 +63,7 @@ class BirdcageBuilder {
 		var k = n/4 - 1; // index for most leg currents/mutual inductance
 		var vol, extravol;
 
-		var predcap = 67e-12; // TODO is this right/fixed/does it need user intput???
+		//var predcap = 67e-12; // TODO is this right/fixed/does it need user intput??? MOVING TO CONSTRUCTOR
 		var cap, kk, jj; // TODO rename kk, jj if possible?
 
 
@@ -85,11 +88,6 @@ class BirdcageBuilder {
 		debug(this.endrings.er_mutual_inductance);
 		debug('');
 
-		// TODO START HERE
-		// TODO ER mutual inductance [k = 1] is NaN and 2 is Inf; WHY?
-		// That's the problem - the NaN is propagating...
-
-
 		switch(this.coil_config) {
 			case 'lowpass':
 				kk = -this.endrings.er_currents[k] * wsq * this.endrings.er_mutual_inductance[k];
@@ -105,13 +103,17 @@ class BirdcageBuilder {
 
 			case 'bandpass_leg':
 				// copied from above:
+				if (this.predcap < 0) debug('WARNING: predcap not set');
+
 				vol = 0.5 * w * this.legs.leg_mutual_inductance * this.legs.leg_currents[k];
-				extravol = -0.5 * this.legs.leg_currents[k] / (w * predcap);
+				extravol = -0.5 * this.legs.leg_currents[k] / (w * this.predcap);
 				cap = this.endrings.er_currents[k] / (wsq * this.endrings.er_currents[k] * this.endrings.er_mutual_inductance[k] + w*2*(vol + extravol));
 				break;
 				
 			case 'bandpass_er':
-				kk = -this.endrings.er_currents[k] * (wsq * this.endrings.er_mutual_inductance[k] - 1/predcap);
+				if (this.predcap < 0) debug('WARNING: predcap not set');
+
+				kk = -this.endrings.er_currents[k] * (wsq * this.endrings.er_mutual_inductance[k] - 1/this.predcap);
 				jj = this.legs.leg_currents[n/4] * wsq * this.legs.leg_mutual_inductance;
 				cap = this.legs.leg_currents[n/4]/ (jj + kk);
 				break;

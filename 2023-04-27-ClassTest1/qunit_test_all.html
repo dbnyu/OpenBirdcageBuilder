@@ -142,6 +142,153 @@
     });
 
 
+    //function test_2002_paper_cap(type, N, f, rc, rs, 
+
+
+    QUnit.test('BirdcageBuilder 2002 Paper Cap Tests', function(assert) {
+      /* Test against Table 1 results from 2002 Birdcage Builder paper 
+       *
+       * Chin, Collins, et al. MRM Vol 15(2) 156-163. 2002.
+       */
+
+      // Coil A:
+	    //           constructor(n,        f,     rc,     rs,   config) 
+	    bb = new BirdcageBuilder(12, 21.25e6, 3.8e-2, 100e-2, 'lowpass');
+		  bb.legs.set_legs_rect(10e-2, 0.6e-2); // TODO assuming rectangular? 'a' superscript?
+      assert.step('NOTE - Custom endring arclength');
+      bb.endrings.er_arclen = 1.98e-2; // custom endring arc length
+		  bb.endrings.set_endrings_rect(0.6e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+      // TODO - NOTE: the units are manually adjusted here, to reflect the app output values:
+      assert.close(1e12 * bb.calc_capacitor(), 269.54, PAPER_TEST_TOL, 'Paper Capacitor A');
+
+
+      // Coil B:
+	    //           constructor(n,        f,     rc,     rs,   config) 
+	    bb = new BirdcageBuilder(12, 63e6, 4.45e-2, 0.0, 'lowpass');
+		  bb.legs.set_legs_rect(8.9e-2, 0.6e-2); // TODO assuming rectangular? 'a' superscript?
+      assert.step('NOTE - Custom endring arclength');
+      bb.endrings.er_arclen = 2.33e-2; // custom endring arc length
+		  bb.endrings.set_endrings_rect(0.6e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+      assert.close(1e12 * bb.calc_capacitor(), 29.56, PAPER_TEST_TOL, 'Paper Capacitor B');
+      // TODO use this to test any no-shield special cases!
+
+
+      // Coil C:
+	    //           constructor(n,        f,     rc,     rs,   config) 
+	    bb = new BirdcageBuilder(8, 127.8e6, 6.35e-2, 8.95e-2, 'lowpass');
+		  bb.legs.set_legs_rect(8.9e-2, 0.6e-2); // TODO assuming rectangular? 'a' superscript?
+      assert.step('NOTE - Custom endring arclength');
+      bb.endrings.er_arclen = 4.98e-2; // custom endring arc length
+		  bb.endrings.set_endrings_rect(1.27e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+      assert.close(1e12 * bb.calc_capacitor(), 9.76, PAPER_TEST_TOL, 'Paper Capacitor C');
+
+
+      // Coil D:
+	    //           constructor(n,        f,     rc,   rs,   config) 
+	    bb = new BirdcageBuilder(8, 400.1e6, 1.25e-2, 1.87e-2, 'lowpass');
+		  bb.legs.set_legs_rect(2.4e-2, 0.1e-2); // TODO assuming rectangular? 'a' superscript?
+      assert.step('NOTE - Custom endring arclength');
+      bb.endrings.er_arclen = 0.98e-2; // custom endring arc length
+		  bb.endrings.set_endrings_rect(0.1e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+      assert.close(1e12 * bb.calc_capacitor(), 3.38, PAPER_TEST_TOL, 'Paper Capacitor D');
+
+
+      // Coil E:
+	    //           constructor(n,      f,     rc,     rs,   config) 
+	    bb = new BirdcageBuilder(16, 106e6, 9.52e-2, 35.5e-2, 'highpass');
+		  //bb.legs.set_legs_rect(22.2e-2, 0.1e-2); // TODO assuming rectangular? 'a' superscript?
+
+      bb.legs.set_legs_tube(22.2e-2, 0.3e-2, 0.4e-2); // NOTE: paper has IR and OR reversed order
+      assert.step('NOTE - Custom endring arclength');
+      // TODO are the endrings also tubes? Using rectangular for now - seems correct from note "a"
+      bb.endrings.er_arclen = 3.72e-2; // custom endring arc length
+		  bb.endrings.set_endrings_rect(1.3e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+      assert.close(1e12 * bb.calc_capacitor(), 47.47, PAPER_TEST_TOL, 'Paper Capacitor E (HP Tube Legs)');
+
+
+      // Coil F:
+	    //           constructor(n,      f,     rc,     rs,   config) 
+	    bb = new BirdcageBuilder(12, 200.1e6, 9.7e-2, 12.8e-2, 'highpass');
+		  //bb.legs.set_legs_rect(22.2e-2, 0.1e-2); // TODO assuming rectangular? 'a' superscript?
+
+      bb.legs.set_legs_tube(20e-2, 0.40e-2, 0.65e-2); // NOTE: paper has IR and OR reversed order
+      assert.step('NOTE - Custom endring arclength');
+      // TODO are the endrings also tubes? Using rectangular for now - seems correct from note "a"
+      bb.endrings.er_arclen = 5.08e-2; // custom endring arc length
+		  bb.endrings.set_endrings_rect(1.4e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+      assert.close(1e12 * bb.calc_capacitor(), 11.62, PAPER_TEST_TOL, 'Paper Capacitor F (HP Tube Legs)');
+
+
+
+      // Coil G:
+	    //           constructor(n,      f,     rc,     rs,   config) 
+	    bb = new BirdcageBuilder(8, 200.5e6, 1.9e-2, 50e-2, 'highpass');
+		  bb.legs.set_legs_rect(7.3e-2, 0.6e-2); // TODO assuming rectangular? 'a' superscript?
+      assert.step('NOTE - Custom endring arclength');
+      bb.endrings.er_arclen = 1.49e-2; // custom endring arc length
+		  bb.endrings.set_endrings_rect(0.6e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+      assert.close(1e12 * bb.calc_capacitor(), 25.58, PAPER_TEST_TOL, 'Paper Capacitor G (HP Rect Legs)');
+
+
+      // Coil H:
+	    //           constructor(n,      f,     rc,     rs,   config) 
+	    bb = new BirdcageBuilder(12, 125.2e6, 9.5e-2, 0.0, 'bandpass_er');
+		  bb.legs.set_legs_rect(20e-2, 1.25e-2); // TODO assuming rectangular? 'a' superscript?
+      assert.step('NOTE - Custom endring arclength');
+      bb.endrings.er_arclen = 4.97e-2; // custom endring arc length
+		  bb.endrings.set_endrings_rect(1.25e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+      console.log('predcap before set: ' + bb.predcap);
+      bb.predcap = 33e-12;
+      assert.close(1e12 * bb.calc_capacitor(), 15.04, PAPER_TEST_TOL, 'Paper Capacitor H (Bandpass ER Caps)');
+
+
+
+      // Coil I:
+	    //           constructor(n,      f,     rc,     rs,   config) 
+	    bb = new BirdcageBuilder(12, 170e6, 9.5e-2, 0.0, 'bandpass_leg');
+		  bb.legs.set_legs_rect(17.2e-2, 0.6e-2); // TODO assuming rectangular? 'a' superscript?
+      assert.step('NOTE - Custom endring arclength');
+      bb.endrings.er_arclen = 4.97e-2; // custom endring arc length
+		  bb.endrings.set_endrings_rect(0.5e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+      bb.predcap = 11.7e-12;
+      assert.close(1e12 * bb.calc_capacitor(), 14.26, PAPER_TEST_TOL, 'Paper Capacitor I (Bandpass Leg Caps)');
+
+
+      // Coil J:
+	    //           constructor(n,      f,     rc,     rs,   config) 
+	    bb = new BirdcageBuilder(12, 173e6, 8.4e-2, 0.0, 'bandpass_leg');
+		  bb.legs.set_legs_rect(22.5e-2, 0.6e-2); // TODO assuming rectangular? 'a' superscript?
+      assert.step('NOTE - Custom endring arclength');
+      bb.endrings.er_arclen = 4.4e-2; // custom endring arc length
+		  bb.endrings.set_endrings_rect(0.6e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+      bb.predcap = 47e-12;
+      assert.close(1e12 * bb.calc_capacitor(), 11.62, PAPER_TEST_TOL, 'Paper Capacitor J (Bandpass Leg Caps)');
+
+
+      //assert.verifySteps(['NOTE - Custom endring arclength']);
+      assert.verifySteps([
+          "NOTE - Custom endring arclength",
+          "NOTE - Custom endring arclength",
+          "NOTE - Custom endring arclength",
+          "NOTE - Custom endring arclength",
+          "NOTE - Custom endring arclength",
+          "NOTE - Custom endring arclength",
+          "NOTE - Custom endring arclength",
+          "NOTE - Custom endring arclength",
+          "NOTE - Custom endring arclength",
+          "NOTE - Custom endring arclength"
+          ], 'verify steps (debug notes)');
+    });
 
 
 
