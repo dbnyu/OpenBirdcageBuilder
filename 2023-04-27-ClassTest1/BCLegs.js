@@ -231,21 +231,30 @@ class BCLegs {
 	helper_Lmn(len, d) {
 		/* Calculate Lmn subpart for Mutual Inductance of Legs 
 		 *
-		 *
+		 * len = leg length
+		 * d = distance between legs
 		 *
 		 * BC2J.96 and BC2J.116
 		 * */
 
+		// TODO warning if length or d are <= 0?
+
+
+		//debug("len: " + len);
+		//debug("d: " + d);
 		//debug("typeof len: " + typeof(len));
 		//debug("typeof d: " + typeof(d));
+		//
 
-		//var a = (len/d) + Math.sqrt(1 + Math.pow(len/d, 2)); 
-		//var b = Math.sqrt(1. + Math.pow(d/len, 2));
+		var a = (len/d) + Math.sqrt(1 + Math.pow(len/d, 2)); 
+		var b = Math.sqrt(1. + Math.pow(d/len, 2));
+
 
 		//debug('a: ' + a);
 		//debug('b: ' + b);
 
 		//var Lmn = 2. * len * Math.log(a - b + d/len);
+		var Lmn = 2. * len * (Math.log(a) - b + d/len);
 
 
 		//debug('Lmn: ' + Lmn);
@@ -254,9 +263,16 @@ class BCLegs {
 		//debug('type b: ' + typeof(b));
 		//debug('type Lmn: ' + typeof(Lmn));
 
-		return 2*len*(Math.log(len/d+Math.sqrt(1+Math.pow(length/d,2)))-Math.sqrt(1+Math.pow(d/len, 2))+d/len);
-		//return Lmn;
+		return Lmn;
+		//return this.helper_Lmn_orig(len, d);
+	}
 
+	helper_Lmn_orig(len, d) {
+		/* Original Lmn function copied from Java code & edited to run in JS.
+		 */
+
+
+		return 2*len*(Math.log(len/d+Math.sqrt(1+Math.pow(len/d,2)))-Math.sqrt(1+Math.pow(d/len, 2))+d/len);
 	}
 
 
@@ -289,6 +305,8 @@ class BCLegs {
 			d = Math.sqrt( Math.pow(this.leg_x[k]-x0, 2) + Math.pow(this.leg_y[k] - y0, 2) );
 
 			Lmn = this.helper_Lmn(len, d);
+			//Lmn = this.helper_Lmn_orig(len, d);
+
 			//debug('Lmn: ' + Lmn);
 
 
@@ -337,6 +355,7 @@ class BCLegs {
 
 			d = Math.sqrt(Math.pow(this.shield_x[k]-this.leg_x[0], 2) + Math.pow(this.shield_y[k]-this.leg_y[0], 2));
 			Lmn = this.helper_Lmn(len, d);
+			//Lmn = this.helper_Lmn_orig(len, d);
 
 			// debugging only:
 			this._shield_mutual_inductances[k] = Lmn * this.shield_currents[k] / this.leg_currents[0];

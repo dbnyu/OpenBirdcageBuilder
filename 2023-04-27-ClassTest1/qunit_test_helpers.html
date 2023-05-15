@@ -42,8 +42,13 @@
     QUnit.test('General Math', function(assert) {
       /* Confirming general Javascript Math/IEEE-754 assumptions */
 
+      /* Make sure Math.log is the same as Java (Natural log) */
+      assert.close(Math.log(2.71), 0.9969486348916096, 1e-15, 'Natural log of truncated e (2.71)');
+      assert.equal(Math.log(Math.E), 1.0, 'Natural log of Math.E (exact)'); 
       assert.equal(Math.log(1), 0);
       assert.equal(Math.log(0), Number.NEGATIVE_INFINITY);
+
+      /* Infinity value handling */
       assert.equal(Math.log(0) + 0.5, Number.NEGATIVE_INFINITY);
       assert.equal(2*Math.log(0), Number.NEGATIVE_INFINITY);
       assert.equal(2*Math.log(0) + 0.5, Number.NEGATIVE_INFINITY);
