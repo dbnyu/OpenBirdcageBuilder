@@ -173,9 +173,9 @@ class BCLegs {
 		var leg_mi = this.calc_leg_mutual_inductance(this.leg_length);
 		var shield_mi = this.calc_shield_mutual_inductance(this.leg_length);
 
-		debug('this.leg_self_inductance: ' + this.leg_self_inductance);
-		debug('this.calc_leg_mutual_inductance(this.leg_length): ' + leg_mi);
-		debug('this.calc_shield_mutual_inductance(this.leg_length): ' + shield_mi);
+		//debug('this.leg_self_inductance: ' + this.leg_self_inductance);
+		//debug('this.calc_leg_mutual_inductance(this.leg_length): ' + leg_mi);
+		//debug('this.calc_shield_mutual_inductance(this.leg_length): ' + shield_mi);
 
 
 		this.leg_mutual_inductance = this.leg_self_inductance + leg_mi + shield_mi;
@@ -236,13 +236,17 @@ class BCLegs {
 		 * BC2J.96 and BC2J.116
 		 * */
 
-		var a = (len/d) + Math.sqrt(1 + Math.pow(len/d, 2)); 
-		var b = Math.sqrt(1. + Math.pow(d/len, 2));
+		//debug("typeof len: " + typeof(len));
+		//debug("typeof d: " + typeof(d));
+
+		//var a = (len/d) + Math.sqrt(1 + Math.pow(len/d, 2)); 
+		//var b = Math.sqrt(1. + Math.pow(d/len, 2));
 
 		//debug('a: ' + a);
 		//debug('b: ' + b);
 
-		var Lmn = 2. * len * Math.log(a - b + d/len);
+		//var Lmn = 2. * len * Math.log(a - b + d/len);
+
 
 		//debug('Lmn: ' + Lmn);
 
@@ -250,7 +254,9 @@ class BCLegs {
 		//debug('type b: ' + typeof(b));
 		//debug('type Lmn: ' + typeof(Lmn));
 
-		return Lmn;
+		return 2*len*(Math.log(len/d+Math.sqrt(1+Math.pow(length/d,2)))-Math.sqrt(1+Math.pow(d/len, 2))+d/len);
+		//return Lmn;
+
 	}
 
 
@@ -276,6 +282,7 @@ class BCLegs {
 		var Lmn; // helper function value
 
 		debug('Leg MI Loop:');
+		debug('k,d,Lmn,cr,mip,mia'); // csv style format
 
 		for (var k=1; k < this.n_legs; k++) {
 			//debug('k: ' + k);
@@ -292,8 +299,9 @@ class BCLegs {
 			
 			// debuggin only:
 			this._leg_mutual_inductances[k] = Lmn * this.leg_currents[k] / this.leg_currents[0];
-			debug('k: ' + k + ', d: ' + d + ', Lmn: ' + Lmn + ', cr:  ' + (this.leg_currents[k] / this.leg_currents[0]) + ', mip: ' + this._leg_mutual_inductances[k] + ', mia: ' + mi);
+			//debug('k: ' + k + ', d: ' + d + ', Lmn: ' + Lmn + ', cr:  ' + (this.leg_currents[k] / this.leg_currents[0]) + ', mip: ' + this._leg_mutual_inductances[k] + ', mia: ' + mi);
 
+			debug(k + ',' + d + ',' + Lmn + ',' + (this.leg_currents[k] / this.leg_currents[0]) + ',' + this._leg_mutual_inductances[k] + ',' + mi); // csv style format
 		}
 
 		//debug('Leg Mutual Inductances: ' + this._leg_mutual_inductances);
@@ -321,6 +329,7 @@ class BCLegs {
 		var mi = 0; // shield portion of mutual inductance
 
 		debug('Shield MI Loop:');
+		debug('k,d,Lmn,cr,mip,mia'); // csv style
 
 		for (var k = 0; k < this.n_legs; k++) {
 			//debug('k: ' + k);
@@ -343,7 +352,7 @@ class BCLegs {
 
 			//debug('mi: ' + mi);
 			//debug('');
-			debug('k: ' + k + ', d: ' + d + ', Lmn: ' + Lmn + ', cr: ' + (this.shield_currents[k] / this.leg_currents[0])  + ', mip: ' + this._shield_mutual_inductances[k] + ', mia: ' + mi);
+			debug(k + ',' + d + ',' + Lmn + ',' + (this.shield_currents[k] / this.leg_currents[0])  + ',' + this._shield_mutual_inductances[k] + ',' + mi);// csv style
 
 		}
 
