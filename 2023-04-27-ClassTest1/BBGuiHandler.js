@@ -162,6 +162,7 @@ function get_coil_config() {
 	 * (Hi/Low/Bandpass)
 	 */
 
+	// TODO do we need a 4th category for bandpass for cap on leg/ER?
 	if (document.getElementById('config_lp').checked) {
 		return 'lowpass';
 	}
