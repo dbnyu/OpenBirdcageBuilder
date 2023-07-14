@@ -40,6 +40,7 @@ class BirdcageBuilder {
 		//  before calling calc_capacitor().
 	}
 
+
 	to_string() {
 		var s = 'BirdcageBuilder Object:<br>';
 		s += 'n_legs: ' + this.n_legs + '<br>';
@@ -48,6 +49,27 @@ class BirdcageBuilder {
 		s += 'r_shield: ' + this.r_shield + '<br>';
 		return s;
 
+	}
+
+
+	to_app_csv_string() {
+		/* Returns a CSV-formatted string of values to compare with Android App output.
+		 *
+		 * Format (no spaces):
+		 * Frequency, Leg Self Inductance, ER Self Inductance, Leg Mutual Inductance, ER Mutual Inductance, Capacitor
+		 *
+		 * Output is only valid after complete setup & capacitor calculation are finished.
+		 */
+
+		var s = 1e-6*this.freq + ',';
+		s += 1e9*this.legs.leg_self_inductance + ',';
+		s += 1e9*this.endrings.er_self_inductance + ',';
+		s += 1e9*this.legs.leg_mutual_inductance + ',';
+		s += 1e9*this.endrings.er_mutual_inductance[this.n_legs/4] + ',';
+		s += 1e12*this.calc_capacitor();
+		// TODO store cap value when it's computed to avoid repeating?
+		// TODO also return config (HP/LP/BP?)
+		return s;
 	}
 
 
