@@ -128,8 +128,7 @@ function get_gui_args() {
 	endring_width = cm2meters(endring_width);
 	endring_r_inner = cm2meters(endring_r_inner);
 	endring_r_outer = cm2meters(endring_r_outer);
-	// TODO stopped after BCJ.MA.280
-	// TODO Predetermined Band Pass Cap value
+	// TODO XXX Predetermined Band Pass Cap value * 1e-12
 	
 	debug('hello');
 	
