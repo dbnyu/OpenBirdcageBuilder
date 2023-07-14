@@ -143,6 +143,7 @@ function get_gui_args() {
 	}
 	else if (leg_geom == 'tube') {
 		bb.legs.set_legs_tube(leg_length, leg_r_inner, leg_r_outer);
+		// TODO XXX - BUG - endring shape is not always the same as leg shape!!!
 		bb.endrings.set_endrings_tube(endring_r_inner, endring_r_outer);
 	}
 	else {
