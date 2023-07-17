@@ -164,6 +164,82 @@
 
       function run_all() {
 
+        document.getElementById("output_csv_test").innerHTML += '<h3>Paper Frequencies<h3>';
+
+
+
+        /*** Paper Frequencies (many not exact in app, only here and Java ***/
+
+         //System.out.print("A,");
+         document.getElementById("output_csv_test").innerHTML += 'A,';
+         testcase(0, 12, 21.25, 3.8, 100, 10, 0.6, -1, -1, -1, 0.6, 269.54, 0.5e-3);
+         document.getElementById("output_csv_test").innerHTML += '<br>';
+
+         //System.out.print("B,");
+         document.getElementById("output_csv_test").innerHTML += 'B,';
+         testcase(0, 12, 63, 4.45, 0, 8.9, 0.6, -1, -1, -1, 0.6, 29.56, 0.5e-3);
+         document.getElementById("output_csv_test").innerHTML += '<br>';
+
+         //Skystem.out.println("\nPaper Test C:");
+        //System.out.print("C,");
+         document.getElementById("output_csv_test").innerHTML += 'C,';
+         testcase(0, 8, 127.8, 6.35, 8.95, 12.6, 1.27, -1, -1, -1, 1.27, 9.76, 0.5e-3);
+         document.getElementById("output_csv_test").innerHTML += '<br>';
+
+         //System.out.println("\nPaper Test D:");
+        //System.out.print("D,");
+         document.getElementById("output_csv_test").innerHTML += 'D,';
+         testcase(0, 8, 400.1, 1.25, 1.87, 2.4, 0.1, -1, -1, -1, 0.1, 3.3, 0.5e-3);
+         document.getElementById("output_csv_test").innerHTML += '<br>';
+
+         // NOTE: High Pass & Tube Legs - make sure both are implemented correctly!
+         //System.out.println("\nPaper Test E:");
+         //System.out.println("\nNOTE: App does not have a nearby requency!)");
+        //System.out.print("E,");
+         document.getElementById("output_csv_test").innerHTML += 'E,';
+         testcase(1, 16, 106, 9.52, 35.5, 22.2, -1, 0.4, 0.3, -1, 1.3, 47.47, 0.5e-3);
+         document.getElementById("output_csv_test").innerHTML += '<br>';
+
+         // NOTE: High Pass & Tube Legs - make sure both are implemented correctly!
+         //System.out.println("\nPaper Test F:");
+        //System.out.print("F,");
+         document.getElementById("output_csv_test").innerHTML += 'F,';
+         testcase(1, 12, 200.1, 9.7, 12.8, 20, -1, 0.65, 0.40, -1, 1.4, 11.62, 0.5e-3);
+         document.getElementById("output_csv_test").innerHTML += '<br>';
+
+         //System.out.println("\nPaper Test G:");
+        //System.out.print("G,");
+         document.getElementById("output_csv_test").innerHTML += 'G,';
+         testcase(1, 8, 200.5, 1.9, 50, 7.3, 0.6, -1, -1, -1, 0.6, 25.58, 0.5e-3);
+         document.getElementById("output_csv_test").innerHTML += '<br>';
+
+         // TODO start here - this does NOT agree with the app but it should because req is exact
+         // App matches paper pretty well
+         // TODO - still not matching app - need to troubleshoot
+         //System.out.println("\nPaper Test H:");
+        //System.out.print("H,");
+         document.getElementById("output_csv_test").innerHTML += 'H,';
+         testcase(3, 12, 125.2, 9.5, 0.0, 20, 1.25, -1, -1, -1, 1.25, 15.04, 0.5e-3, 33);
+         document.getElementById("output_csv_test").innerHTML += '<br>';
+
+         //System.out.println("\nPaper Test I:");
+        //System.out.print("I,");
+         document.getElementById("output_csv_test").innerHTML += 'I,';
+         testcase(2, 12, 170, 9.5, 0.0, 17.2, 0.6, -1, -1, -1, 0.5, 14.26, 0.5e-3, 11.7);
+         document.getElementById("output_csv_test").innerHTML += '<br>';
+
+         //System.out.println("\nPaper Test J:");
+        //System.out.print("J,");
+         document.getElementById("output_csv_test").innerHTML += 'J,';
+         testcase(2, 12, 173, 8.4, 0.0, 22.5, 0.6, -1, -1, -1, 0.6, 11.62, 0.5e-3, 47);
+         document.getElementById("output_csv_test").innerHTML += '<br>';
+
+
+
+        /*** App Frequencies (adjusted to match limited list in Android App release ***/
+
+        document.getElementById("output_csv_test").innerHTML += '<h3>App Frequencies</h3>';
+
         document.getElementById("output_csv_test").innerHTML += 'A,';
         testcase(0, 12, 21.28, 3.8, 100, 10, 0.6, -1, -1, -1, 0.6, 268.6685, 0.5e-4);
         document.getElementById("output_csv_test").innerHTML += '<br>';
@@ -241,88 +317,6 @@
         document.getElementById("output_csv_test").innerHTML += '<br>';
 
 
-      /*
-       //System.out.println("\nPaper Test A:");
-       document.getElementById("output_csv_test").innerHTML += 'A,';
-       testcase(0, 12, 21.25, 3.8, 100, 10, 0.6, -1, -1, -1, 0.6, 269.54, 0.5e-3);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test B:");
-       document.getElementById("output_csv_test").innerHTML += 'B,';
-       testcase(0, 12, 63, 4.45, 0, 8.9, 0.6, -1, -1, -1, 0.6, 29.56, 0.5e-3);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-  
-       //System.out.println("\nPaper Test C:");
-       document.getElementById("output_csv_test").innerHTML += 'C,';
-       testcase(0, 8, 127.8, 6.35, 8.95, 12.6, 1.27, -1, -1, -1, 1.27, 9.76, 0.5e-3);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test D:");
-       document.getElementById("output_csv_test").innerHTML += 'D,';
-       testcase(0, 8, 400.1, 1.25, 1.87, 2.4, 0.1, -1, -1, -1, 0.1, 3.3, 0.5e-3);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test E:");
-       //System.out.println("\nNOTE: App does not have a nearby frequency!)");
-       document.getElementById("output_csv_test").innerHTML += 'E0,';
-       testcase(1, 16, 106, 9.52, 35.5, 22.2, -1, 0.4, 0.3, -1, 1.3, 47.47, 0.5e-3);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test E @ 85.13MHz (nearest app Freq, not close):");
-       document.getElementById("output_csv_test").innerHTML += 'E1,';
-       testcase(1, 16, 85.13, 9.52, 35.5, 22.2, -1, 0.4, 0.3, -1, 1.3, 70.2500, 0.5e-4);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test E @ 125.2MHz (2nd nearest app Freq, also not close):");
-       document.getElementById("output_csv_test").innerHTML += 'E2,';
-       testcase(1, 16, 125.20, 9.52, 35.5, 22.2, -1, 0.4, 0.3, -1, 1.3, 32.4790, 0.5e-4);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test F:");
-       document.getElementById("output_csv_test").innerHTML += 'F,';
-       testcase(1, 12, 200.1, 9.7, 12.8, 20, -1, 0.65, 0.40, -1, 1.4, 11.62, 0.5e-3);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test G:");
-       document.getElementById("output_csv_test").innerHTML += 'G,';
-       testcase(1, 8, 200.5, 1.9, 50, 7.3, 0.6, -1, -1, -1, 0.6, 25.58, 0.5e-3);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test H:");
-       document.getElementById("output_csv_test").innerHTML += 'H,';
-       testcase(3, 12, 125.2, 9.5, 0.0, 20, 1.25, -1, -1, -1, 1.25, 15.04, 0.5e-3, 33);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test I:");
-       document.getElementById("output_csv_test").innerHTML += 'I0,';
-       testcase(2, 12, 170, 9.5, 0.0, 17.2, 0.6, -1, -1, -1, 0.5, 14.26, 0.5e-3, 11.7);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test I (@ 125.2 MHz):");
-       document.getElementById("output_csv_test").innerHTML += 'I1,';
-       testcase(2, 12, 125.2, 9.5, 0.0, 17.2, 0.6, -1, -1, -1, 0.5, 14.26, 0.5e-3, 11.7)    ;
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test I (@ 200.03MHz):"); 
-       document.getElementById("output_csv_test").innerHTML += 'I2,';
-       testcase(2, 12, 200.03, 9.5, 0.0, 17.2, 0.6, -1, -1, -1, 0.5, 14.26, 0.5e-3, 11.7    );
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test J0:");   
-       document.getElementById("output_csv_test").innerHTML += 'J0,';
-       testcase(2, 12, 173, 8.4, 0.0, 22.5, 0.6, -1, -1, -1, 0.6, 11.62, 0.5e-3, 47);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test J (@ 125.2 MHz):"); 
-       document.getElementById("output_csv_test").innerHTML += 'J1,';
-       testcase(2, 12, 125.2, 8.4, 0.0, 22.5, 0.6, -1, -1, -1, 0.6, 11.62, 0.5e-3, 47);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-
-       //System.out.println("\nPaper Test J (@ 200.03 MHz):");
-       document.getElementById("output_csv_test").innerHTML += 'J2,';
-       testcase(2, 12, 200.03, 8.4, 0.0, 22.5, 0.6, -1, -1, -1, 0.6, 11.62, 0.5e-3, 47);
-       document.getElementById("output_csv_test").innerHTML += '<br>';
-      */
  
 
 
