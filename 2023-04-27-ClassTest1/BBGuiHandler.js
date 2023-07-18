@@ -24,7 +24,7 @@
 // these are declared in debug.js but set here 
 DEBUG_ENABLE = true; // bool; enable or disable debug printing to DOM
 DEBUG_ID = 'debug1'; // DOM ID for debug output
-
+PLOTLY_ENABLE = false;
 
 
 
@@ -67,10 +67,20 @@ function calculate() {
 
 
 	// Plots
-	plotly_leg_currents(BB.legs, 'plotly_ILegs');
-	plotly_cross_section(BB.legs, 'plotly_crossSection');
-	plotly_endring_currents(BB.legs, BB.endrings, 'plotly_Iendrings');
-	plotly_leg_inductance(BB.legs, 'plotly_leg_inductance');
+	if (PLOTLY_ENABLE) {
+		try {
+			plotly_leg_currents(BB.legs, 'plotly_ILegs');
+			plotly_cross_section(BB.legs, 'plotly_crossSection');
+			plotly_endring_currents(BB.legs, BB.endrings, 'plotly_Iendrings');
+			plotly_leg_inductance(BB.legs, 'plotly_leg_inductance');
+		}
+		catch ({name, message}) {
+			console.warn('Exception in BBGuihandler plotting');
+			console.log('(probably plotly is not available)');
+			console.log(name);
+			console.log(message);
+		}
+	}
 }
 
 
