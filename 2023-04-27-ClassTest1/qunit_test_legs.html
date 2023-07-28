@@ -122,7 +122,8 @@
 
       // TODO is this really a bug, or is a loose tolerance assertion ok for this?
       // why isn't it exact?
-      assert.close(bb.legs.helper_Lmn(1., 1.), 2*Math.log(2), 1e-15);
+      //assert.close(bb.legs.helper_Lmn(1., 1.), 2*Math.log(2), 1e-15); // from old (wrong) Lmn calculation
+      assert.close(bb.legs.helper_Lmn(1., 1.), 2*(Math.log(1 +Math.sqrt(2)) - Math.sqrt(2) + 1), 1e-15); // from old (wrong) Lmn calculation
 
       // TODO continue tests
       // TODO test final mutual inductance result
