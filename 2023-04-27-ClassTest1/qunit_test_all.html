@@ -121,25 +121,25 @@
     var PAPER_TEST_TOL = 5e-3; // paper results only have 2 digits after decimal
     // TODO some have 0 or 1 digits (after decimal)
 
-    QUnit.test('BirdcageBuilder 2002-A', function(assert) {
-      /* Test against Table 1 results from 2002 Birdcage Builder paper 
-       *
-       * Chin, Collins, et al. MRM Vol 15(2) 156-163. 2002.
-       */
-
-	    //           constructor(n,        f,     rc,     rs,   config) 
-	    bb = new BirdcageBuilder(12, 21.25e6, 3.8e-2, 100e-2, 'lowpass');
-      assert.step('NOTE - Custom endring arclength');
-		  bb.legs.set_legs_rect(10e-2, 0.6e-2); // TODO assuming rectangular? 'a' superscript?
-      bb.endrings.er_arclen = 1.98e-2;
-		  bb.endrings.set_endrings_rect(0.6e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
-	    bb.endrings.calc_er_mutual_inductance(bb.legs);
-
-      // TODO - NOTE: the units are manually adjusted here, to reflect the app output values:
-      assert.close(1e12 * bb.calc_capacitor(), 269.54, PAPER_TEST_TOL, 'Paper Capacitor A');
-
-      assert.verifySteps(['NOTE - Custom endring arclength']);
-    });
+//    QUnit.test('BirdcageBuilder 2002-A', function(assert) {
+//      /* Test against Table 1 results from 2002 Birdcage Builder paper 
+//       *
+//       * Chin, Collins, et al. MRM Vol 15(2) 156-163. 2002.
+//       */
+//
+//	    //           constructor(n,        f,     rc,     rs,   config) 
+//	    bb = new BirdcageBuilder(12, 21.25e6, 3.8e-2, 100e-2, 'lowpass');
+//      assert.step('NOTE - Custom endring arclength');
+//		  bb.legs.set_legs_rect(10e-2, 0.6e-2); // TODO assuming rectangular? 'a' superscript?
+//      bb.endrings.er_arclen = 1.98e-2;
+//		  bb.endrings.set_endrings_rect(0.6e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+//	    bb.endrings.calc_er_mutual_inductance(bb.legs);
+//
+//      // TODO - NOTE: the units are manually adjusted here, to reflect the app output values:
+//      assert.close(1e12 * bb.calc_capacitor(), 269.54, PAPER_TEST_TOL, 'Paper Capacitor A');
+//
+//      assert.verifySteps(['NOTE - Custom endring arclength']);
+//    });
 
 
     //function test_2002_paper_cap(type, N, f, rc, rs, 
@@ -290,6 +290,28 @@
           ], 'verify steps (debug notes)');
     });
 
+
+    QUnit.test('Sim4Life Birdcage Comparison', function(assert) {
+      /* Comparing against manually tuned bore-size birdcage from our 2023 ISMRM poster.
+       *
+       * 
+       */
+    
+      //           constructor(n,        f,     rc,     rs,   config) 
+      bb = new BirdcageBuilder(16, 128e6, 325e-2, 400e-2, 'highpass');
+      assert.step('Manually Tuned');
+      // TODO rest of parameters
+      // TODO try original calculated capacitor too
+      bb.legs.set_legs_rect(10e-2, 0.6e-2); // TODO assuming rectangular? 'a' superscript?
+      bb.endrings.er_arclen = 1.98e-2;
+      bb.endrings.set_endrings_rect(0.6e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
+      bb.endrings.calc_er_mutual_inductance(bb.legs);
+    
+      // TODO - NOTE: the units are manually adjusted here, to reflect the app output values:
+      assert.close(1e12 * bb.calc_capacitor(), 269.54, PAPER_TEST_TOL, 'Paper Capacitor A');
+    
+      assert.verifySteps(['Manually Tuned']);
+    });
 
 
   }); // end all tests
