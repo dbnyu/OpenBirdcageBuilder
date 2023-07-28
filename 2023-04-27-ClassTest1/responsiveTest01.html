@@ -2,7 +2,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Birdcage Builder v0.0.3</title>
+    <title>BirdcageBuilderJS</title>
 
     <!-- scripts must be included in reverse order of call stack for scope visibility -->
     <script src="debug.js"></script>
@@ -11,28 +11,44 @@
     <script src="BCEndRings.js"></script>
     <script src="BirdcageBuilder.js"></script>
     <script src="BBGuiHandler.js"></script>
-    <script src="../../plotly/v1.58.5/plotly-latest.min.js"></script>
+    <!-- <script src="../../plotly/v1.58.5/plotly-latest.min.js"></script> -->
+
+    <style> 
+
+      body {
+        font-family: Helvetica;
+      }
+
+      header {
+        background-color: #580f8b;
+        color: #ffffff;
+      }
+
+    </style>
 
 
 
   <!-- Birdcage Builder -->
-  <!-- v0.0.2 GUI Test only -->
-  <!-- Doug Brantner 4/17/2023 -->
+  <!-- v0.0.4 Responsive Test only -->
+  <!-- Doug Brantner 7/28/2023 -->
   <!-- NYU Langone Health CAI2R -->
   <!-- cai2r.net -->
 
   </head>
 
+  <!-- approx color: 580f8b -->
 
 
 
 
   <body>
-    <h1>Birdcage Builder</h1>
-    v0.0.3<br>
+    <header>
+    <h1>BirdcageBuilderJS</h1>
+    v0.0.4<br>
     <br>
+    </header>
 
-    <h2>Plotly Test & Leg M.I. Troubleshooting</h2>
+    <h2>Responsive Mobile DIY Tests</h2>
 
     <form> 
 
@@ -125,22 +141,6 @@
     <p id="output_test1">This field intentionally blank.</p>
     <p id="output_main"></p>
 
-    <hr>
-    <h2>Plotly Tests</h2>
-    <h3>Leg & Shield Positions</h3>
-    <s>TODO: Seems like shield radius is wrong (too far from center?)</s><br>
-    The "legs" of the "shield" are using the Method of Images [1], and <i>should</i> be farther out than the shield radius.<br>
-    The <b>Electric Field</b> should be zero at the shield radius, negated by the image of the shield "virtual legs".<br>
-    <div id="plotly_crossSection" style="width:100%;max-width:700px"></div>
-
-    <h3>Leg & Shield Currents</h3>
-    <div id="plotly_ILegs" style="width:100%;max-width:700px"></div>
-
-    <h3>Leg Self & Mutual Inductance</h3>
-    <div id="plotly_leg_inductance" style="width:100%;max-width:700px"></div>
-
-    <h3>End Ring Currents & Mutual Inductance</h3>
-    <div id="plotly_Iendrings" style="width:100%;max-width:700px"></div>
 
 
     <hr>
