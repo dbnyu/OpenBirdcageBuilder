@@ -101,12 +101,12 @@
 
 
         End Ring Type:<br>
-        <input type="radio" id="er_rect" name="er_type" value="er_rect" onchange="update_er_geom_inputs(this)" checked />
+        <input type="radio" id="er_rect" name="er_type" value="er_rect" onChange="update_er_geom_inputs(this)" checked />
         <label for="er_rect">Rectangular</label><br>
           <input type="number" id="er_width" step="any" value="1"> End Ring Width (cm)</input><br>
         <br>
 
-        <input type="radio" id="er_tube" name="er_type" value="er_tube" onchange="update_er_geom_inputs(this)" />
+        <input type="radio" id="er_tube" name="er_type" value="er_tube" onChange="update_er_geom_inputs(this)" />
         <label for="er_tube">Tubular</label>
         <br>
           <input type="number" id="er_ID" step="any" value="0" disabled="disabled"> ER Inner Diam. (cm)</input><br>
@@ -121,16 +121,16 @@
       <fieldset>
         <legend>Configuration</legend>
 
-        <input type="radio" id="config_lp" name="config" value="lowpass" checked />
+        <input type="radio" id="config_lp" name="config" value="lowpass" onChange="update_coil_config(this)" checked />
         <label for="config_lp">Low Pass</label><br>
 
-        <input type="radio" id="config_hp" name="config" value="highpass" />
+        <input type="radio" id="config_hp" name="config" value="highpass" onChange="update_coil_config(this)" />
         <label for="config_hp">High Pass</label><br>
 
-        <input type="radio" id="config_bp_leg" name="config" value="bandpass_leg" />
+        <input type="radio" id="config_bp_leg" name="config" value="bandpass_leg" onChange="update_coil_config(this) "/>
         <label for="config_bp_leg">Band Pass (Fixed Caps on Legs)</label><br>
 
-        <input type="radio" id="config_bp_er" name="config" value="bandpass_er" />
+        <input type="radio" id="config_bp_er" name="config" value="bandpass_er" onChange="update_coil_config(this) "/>
         <label for="config_bp_er">Band Pass (Fixed Caps on ER)</label><br>
 
             <input type="number" id="bp_predcap" step="any" value="-1" disabled="disabled"> Fixed Capacitor (UNITS)</input><br>

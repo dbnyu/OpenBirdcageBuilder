@@ -228,6 +228,8 @@ function get_endring_geom() {
  */
 
 function update_leg_geom_inputs(radiobtn) {
+	// Enable/disable leg width/inner/outer diameter inputs based on radio button state
+
 	if (radiobtn.value === "leg_rect") {
 		document.getElementById("leg_ID").disabled = true;
 		document.getElementById("leg_OD").disabled = true;
@@ -245,6 +247,8 @@ function update_leg_geom_inputs(radiobtn) {
 
 
 function update_er_geom_inputs(radiobtn) {
+	// Enable/disable endring width/inner/outer diameter inputs based on radio button state
+
 	if (radiobtn.value === "er_rect") {
 		document.getElementById("er_ID").disabled = true;
 		document.getElementById("er_OD").disabled = true;
@@ -258,6 +262,21 @@ function update_er_geom_inputs(radiobtn) {
 	else {
 		debug("BBGuiHandler update_er_geom_inputs: invalid er type input");
 	}
+}
+
+
+function update_coil_config(radiobtn) {
+	// Enable/disable predefined capacitor field based on coil config radio button state
+
+	if (radiobtn.value === "lowpass" || radiobtn.value === "highpass") {
+		document.getElementById("bp_predcap").disabled = true;
+	}
+	else if (radiobtn.value === "bandpass_leg" || radiobtn.value === "bandpass_er") {
+		document.getElementById("bp_predcap").disabled = false;
+		// TODO - add input validation here? so it only turns red if/after bandpass is selected?
+		// OR TODO can 'disabled' CSS take precedence over input validation error CSS?
+	}
+
 }
 
 
