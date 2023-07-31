@@ -24,6 +24,23 @@
         color: #ffffff;
       }
 
+      legend {
+        background-color: #580f8b;
+        color: #fff;
+        padding: 3px 6px;
+        font-weight: bold;
+      }
+
+      input {
+        margin: 0.4rem;
+      }
+
+  
+      input:disabled+label {
+        color: #ccc;
+      }
+
+
     </style>
 
 
@@ -36,7 +53,6 @@
 
   </head>
 
-  <!-- approx color: 580f8b -->
 
 
 
@@ -53,21 +69,35 @@
     <form> 
 
       <fieldset>
-        <legend>Leg Type</legend>
+        <legend>Birdcage Legs</legend>
+
+        <input type="number" id="leg_len" step="any" value="10"> Leg Length (cm)</input><br>
+        <br>
+
+        Leg Type:<br>
         <ul>
           <li>
             <label for="leg_rect">Rectangular</label>
-            <input type="radio" id="leg_rect" name="leg_type" value="leg_rect" checked />
+            <input type="radio" id="leg_rect" name="leg_type" value="leg_rect" checked /><br>
+
+            <input type="number" id="leg_width" step="any" value="2"> Leg Width (cm)</input><br>
           </li>
+          <br>
           <li>
             <label for="leg_tube">Tubular</label>
-            <input type="radio" id="leg_tube" name="leg_type" value="leg_tube" />
+            <input type="radio" id="leg_tube" name="leg_type" value="leg_tube" /><br>
+
+            <input type="number" id="leg_ID" step="any" value="0" disabled="disabled"> Leg Inner Diam. (cm)</input><br>
+            <input type="number" id="leg_OD" step="any" value="0" disabled="disabled"> Leg Outer Diam. (cm)</input><br>
           </li>
         </ul>
+
+        <br>
+
       </fieldset>
 
       <fieldset>
-        <legend>End Ring Type</legend>
+        <legend>End Rings</legend>
         <ul>
           <li>
             <label for="er_rect">Rectangular</label>
@@ -83,6 +113,7 @@
 
 
       <fieldset>
+        TODO - move inputs before labels so radio buttons are left justified & get rid of bullet points/li? <br>
         <legend>Configuration</legend>
         <ul>
           <li>
@@ -94,9 +125,18 @@
             <input type="radio" id="config_hp" name="config" value="highpass" />
           </li>
           <li>
-            <label for="config_bp">Band Pass</label>
-            <input type="radio" id="config_bp" name="config" value="bandpass" />
-<!-- TODO: need a popup/grayed out box for extra capacitor value if using Bandpass! -->
+            <label for="config_bp_leg">Band Pass (Fixed Caps on Legs)</label>
+            <input type="radio" id="config_bp_leg" name="config" value="bandpass_leg" />
+          </li>
+          <li>
+            <label for="config_bp_er">Band Pass (Fixed Caps on ER)</label>
+            <input type="radio" id="config_bp_er" name="config" value="bandpass_er" />
+            <ul>
+              <li>
+                <input type="number" id="bp_predcap" step="any" value="1" disabled="disabled"> Fixed Capacitor (UNITS)</input><br>
+              </li>
+            </ul>
+            <!--          TODO - one choice for BP, then dropdown for Legs/ER?<br> -->
           </li>
       </fieldset>
 
@@ -118,8 +158,6 @@
       <input type="number" id="center_freq" step="any" value="21.28"> Frequency (MHz)</input><br>
       <input type="number" id="coil_radius" step="any" value="10"> Coil Radius (cm)</input><br>
       <input type="number" id="shield_radius" step="any" value="0"> Shield Radius (cm)</input><br>
-      <input type="number" id="leg_len" step="any" value="10"> Leg Length (cm)</input><br>
-      <input type="number" id="leg_width" step="any" value="2"> Leg Width (cm)</input><br>
       <input type="number" id="er_width" step="any" value="1"> End Ring Width (cm)</input><br>
 
       <!-- TODO input verification regex -->

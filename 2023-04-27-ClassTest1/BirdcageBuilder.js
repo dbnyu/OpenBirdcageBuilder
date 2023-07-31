@@ -134,6 +134,7 @@ class BirdcageBuilder {
 				
 			case 'bandpass_er':
 				if (this.predcap < 0) debug('WARNING: predcap not set');
+				// TODO upgrade this to a user message or console.log; debugs will get lost when disabled for production (above case also!)
 
 				kk = -this.endrings.er_currents[k] * (wsq * this.endrings.er_mutual_inductance[k] - 1/this.predcap);
 				jj = this.legs.leg_currents[n/4] * wsq * this.legs.leg_mutual_inductance;
