@@ -17,11 +17,13 @@
 
       body {
         font-family: Helvetica;
+        /* border: solid #580f8b; */
       }
 
       header {
         background-color: #580f8b;
         color: #ffffff;
+        width: 100%;
       }
 
       legend {
@@ -75,41 +77,45 @@
         <br>
 
         Leg Type:<br>
-        <ul>
-          <li>
-            <label for="leg_rect">Rectangular</label>
-            <input type="radio" id="leg_rect" name="leg_type" value="leg_rect" checked /><br>
+        <input type="radio" id="leg_rect" name="leg_type" value="leg_rect" onchange="update_leg_geom_inputs(this)" checked />
+        <label for="leg_rect">Rectangular</label>
+        <br>
 
-            <input type="number" id="leg_width" step="any" value="2"> Leg Width (cm)</input><br>
-          </li>
-          <br>
-          <li>
-            <label for="leg_tube">Tubular</label>
-            <input type="radio" id="leg_tube" name="leg_type" value="leg_tube" /><br>
+        <input type="number" id="leg_width" step="any" value="2"> Leg Width (cm)</input><br>
+        <br>
+        <input type="radio" id="leg_tube" name="leg_type" value="leg_tube" onChange="update_leg_geom_inputs(this)" />
+        <label for="leg_tube">Tubular</label>
+        <br>
 
-            <input type="number" id="leg_ID" step="any" value="0" disabled="disabled"> Leg Inner Diam. (cm)</input><br>
-            <input type="number" id="leg_OD" step="any" value="0" disabled="disabled"> Leg Outer Diam. (cm)</input><br>
-          </li>
-        </ul>
+          <input type="number" id="leg_ID" step="any" value="0" disabled="disabled"> Leg Inner Diam. (cm)</input><br>
+          <input type="number" id="leg_OD" step="any" value="0" disabled="disabled"> Leg Outer Diam. (cm)</input><br>
 
         <br>
 
       </fieldset>
+      <br>
+
 
       <fieldset>
         <legend>End Rings</legend>
-        <ul>
-          <li>
-            <label for="er_rect">Rectangular</label>
-            <input type="radio" id="er_rect" name="er_type" value="er_rect" checked />
-          </li>
-          <li>
-            <label for="er_tube">Tubular</label>
-            <input type="radio" id="er_tube" name="er_type" value="er_tube" />
-<!-- TODO: need a popup/grayed out box for tube inner/outer radius!!!  -->
-          </li>
-        </ul>
+
+
+        End Ring Type:<br>
+        <input type="radio" id="er_rect" name="er_type" value="er_rect" onchange="update_er_geom_inputs(this)" checked />
+        <label for="er_rect">Rectangular</label><br>
+          <input type="number" id="er_width" step="any" value="1"> End Ring Width (cm)</input><br>
+        <br>
+
+        <input type="radio" id="er_tube" name="er_type" value="er_tube" onchange="update_er_geom_inputs(this)" />
+        <label for="er_tube">Tubular</label>
+        <br>
+          <input type="number" id="er_ID" step="any" value="0" disabled="disabled"> ER Inner Diam. (cm)</input><br>
+          <input type="number" id="er_OD" step="any" value="0" disabled="disabled"> ER Outer Diam. (cm)</input><br>
+
       </fieldset>
+      <br>
+
+
 
 
       <fieldset>
@@ -158,7 +164,6 @@
       <input type="number" id="center_freq" step="any" value="21.28"> Frequency (MHz)</input><br>
       <input type="number" id="coil_radius" step="any" value="10"> Coil Radius (cm)</input><br>
       <input type="number" id="shield_radius" step="any" value="0"> Shield Radius (cm)</input><br>
-      <input type="number" id="er_width" step="any" value="1"> End Ring Width (cm)</input><br>
 
       <!-- TODO input verification regex -->
       <!-- TODO input verification min/max (maybe just min=0?) -->

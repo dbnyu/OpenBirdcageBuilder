@@ -223,6 +223,44 @@ function get_endring_geom() {
 
 }
 
+/* update form inputs for rectangular/tube legs & endrings
+ * Just gray out/disable & enable the appropriate input fields
+ */
+
+function update_leg_geom_inputs(radiobtn) {
+	if (radiobtn.value === "leg_rect") {
+		document.getElementById("leg_ID").disabled = true;
+		document.getElementById("leg_OD").disabled = true;
+		document.getElementById("leg_width").disabled = false;
+	}
+	else if (radiobtn.value === "leg_tube") {
+		document.getElementById("leg_ID").disabled = false;
+		document.getElementById("leg_OD").disabled = false;
+		document.getElementById("leg_width").disabled = true;
+	}
+	else {
+		debug("BBGuiHandler update_leg_geom_inputs: invalid leg type input");
+	}
+}
+
+
+function update_er_geom_inputs(radiobtn) {
+	if (radiobtn.value === "er_rect") {
+		document.getElementById("er_ID").disabled = true;
+		document.getElementById("er_OD").disabled = true;
+		document.getElementById("er_width").disabled = false;
+	}
+	else if (radiobtn.value === "er_tube") {
+		document.getElementById("er_ID").disabled = false;
+		document.getElementById("er_OD").disabled = false;
+		document.getElementById("er_width").disabled = true;
+	}
+	else {
+		debug("BBGuiHandler update_er_geom_inputs: invalid er type input");
+	}
+}
+
+
 
 function append_main_output(s) {
 	/* Append a string to the output_main DOM paragraph.
