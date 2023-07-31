@@ -70,6 +70,72 @@
 
     <form> 
 
+
+      <fieldset>
+        <legend>Configuration</legend>
+
+        <!-- Defaults set to match Android app for quick testing -->
+
+        <label for="num_legs">Number of Legs:</label>
+        <select name="num_legs" id="num_legs">
+          <!-- NOTE: User can edit this list/add custom values if needed (must be multiples of 4) -->
+          <option value="4">4</option>
+          <option selected="selected" value="8">8</option>
+          <option value="12">12</option>
+          <option value="16">16</option>
+          <option value="20">20</option>
+          <option value="24">24</option>
+          <option value="28">28</option>
+          <option value="32">32</option>
+          <option value="36">36</option>
+          <option value="40">40</option>
+          <option value="44">44</option>
+          <option value="48">48</option>
+          <option value="52">52</option>
+          <option value="56">56</option>
+          <option value="60">60</option>
+          <option value="64">64</option>
+          <option value="68">68</option>
+          <option value="72">72</option>
+          <option value="76">76</option>
+          <option value="80">80</option>
+          <option value="84">84</option>
+          <option value="88">88</option>
+          <option value="92">92</option>
+          <option value="96">96</option>
+          <option value="100">100</option>
+          <option value="104">104</option>
+          <option value="108">108</option>
+          <option value="112">112</option>
+          <option value="116">116</option>
+          <option value="120">120</option>
+          <option value="124">124</option>
+          <option value="128">128</option>
+        </select>
+        <br>
+
+        <input type="number" id="center_freq" step="any" value="21.28"> Frequency (MHz)</input><br>
+        <input type="number" id="coil_radius" step="any" value="10"> Coil Radius (cm)</input><br>
+        <input type="number" id="shield_radius" step="any" value="0"> Shield Radius (cm)</input><br>
+
+        <input type="radio" id="config_lp" name="config" value="lowpass" onChange="update_coil_config(this)" checked />
+        <label for="config_lp">Low Pass</label><br>
+
+        <input type="radio" id="config_hp" name="config" value="highpass" onChange="update_coil_config(this)" />
+        <label for="config_hp">High Pass</label><br>
+
+        <input type="radio" id="config_bp_leg" name="config" value="bandpass_leg" onChange="update_coil_config(this) "/>
+        <label for="config_bp_leg">Band Pass (Fixed Caps on Legs)</label><br>
+
+        <input type="radio" id="config_bp_er" name="config" value="bandpass_er" onChange="update_coil_config(this) "/>
+        <label for="config_bp_er">Band Pass (Fixed Caps on ER)</label><br>
+
+            <input type="number" id="bp_predcap" step="any" value="-1" disabled="disabled"> Fixed Capacitor (UNITS)</input><br>
+        <!--          TODO - one choice for BP, then dropdown for Legs/ER?<br> -->
+      </fieldset>
+      <br>
+
+
       <fieldset>
         <legend>Birdcage Legs</legend>
 
@@ -118,68 +184,7 @@
 
 
 
-      <fieldset>
-        <legend>Configuration</legend>
 
-        <input type="radio" id="config_lp" name="config" value="lowpass" onChange="update_coil_config(this)" checked />
-        <label for="config_lp">Low Pass</label><br>
-
-        <input type="radio" id="config_hp" name="config" value="highpass" onChange="update_coil_config(this)" />
-        <label for="config_hp">High Pass</label><br>
-
-        <input type="radio" id="config_bp_leg" name="config" value="bandpass_leg" onChange="update_coil_config(this) "/>
-        <label for="config_bp_leg">Band Pass (Fixed Caps on Legs)</label><br>
-
-        <input type="radio" id="config_bp_er" name="config" value="bandpass_er" onChange="update_coil_config(this) "/>
-        <label for="config_bp_er">Band Pass (Fixed Caps on ER)</label><br>
-
-            <input type="number" id="bp_predcap" step="any" value="-1" disabled="disabled"> Fixed Capacitor (UNITS)</input><br>
-        <!--          TODO - one choice for BP, then dropdown for Legs/ER?<br> -->
-      </fieldset>
-
-      <fieldset>
-      <label for="num_legs">Number of Legs:</label>
-      <select name="num_legs" id="num_legs">
-        <!-- NOTE: User can edit this list/add custom values if needed (must be multiples of 4) -->
-        <option value="4">4</option>
-        <option selected="selected" value="8">8</option>
-        <option value="12">12</option>
-        <option value="16">16</option>
-        <option value="20">20</option>
-        <option value="24">24</option>
-        <option value="28">28</option>
-        <option value="32">32</option>
-        <option value="36">36</option>
-        <option value="40">40</option>
-        <option value="44">44</option>
-        <option value="48">48</option>
-        <option value="52">52</option>
-        <option value="56">56</option>
-        <option value="60">60</option>
-        <option value="64">64</option>
-        <option value="68">68</option>
-        <option value="72">72</option>
-        <option value="76">76</option>
-        <option value="80">80</option>
-        <option value="84">84</option>
-        <option value="88">88</option>
-        <option value="92">92</option>
-        <option value="96">96</option>
-        <option value="100">100</option>
-        <option value="104">104</option>
-        <option value="108">108</option>
-        <option value="112">112</option>
-        <option value="116">116</option>
-        <option value="120">120</option>
-        <option value="124">124</option>
-        <option value="128">128</option>
-      </select>
-      </fieldset>
-
-      <!-- Defaults set to match Android app for quick testing -->
-      <input type="number" id="center_freq" step="any" value="21.28"> Frequency (MHz)</input><br>
-      <input type="number" id="coil_radius" step="any" value="10"> Coil Radius (cm)</input><br>
-      <input type="number" id="shield_radius" step="any" value="0"> Shield Radius (cm)</input><br>
 
       <!-- TODO input verification regex -->
       <!-- TODO input verification min/max (maybe just min=0?) -->
@@ -207,6 +212,7 @@
     <form>
     <button type="submit" onclick="debug_clear(); return false">Clear Debug</button>
     </form>
+
     <p id="debug1"></p>
     <!-- TODO - add 'clear' button -->
 
