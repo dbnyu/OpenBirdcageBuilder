@@ -192,15 +192,16 @@
       <!-- TODO maybe bootstrap or other library has nicer inputs? don't waste too much time making it pretty -->
 
 
-      <button type="submit" onclick="calculate(); return false">Calculate!</button>
+      <button type="button" onclick="calculate(); return false">Calculate!</button>
       <!-- 'return false' is necessary to avoid automatic page refresh -->
+      <!-- NOTE: changed buttons to type "button" instead of "submit"; is return false still necessary? -->
 
     </form>
 
     <hr>
     <h2>Output</h2>
 
-    <button type="submit" onclick="output_clear(); return false">Clear Results</button>
+    <button type="button" onclick="output_clear(); return false">Clear Results</button>
 
     <p id="output_test1">This field intentionally blank.</p>
     <p id="output_main"></p>
@@ -209,9 +210,8 @@
 
     <hr>
     <h2>Debug</h2>
-    <form>
-    <button type="submit" onclick="debug_clear(); return false">Clear Debug</button>
-    </form>
+
+    <button type="button" onclick="debug_clear(); return false">Clear Debug</button>
 
     <p id="debug1"></p>
     <!-- TODO - add 'clear' button -->
