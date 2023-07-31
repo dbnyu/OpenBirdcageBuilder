@@ -52,6 +52,11 @@
         padding: 10px;
       }
 
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+
 
     </style>
 
@@ -208,12 +213,35 @@
     </form>
 
     <hr>
-    <h2>Output</h2>
+    <h2>Results</h2>
 
-    <button type="button" onclick="output_clear(); return false">Clear Results</button>
+    <!-- <button type="button" onclick="output_clear(); return false">Clear Results</button> -->
+    <!-- TODO - delete/deprecate the output_clear function -->
 
-    <p id="output_test1">This field intentionally blank.</p>
-    <p id="output_main"></p>
+    <!-- <p id="output_test1">This field intentionally blank.</p> -->
+    <!-- <p id="output_main"></p> -->
+    <table>
+      <tr>
+        <td>Leg Self Inductance (nH)</td>
+        <td id="leg_si">--</td>
+      </tr>
+      <tr>
+        <td>ER Self Inductance (nH)</td>
+        <td id="er_si">--</td>
+      </tr>
+      <tr>
+        <td>Leg Mutual Inductance (nH)</td>
+        <td id="leg_mi">--</td>
+      </tr>
+      <tr>
+        <td>ER Mutual Inductance (nH)</td>
+        <td id="er_mi">--</td>
+      </tr>
+      <tr>
+        <td style="font-weight: bold">Capacitor (pF)</td>
+        <td style="font-weight: bold" id="calc_cap">--</td>
+
+    </table>
 
 
 

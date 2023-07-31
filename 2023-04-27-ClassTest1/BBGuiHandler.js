@@ -36,25 +36,19 @@ PLOTLY_ENABLE = false;
 
 // TODO change name to 'main' or something?
 function calculate() {
-	document.getElementById("output_test1").innerHTML = "Working on it...<br>";
+	//document.getElementById("output_test1").innerHTML = "Working on it...<br>";
 	
 	BB = get_gui_args();
 	cap = BB.calc_capacitor();
 
 	debug("n_legs = " + BB.n_legs);
 
-	// TODO are the units only changed for the output? - should I keep the internals the same?
-	
-	append_main_output('Leg Self Inductance       (nH): ' + 1e9 * BB.legs.leg_self_inductance);
-	append_main_output('EndRing Self Inductance   (nH): ' + 1e9 * BB.endrings.er_self_inductance);
-	append_main_output('Leg Mutual Inductance     (nH): ' + 1e9 * BB.legs.leg_mutual_inductance);
-	append_main_output('EndRing Mutual Inductance (nH): ' + 1e9 * BB.endrings.er_mutual_inductance[BB.n_legs/4]);
-	append_main_output('Calculated Capacitance    (pF): ' + 1e12 * cap);
-	append_main_output('');
-
-	document.getElementById('output_test1').innerHTML = 'Done.';
-
-
+	// TODO - round to 4 decimal places?
+	document.getElementById("leg_si").innerHTML = 1e9 * BB.legs.leg_self_inductance;
+    document.getElementById("er_si").innerHTML = 1e9 * BB.endrings.er_self_inductance;
+	document.getElementById("leg_mi").innerHTML = 1e9 * BB.legs.leg_mutual_inductance;
+	document.getElementById("er_mi").innerHTML = 1e9 * BB.endrings.er_mutual_inductance[BB.n_legs/4];
+	document.getElementById("calc_cap").innerHTML = 1e12 * cap;
 
 	// Mocking output from the Android app for debugging:
 	debug('Leg Self Inductance       (H?): ' + BB.legs.leg_self_inductance);
