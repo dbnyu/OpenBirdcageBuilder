@@ -28,6 +28,7 @@
 
       legend {
         background-color: #580f8b;
+        border-radius: 5px;
         color: #fff;
         padding: 3px 6px;
         font-weight: bold;
@@ -40,6 +41,15 @@
   
       input:disabled+label {
         color: #ccc;
+      }
+
+      button {
+        background-color: #580f8b;
+        border-color: #580f8b;
+        border-radius: 5px;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 10px;
       }
 
 
@@ -117,6 +127,8 @@
         <input type="number" id="center_freq" step="any" value="21.28"> Frequency (MHz)</input><br>
         <input type="number" id="coil_radius" step="any" value="10"> Coil Radius (cm)</input><br>
         <input type="number" id="shield_radius" step="any" value="0"> Shield Radius (cm)</input><br>
+        <input type="number" id="leg_len" step="any" value="10"> Leg Length (cm)</input><br>
+        <br>
 
         <input type="radio" id="config_lp" name="config" value="lowpass" onChange="update_coil_config(this)" checked />
         <label for="config_lp">Low Pass</label><br>
@@ -130,19 +142,16 @@
         <input type="radio" id="config_bp_er" name="config" value="bandpass_er" onChange="update_coil_config(this) "/>
         <label for="config_bp_er">Band Pass (Fixed Caps on ER)</label><br>
 
-            <input type="number" id="bp_predcap" step="any" value="-1" disabled="disabled"> Fixed Capacitor (UNITS)</input><br>
+            <input type="number" id="bp_predcap" step="any" value="-1" disabled="disabled"> Fixed Capacitor (pF)</input><br>
         <!--          TODO - one choice for BP, then dropdown for Legs/ER?<br> -->
       </fieldset>
       <br>
 
 
       <fieldset>
-        <legend>Birdcage Legs</legend>
+        <legend>Leg Type</legend>
 
-        <input type="number" id="leg_len" step="any" value="10"> Leg Length (cm)</input><br>
-        <br>
 
-        Leg Type:<br>
         <input type="radio" id="leg_rect" name="leg_type" value="leg_rect" onchange="update_leg_geom_inputs(this)" checked />
         <label for="leg_rect">Rectangular</label>
         <br>
@@ -163,7 +172,7 @@
 
 
       <fieldset>
-        <legend>End Rings</legend>
+        <legend>End Ring Type</legend>
 
 
         End Ring Type:<br>
