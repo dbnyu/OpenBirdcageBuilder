@@ -23,7 +23,10 @@
 /* Debug Settings */
 // these are declared in debug.js but set here 
 DEBUG_ENABLE = true; // bool; enable or disable debug printing to DOM
-DEBUG_ID = 'debug1'; // DOM ID for debug output
+DEBUG_OUTPUT = 'CONSOLE'; // set to CONSOLE only for production; BOTH or DOM for testing is ok
+DEBUG_ID = 'debug1'; // DOM ID for debug output (not used in production)
+ROUND_OUTPUT = true; // true/false - round displayed output or not
+ROUND_N_DIGITS = 4; // number of decimal places to round to (if ROUND_OUTPUT is true)
 PLOTLY_ENABLE = false;
 
 
@@ -34,30 +37,51 @@ PLOTLY_ENABLE = false;
 //debug('BBGuiHandler loaded.');
 
 
-// TODO change name to 'main' or something?
 function calculate() {
-	//document.getElementById("output_test1").innerHTML = "Working on it...<br>";
 	
 	BB = get_gui_args();
 	cap = BB.calc_capacitor();
 
 	debug("n_legs = " + BB.n_legs);
 
-	// TODO - round to 4 decimal places?
-	document.getElementById("leg_si").innerHTML = 1e9 * BB.legs.leg_self_inductance;
-    document.getElementById("er_si").innerHTML = 1e9 * BB.endrings.er_self_inductance;
-	document.getElementById("leg_mi").innerHTML = 1e9 * BB.legs.leg_mutual_inductance;
-	document.getElementById("er_mi").innerHTML = 1e9 * BB.endrings.er_mutual_inductance[BB.n_legs/4];
-	document.getElementById("calc_cap").innerHTML = 1e12 * cap;
-
-	// Mocking output from the Android app for debugging:
-	debug('Leg Self Inductance       (H?): ' + BB.legs.leg_self_inductance);
-	debug('EndRing Self Inductance   (H?): ' + BB.endrings.er_self_inductance);
-	debug('Leg Mutual Inductance     (H?): ' + BB.legs.leg_mutual_inductance);
-	debug('EndRing Mutual Inductance (H?): ' + BB.endrings.er_mutual_inductance);
-	debug('Calculated Capacitance    (F?): ' + cap);
-
+	// convert units for final output:
+	var disp_leg_self_ind = 1e9 * BB.legs.leg_self_inductance;
+	var disp_er_self_ind  = 1e9 * BB.endrings.er_self_inductance;
+	var disp_leg_mut_ind  = 1e9 * BB.legs.leg_mutual_inductance;
+	var disp_er_mut_ind   = 1e9 * BB.endrings.er_mutual_inductance[BB.n_legs/4];
+	var disp_calc_cap     = 1e12 * cap;
+	
+	// print full precision to console before rounding
+	debug('Leg Self Inductance       (H?): ' + disp_leg_self_ind  );
+	debug('EndRing Self Inductance   (H?): ' + disp_er_self_ind   );
+	debug('Leg Mutual Inductance     (H?): ' + disp_leg_mut_ind   );
+	debug('EndRing Mutual Inductance (H?): ' + disp_er_mut_ind    );
+	debug('Calculated Capacitance    (F?): ' + disp_calc_cap      );
 	debug(''); // keep a blank line at the end
+
+	if (ROUND_OUTPUT) {
+		// NOTE: this converts numbers to STRINGS:
+		disp_leg_self_ind = disp_leg_self_ind.toFixed(ROUND_N_DIGITS);
+		disp_er_self_ind  = disp_er_self_ind.toFixed(ROUND_N_DIGITS);
+		disp_leg_mut_ind  = disp_leg_mut_ind.toFixed(ROUND_N_DIGITS);
+		disp_er_mut_ind   = disp_er_mut_ind.toFixed(ROUND_N_DIGITS);
+		disp_calc_cap     = disp_calc_cap.toFixed(ROUND_N_DIGITS);
+	}
+
+	// fill in Results table:
+	document.getElementById("leg_si").innerHTML = disp_leg_self_ind;
+    document.getElementById("er_si").innerHTML =  disp_er_self_ind;
+	document.getElementById("leg_mi").innerHTML = disp_leg_mut_ind;
+	document.getElementById("er_mi").innerHTML =  disp_er_mut_ind;
+	document.getElementById("calc_cap").innerHTML = disp_calc_cap;
+
+	//document.getElementById("leg_si").innerHTML = 1e9 * BB.legs.leg_self_inductance;
+    //document.getElementById("er_si").innerHTML = 1e9 * BB.endrings.er_self_inductance;
+	//document.getElementById("leg_mi").innerHTML = 1e9 * BB.legs.leg_mutual_inductance;
+	//document.getElementById("er_mi").innerHTML = 1e9 * BB.endrings.er_mutual_inductance[BB.n_legs/4];
+	//document.getElementById("calc_cap").innerHTML = 1e12 * cap;
+
+
 
 
 	// Plots
@@ -134,8 +158,7 @@ function get_gui_args() {
 	endring_r_outer = cm2meters(endring_r_outer);
 	// TODO XXX Predetermined Band Pass Cap value * 1e-12
 	
-	debug('hello');
-	
+
 	bb = new BirdcageBuilder(n_legs, freq, r_coil, r_shield, coil_config);
 	debug(bb.to_string());
 	
