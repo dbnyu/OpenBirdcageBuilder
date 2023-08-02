@@ -5,9 +5,15 @@ TODO date
 
 
 ## Intro/Background
-TODO  
-Estimate capacitor value for building Birdcage Coils.  
+Estimates the capacitor value for building cylindrical [Birdcage Coils](https://mriquestions.com/birdcage-coil.html).  
 Updated version of Birdcage Builder Android app, to run in any web browser, on any device (desktop or mobile).
+
+### Prior Versions
+- This new JavaScript version (2023) is based largely on the Java codebase from the Android version, available here:
+  - [Birdcage Builder Mobile](https://cai2r.net/resources/birdcagebuilder-mobile/) (for Android)
+- The original version was written in Visual Basic and released in 2002 for Windows
+  - See Chin, Collins, et al. 2002 referenced below
+
 
 ## Usage
 TODO
