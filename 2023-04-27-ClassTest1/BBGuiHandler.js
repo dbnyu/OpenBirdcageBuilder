@@ -38,6 +38,8 @@ PLOTLY_ENABLE = false;
 
 
 function calculate() {
+
+	reset_output_table("--"); // clear old results (if any)
 	
 	BB = get_gui_args();
 	cap = BB.calc_capacitor();
@@ -307,12 +309,23 @@ function append_main_output(s) {
 }
 
 function output_clear() {
-	/* Clear the DEBUG_ID field */
+	/* Clear the (deprecated) output field */
 	document.getElementById('output_main').innerHTML = '';
 }
 
-
-
+function reset_output_table(s) {
+	/* Reset output in new twble format 
+	 * (just writes the same string to all output fields in table)
+	 *
+	 * s = string to overwrite table data with
+	 *
+	 * */
+	document.getElementById("leg_si").innerHTML = s;
+    document.getElementById("er_si").innerHTML =  s;
+	document.getElementById("leg_mi").innerHTML = s;
+	document.getElementById("er_mi").innerHTML =  s;
+	document.getElementById("calc_cap").innerHTML = s;
+}
 
 
 /*** Plotly Plots ***/
