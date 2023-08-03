@@ -198,8 +198,11 @@ function get_coil_config() {
 	else if (document.getElementById('config_hp').checked) {
 		return 'highpass';
 	}
-	else if (document.getElementById('config_bp').checked) {
-		return 'bandpass';
+	else if (document.getElementById('config_bp_leg').checked) {
+		return 'bandpass_leg';
+	}
+	else if (document.getElementById('config_bp_er').checked) {
+		return 'bandpass_er';
 	}
 	else {
 		return 'INVALID';
