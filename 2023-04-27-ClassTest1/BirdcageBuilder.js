@@ -19,7 +19,7 @@ class BirdcageBuilder {
 		this.freq = Number(f);		// target frequency (Hz)
 		this.r_coil = Number(rc);	// radius of the birdcage TODO - units = meters?
 		this.r_shield = Number(rs); // radius of shield TODO units
-		this.coil_config = config; // string: 'highpass', 'lowpass', 'bandpass_leg', or 'bandpass_er'
+		this.coil_config = config;  // string: 'highpass', 'lowpass', 'bandpass_leg', or 'bandpass_er'
 		this.predcap = -1; // predetermined capacitor for bandpass coils (not used for LP/HP)
 
 		// TODO force type of arrays? item by item or whole array?
@@ -32,6 +32,8 @@ class BirdcageBuilder {
 		//	legs.set_legs_<geom>
 		// 	endrings.set_endrings_<geom>
 		//  endrings.set_mutual_inductance(this.legs); // TODO - can this have a wrapper here to make it more transparent to user?
+		//
+		//  also set bb.predcap for bandpass cases
 		//
 		// before continuing
 		// (these all have dependence on the steps before them)

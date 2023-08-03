@@ -131,6 +131,7 @@ function get_gui_args() {
 	var endring_r_inner = Number(document.getElementById('er_ID').value);
 	var endring_r_outer = Number(document.getElementById('er_OD').value);
 
+	var predcap = Number(document.getElementById('bp_predcap').value);
 
 	var coil_config = get_coil_config();
 	var leg_geom = get_leg_geom();
@@ -153,7 +154,7 @@ function get_gui_args() {
 	endring_width = cm2meters(endring_width);
 	endring_r_inner = cm2meters(endring_r_inner);
 	endring_r_outer = cm2meters(endring_r_outer);
-	// TODO XXX Predetermined Band Pass Cap value * 1e-12
+	predcap *= 1e-12; // TODO make this a function
 	
 
 
@@ -195,6 +196,13 @@ function get_gui_args() {
 
 	// TODO make another 'finish_setup' function in BB that does this (abstract from user?)
 	bb.endrings.calc_er_mutual_inductance(bb.legs);
+
+
+	if (coil_config == 'bandpass_leg' || coil_config == 'bandpass_er') {
+		bb.predcap = predcap;
+	}
+
+
 
 	return bb;
 }
