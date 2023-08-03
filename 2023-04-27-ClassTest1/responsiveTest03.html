@@ -5,7 +5,9 @@
 
     <meta charset="UTF-8">
 
-    <!-- <meta name="viewport" content="width=800" /> -->
+    
+    <!-- from https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#the_viewport_meta_tag -->
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
 
     <title>BirdcageBuilderJS</title>
 
@@ -89,11 +91,12 @@
       }
   
 
-     /*  @media only screen and (max-width: 300px) {
+     @media only screen and (max-width: 300px) {
         .fonts {
            font-size: 20vw;
         }
       } */
+      <!-- TODO set max width (of what/which element?) to 100% to prevent scrolling offscreen? possible to limit text size based on that (while still allowing user to scroll in?) -->
       
       /* .fonts {
         font-size: 5vw;
@@ -106,8 +109,8 @@
 
 
   <!-- Birdcage Builder -->
-  <!-- v0.0.4 Responsive Test only -->
-  <!-- Doug Brantner 7/28/2023 -->
+  <!-- v0.0.6 Responsive Test only -->
+  <!-- Doug Brantner 8/3/2023 -->
   <!-- NYU Langone Health CAI2R -->
   <!-- cai2r.net -->
 
@@ -120,7 +123,7 @@
   <body>
     <header>
     <h1>BirdcageBuilderJS</h1>
-    v0.0.4<br>
+    v0.0.6<br>
     <br>
     </header>
 
