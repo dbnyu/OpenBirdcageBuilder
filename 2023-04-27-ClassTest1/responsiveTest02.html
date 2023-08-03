@@ -38,15 +38,16 @@
         font-weight: bold;
       }
 
-      input {
-        margin: 0.4rem;
-      }
+      /* input { */
+      /*   margin: 0.4rem; */
+      /* } */
 
   
       input:disabled+label {
         color: #ccc;
       }
 
+      /*
       button {
         background-color: #580f8b;
         border-color: #580f8b;
@@ -55,6 +56,7 @@
         font-weight: bold;
         padding: 10px;
       }
+      */
 
       button:active {
           /* indicate when button is actively clicked */
@@ -75,6 +77,69 @@
         padding-right: 20px;
       }
  
+    /* Based on https://www.w3schools.com/howto/howto_css_responsive_form.asp */
+    /* Style inputs, select elements and textareas */
+    input[type=text], select, textarea{
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+    
+    /* Style the label to display next to the inputs */
+    label {
+      padding: 12px 12px 12px 0;
+      display: inline-block;
+    }
+    
+    /* Style the submit button */
+    input[type=submit] {
+      background-color: #04AA6D;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      float: right;
+    }
+    
+    /* Style the container */
+    .container {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    
+    /* Floating column for labels: 25% width */
+    .col-25 {
+      float: left;
+      width: 25%;
+      margin-top: 6px;
+    }
+    
+    /* Floating column for inputs: 75% width */
+    .col-75 {
+      float: left;
+      width: 75%;
+      margin-top: 6px;
+    }
+    
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    
+    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+      .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+      }
+    } 
 
 
     </style>
@@ -96,11 +161,13 @@
   <body>
     <header>
     <h1>BirdcageBuilderJS</h1>
-    v0.0.4<br>
+    v0.0.5<br>
     <br>
     </header>
 
     <h2>Responsive Mobile DIY Tests</h2>
+    Using: <a href="https://www.w3schools.com/howto/howto_css_responsive_form.asp">https://www.w3schools.com/howto/howto_css_responsive_form.asp</a><br>
+    <br>
 
     <form> 
 
@@ -109,48 +176,89 @@
 
         <!-- Defaults set to match Android app for quick testing -->
 
-        <label for="num_legs">Number of Legs:</label>
-        <select name="num_legs" id="num_legs">
-          <!-- NOTE: User can edit this list/add custom values if needed (must be multiples of 4) -->
-          <option value="4">4</option>
-          <option selected="selected" value="8">8</option>
-          <option value="12">12</option>
-          <option value="16">16</option>
-          <option value="20">20</option>
-          <option value="24">24</option>
-          <option value="28">28</option>
-          <option value="32">32</option>
-          <option value="36">36</option>
-          <option value="40">40</option>
-          <option value="44">44</option>
-          <option value="48">48</option>
-          <option value="52">52</option>
-          <option value="56">56</option>
-          <option value="60">60</option>
-          <option value="64">64</option>
-          <option value="68">68</option>
-          <option value="72">72</option>
-          <option value="76">76</option>
-          <option value="80">80</option>
-          <option value="84">84</option>
-          <option value="88">88</option>
-          <option value="92">92</option>
-          <option value="96">96</option>
-          <option value="100">100</option>
-          <option value="104">104</option>
-          <option value="108">108</option>
-          <option value="112">112</option>
-          <option value="116">116</option>
-          <option value="120">120</option>
-          <option value="124">124</option>
-          <option value="128">128</option>
-        </select>
+        <div  class="row">
+          <div class="col-25">
+            <label for="num_legs">Number of Legs:</label>
+          </div>
+          <div class="col-75">
+            <select name="num_legs" id="num_legs">
+              <!-- NOTE: User can edit this list/add custom values if needed (must be multiples of 4) -->
+              <option value="4">4</option>
+              <option selected="selected" value="8">8</option>
+              <option value="12">12</option>
+              <option value="16">16</option>
+              <option value="20">20</option>
+              <option value="24">24</option>
+              <option value="28">28</option>
+              <option value="32">32</option>
+              <option value="36">36</option>
+              <option value="40">40</option>
+              <option value="44">44</option>
+              <option value="48">48</option>
+              <option value="52">52</option>
+              <option value="56">56</option>
+              <option value="60">60</option>
+              <option value="64">64</option>
+              <option value="68">68</option>
+              <option value="72">72</option>
+              <option value="76">76</option>
+              <option value="80">80</option>
+              <option value="84">84</option>
+              <option value="88">88</option>
+              <option value="92">92</option>
+              <option value="96">96</option>
+              <option value="100">100</option>
+              <option value="104">104</option>
+              <option value="108">108</option>
+              <option value="112">112</option>
+              <option value="116">116</option>
+              <option value="120">120</option>
+              <option value="124">124</option>
+              <option value="128">128</option>
+            </select>
+          </div>
+        </div>
         <br>
 
-        <input type="number" id="center_freq" step="any" value="21.28"> Frequency (MHz)</input><br>
-        <input type="number" id="coil_radius" step="any" value="10"> Coil Radius (cm)</input><br>
-        <input type="number" id="shield_radius" step="any" value="0"> Shield Radius (cm)</input><br>
-        <input type="number" id="leg_len" step="any" value="10"> Leg Length (cm)</input><br>
+        <div  class="row">
+          <div class="col-25">
+            <label for="center_freq">Frequency (MHz)</label>
+          </div>
+          <div class="col-75">
+            <input type="number" id="center_freq" step="any" value="21.28">
+          </div>
+        </div>
+
+        <div  class="row">
+          <div class="col-25">
+            <label for="coil_radius">Coil Radius (cm)</label>
+          </div>
+          <div class="col-75">
+            <input type="number" id="coil_radius" step="any" value="10">
+          </div>
+        </div>
+
+        <div  class="row">
+          <div class="col-25">
+            <label for="shield_radius">Shield Radius (cm)</label>
+          </div>
+          <div class="col-75">
+            <input type="number" id="shield_radius" step="any" value="0">
+          </div>
+        </div>
+
+        <div  class="row">
+          <div class="col-25">
+            <label for="leg_len">Leg Length (cm)</label>
+          </div>
+          <div class="col-75">
+            <input type="number" id="leg_len" step="any" value="10">
+          </div>
+        </div>
+
+        <!-- TODO start here continue divs/responsive formatting -->
+
+
         <br>
 
         <input type="radio" id="config_lp" name="config" value="lowpass" onChange="update_coil_config(this)" checked />
