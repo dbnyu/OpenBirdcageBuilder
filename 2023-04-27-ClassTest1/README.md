@@ -37,5 +37,7 @@ Also TODO - Disclaimer/no warranty/as-is etc.
 
 ## References
 1. Chin CL, Collins CM, Li S, Dardzinski BJ, Smith MB. BirdcageBuilder: Design of specified-geometry birdcage coils with desired current pattern and resonant frequency. Concepts Magn Reson. 2002;15(2):156-163. doi:10.1002/cmr.10030
-2. https://en.wikipedia.org/wiki/Method_of_images
-TODO - could separate wiki/other non-academic links into a separate "learning more" section
+
+### Other References
+- https://en.wikipedia.org/wiki/Method_of_images
+- https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#the_viewport_meta_tag
