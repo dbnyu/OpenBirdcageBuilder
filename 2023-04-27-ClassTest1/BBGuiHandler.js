@@ -106,13 +106,9 @@ function calculate() {
 
 
 function get_gui_args() {
-	/* Parse DOM and populate global vars
-	 *
-	 * This version initializes & returns a BirdcageBuilder class object
+	/* Parse DOM and populate BirdcageBuilder object (including Leg and Endring child objects) 
 	 *
 	 * Returns populated BB object.
-	 * // TODO - rename?
-	 *
 	 */
 
 	// TODO - input sanitize & sanity check
@@ -126,16 +122,15 @@ function get_gui_args() {
 	var r_coil = Number(document.getElementById('coil_radius').value); 
 	var r_shield = Number(document.getElementById('shield_radius').value);
 
-	//var leg_shape_rect = true; // leg shape (true=rectangle or false=tubular) TODO can probably delete!
 	var leg_length = Number(document.getElementById('leg_len').value);
 	var leg_width = Number(document.getElementById('leg_width').value);
-	var leg_r_inner; // inner radius of tubular leg TODO - need to add DOM flexibility
-	var leg_r_outer; // outer radius of tubular leg TODO
-
+	var leg_r_inner = Number(document.getElementById('leg_ID').value);
+	var leg_r_outer = Number(document.getElementById('leg_OD').value);
 	
 	var endring_width = Number(document.getElementById('er_width').value);
-	var endring_r_inner; // = TODO
-	var endring_r_outer; // = TODO
+	var endring_r_inner = Number(document.getElementById('er_ID').value);
+	var endring_r_outer = Number(document.getElementById('er_OD').value);
+
 
 	var coil_config = get_coil_config();
 	var leg_geom = get_leg_geom();
@@ -161,21 +156,41 @@ function get_gui_args() {
 	// TODO XXX Predetermined Band Pass Cap value * 1e-12
 	
 
+
 	bb = new BirdcageBuilder(n_legs, freq, r_coil, r_shield, coil_config);
 	debug(bb.to_string());
+
+
 	
-	//if (leg_shape_rect) {
+	// TODO change to ===?
 	if (leg_geom == 'rect') {
+
 		bb.legs.set_legs_rect(leg_length, leg_width);
-		bb.endrings.set_endrings_rect(endring_width);
+
+		//console.log("leg_length: " + leg_length);
+		//console.log("leg_width: " + leg_width);
 	}
 	else if (leg_geom == 'tube') {
+
 		bb.legs.set_legs_tube(leg_length, leg_r_inner, leg_r_outer);
-		// TODO XXX - BUG - endring shape is not always the same as leg shape!!!
+
+		//console.log("leg_length: " + leg_length);
+		//console.log("leg_r_inner: " + leg_r_inner);
+		//console.log("leg_r_outer: " + leg_r_outer);
+	}
+	else {
+		console.warning('BBGuiHandler: invalid leg_geom');
+	}
+
+
+	if (endring_geom == 'rect') {
+		bb.endrings.set_endrings_rect(endring_width);
+	}
+	else if (endring_geom == 'tube') {
 		bb.endrings.set_endrings_tube(endring_r_inner, endring_r_outer);
 	}
 	else {
-		console.log('BBGuiHandler: invalid leg_geom');
+		console.warning('BBGuiHandler: invalid endring_geom');
 	}
 
 	// TODO make another 'finish_setup' function in BB that does this (abstract from user?)
