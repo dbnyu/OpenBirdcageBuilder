@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+    <meta charset="UTF-8">
+
+    <!-- <meta name="viewport" content="width=800" /> -->
+
+    <title>BirdcageBuilderJS</title>
+
+    <!-- scripts must be included in reverse order of call stack for scope visibility -->
+    <script src="debug.js"></script>
+    <script src="helpers.js"></script>
+    <script src="BCLegs.js"></script>
+    <script src="BCEndRings.js"></script>
+    <script src="BirdcageBuilder.js"></script>
+    <script src="BBGuiHandler.js"></script>
+    <!-- <script src="../../plotly/v1.58.5/plotly-latest.min.js"></script> -->
+
+    <style> 
+
+      body {
+        font-family: Helvetica;
+        /* border: solid #580f8b; */
+      }
+
+
+      /* TODO this might work but need to make it responsive & catch all input typtes etc. */
+      /* https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design */
+      /* html, input {
+        font-size: 2em;
+      } */
+
+      header {
+        background-color: #580f8b;
+        color: #ffffff;
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      legend {
+        background-color: #580f8b;
+        border-radius: 5px;
+        color: #fff;
+        padding: 3px 6px;
+        font-weight: bold;
+      }
+
+      input {
+        margin: 0.4rem;
+      }
+
+  
+      input:disabled+label {
+        color: #ccc;
+      }
+
+      button {
+        background-color: #580f8b;
+        border-color: #580f8b;
+        border-radius: 5px;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 10px;
+      }
+
+      button:active {
+          /* indicate when button is actively clicked */
+          /* background-color: #909090; */
+          background-color: #782fab;
+      }
+
+      table {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      
+      th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+  
+
+     /*  @media only screen and (max-width: 300px) {
+        .fonts {
+           font-size: 20vw;
+        }
+      } */
+      
+      /* .fonts {
+        font-size: 5vw;
+      }  */
+
+
+
+    </style>
+
+
+
+  <!-- Birdcage Builder -->
+  <!-- v0.0.4 Responsive Test only -->
+  <!-- Doug Brantner 7/28/2023 -->
+  <!-- NYU Langone Health CAI2R -->
+  <!-- cai2r.net -->
+
+  </head>
+
+
+
+
+
+  <body>
+    <header>
+    <h1>BirdcageBuilderJS</h1>
+    v0.0.4<br>
+    <br>
+    </header>
+
+    <h2>Responsive Mobile DIY Tests</h2>
+
+    <form> 
+
+      <fieldset>
+        <legend>Configuration</legend>
+
+        <!-- Defaults set to match Android app for quick testing -->
+
+        <label for="num_legs">Number of Legs:</label>
+        <select name="num_legs" id="num_legs">
+          <!-- NOTE: User can edit this list/add custom values if needed (must be multiples of 4) -->
+          <option value="4">4</option>
+          <option selected="selected" value="8">8</option>
+          <option value="12">12</option>
+          <option value="16">16</option>
+          <option value="20">20</option>
+          <option value="24">24</option>
+          <option value="28">28</option>
+          <option value="32">32</option>
+          <option value="36">36</option>
+          <option value="40">40</option>
+          <option value="44">44</option>
+          <option value="48">48</option>
+          <option value="52">52</option>
+          <option value="56">56</option>
+          <option value="60">60</option>
+          <option value="64">64</option>
+          <option value="68">68</option>
+          <option value="72">72</option>
+          <option value="76">76</option>
+          <option value="80">80</option>
+          <option value="84">84</option>
+          <option value="88">88</option>
+          <option value="92">92</option>
+          <option value="96">96</option>
+          <option value="100">100</option>
+          <option value="104">104</option>
+          <option value="108">108</option>
+          <option value="112">112</option>
+          <option value="116">116</option>
+          <option value="120">120</option>
+          <option value="124">124</option>
+          <option value="128">128</option>
+        </select>
+        <br>
+
+        <input type="number" id="center_freq" step="any" value="21.28"> Frequency (MHz)</input><br>
+        <input type="number" id="coil_radius" step="any" value="10"> Coil Radius (cm)</input><br>
+        <input type="number" id="shield_radius" step="any" value="0"> Shield Radius (cm)</input><br>
+        <input type="number" id="leg_len" step="any" value="10"> Leg Length (cm)</input><br>
+        <br>
+
+        <input type="radio" id="config_lp" name="config" value="lowpass" onChange="update_coil_config(this)" checked />
+        <label for="config_lp">Low Pass</label><br>
+
+        <input type="radio" id="config_hp" name="config" value="highpass" onChange="update_coil_config(this)" />
+        <label for="config_hp">High Pass</label><br>
+
+        <input type="radio" id="config_bp_leg" name="config" value="bandpass_leg" onChange="update_coil_config(this) "/>
+        <label for="config_bp_leg">Band Pass (Fixed Caps on Legs)</label><br>
+
+        <input type="radio" id="config_bp_er" name="config" value="bandpass_er" onChange="update_coil_config(this) "/>
+        <label for="config_bp_er">Band Pass (Fixed Caps on ER)</label><br>
+
+            <input type="number" id="bp_predcap" step="any" value="-1" disabled="disabled"> Fixed Capacitor (pF)</input><br>
+        <!--          TODO - one choice for BP, then dropdown for Legs/ER?<br> -->
+      </fieldset>
+      <br>
+
+
+      <fieldset>
+        <legend>Leg Type</legend>
+
+        <input type="radio" id="leg_rect" name="leg_type" value="leg_rect" onchange="update_leg_geom_inputs(this)" checked />
+        <label for="leg_rect">Rectangular</label>
+        <br>
+
+        <input type="number" id="leg_width" step="any" value="2"> Leg Width (cm)</input><br>
+        <br>
+        <input type="radio" id="leg_tube" name="leg_type" value="leg_tube" onChange="update_leg_geom_inputs(this)" />
+        <label for="leg_tube">Tubular</label>
+        <br>
+
+          <input type="number" id="leg_ID" step="any" value="0" disabled="disabled"> Leg Inner Diam. (cm)</input><br>
+          <input type="number" id="leg_OD" step="any" value="0" disabled="disabled"> Leg Outer Diam. (cm)</input><br>
+
+        <br>
+
+      </fieldset>
+      <br>
+
+
+      <fieldset>
+        <legend>End Ring Type</legend>
+
+        <input type="radio" id="er_rect" name="er_type" value="er_rect" onChange="update_er_geom_inputs(this)" checked />
+        <label for="er_rect">Rectangular</label><br>
+          <input type="number" id="er_width" step="any" value="1"> End Ring Width (cm)</input><br>
+        <br>
+
+        <input type="radio" id="er_tube" name="er_type" value="er_tube" onChange="update_er_geom_inputs(this)" />
+        <label for="er_tube">Tubular</label>
+        <br>
+          <input type="number" id="er_ID" step="any" value="0" disabled="disabled"> ER Inner Diam. (cm)</input><br>
+          <input type="number" id="er_OD" step="any" value="0" disabled="disabled"> ER Outer Diam. (cm)</input><br>
+
+      </fieldset>
+      <br>
+
+
+
+
+
+
+      <!-- TODO input verification regex -->
+      <!-- TODO input verification min/max (maybe just min=0?) -->
+      <!-- TODO display 0.0 literal for float inputs? (maybe just min=0?) -->
+      <!-- TODO maybe bootstrap or other library has nicer inputs? don't waste too much time making it pretty -->
+
+
+      <button type="button" onclick="calculate(); return false">Calculate!</button>
+      <!-- 'return false' is necessary to avoid automatic page refresh (for type="submit") -->
+      <!-- NOTE: changed buttons to type "button" instead of "submit"; is return false still necessary? -->
+
+    </form>
+
+    <hr>
+    <h2>Results</h2>
+
+    <!-- <button type="button" onclick="output_clear(); return false">Clear Results</button> -->
+    <!-- TODO - delete/deprecate the output_clear function -->
+    <!-- <p id="output_test1">This field intentionally blank.</p> -->
+    <!-- <p id="output_main"></p> -->
+
+    <table>
+      <tr>
+        <td>Leg Self Inductance (nH)</td>
+        <td id="leg_si">--</td>
+      </tr>
+      <tr>
+        <td>ER Self Inductance (nH)</td>
+        <td id="er_si">--</td>
+      </tr>
+      <tr>
+        <td>Leg Mutual Inductance (nH)</td>
+        <td id="leg_mi">--</td>
+      </tr>
+      <tr>
+        <td>ER Mutual Inductance (nH)</td>
+        <td id="er_mi">--</td>
+      </tr>
+      <tr>
+        <td style="font-weight: bold">Capacitor (pF)</td>
+        <td style="font-weight: bold" id="calc_cap">--</td>
+
+    </table>
+
+
+
+    <!-- Uncomment this & enable debug output to DOM/BOTH to see debug output in page: -->
+    <!-- <hr> -->
+    <!-- <h2>Debug</h2> -->
+    <!-- <button type="button" onclick="debug_clear(); return false">Clear Debug</button> -->
+    <!-- <p id="debug1"></p> -->
+
+
+  </body>
+
+
+</html>
