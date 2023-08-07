@@ -1,5 +1,5 @@
 # BirdcageBuilderJS
-Douglas Brantner, Giuseppe Carluccio, Christopher Collins  
+Douglas Brantner, Giuseppe Carluccio, Chih-Liang Chin, Christopher Collins  
 NYU Langone Health [CAI2R](https://cai2r.net) + CBI
 TODO date
 
