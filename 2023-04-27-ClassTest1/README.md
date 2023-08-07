@@ -1,7 +1,10 @@
 # BirdcageBuilderJS
-Douglas Brantner, Giuseppe Carluccio, Chih-Liang Chin, Christopher Collins  
-NYU Langone Health [CAI2R](https://cai2r.net) + CBI
-TODO date
+Douglas Brantner<sup>1</sup>, Giuseppe Carluccio<sup>1</sup>, Chih-Liang Chin<sup>2</sup>, Christopher Collins<sup>1</sup>  
+<sup>1</sup>NYU Langone Health [CAI2R](https://cai2r.net) + CBI  
+<sup>2</sup>??? TODO
+
+TODO date  
+TODO version
 
 
 ## Intro/Background
