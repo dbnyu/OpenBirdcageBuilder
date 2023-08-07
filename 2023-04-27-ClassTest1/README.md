@@ -14,6 +14,11 @@ Updated version of Birdcage Builder Android app, to run in any web browser, on a
 - The original version was written in Visual Basic and released in 2002 for Windows
   - See Chin, Collins, et al. 2002 referenced below
 
+### Caveats
+- TODO
+- Does not take into account high frequency effects (Biot-Savart only)
+  -   waqvelength effects
+-   Does not consider capacitive coupling (only mutual inducatnace)
 
 ## Usage
 
