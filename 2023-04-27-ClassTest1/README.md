@@ -38,6 +38,16 @@ Custom usage/code extendability etc.
 If you use this webapp or our code, please cite:  
 Chin CL, Collins CM, Li S, Dardzinski BJ, Smith MB. BirdcageBuilder: Design of specified-geometry birdcage coils with desired current pattern and resonant frequency. Concepts Magn Reson. 2002;15(2):156-163. doi:10.1002/cmr.10030
 
+## DEVELOPMENT
+A lot of this can probably get merged into "Usage" as time goes on...
+
+### Current Main file: 
+- [responsiveTest03.html](responsiveTest03.html)
+- Documentation: [README.md](README.md) (this file)
+- Backend Heavy Lifting:
+  - BirdcageBuilder.js is the main file, but is mostly just a container for global variables (coil settings) and the Leg/Endring objects
+    
+
 ## License
 TODO
 
