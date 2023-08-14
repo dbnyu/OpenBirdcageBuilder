@@ -31,6 +31,14 @@ PLOTLY_ENABLE = false;
 
 
 
+/* Globals */
+FIRST_RUN = true; // set to false after first time "calculate" is called.
+RESULTS_STALE = false; // set to true if user input changes & reset to false when "Calculate" is called.
+
+
+
+
+
 /********************
  *  MAIN FUNCTIONS  *
  ********************/
@@ -76,6 +84,9 @@ function calculate() {
 	document.getElementById("leg_mi").innerHTML = disp_leg_mut_ind;
 	document.getElementById("er_mi").innerHTML =  disp_er_mut_ind;
 	document.getElementById("calc_cap").innerHTML = disp_calc_cap;
+
+	clear_results_stale();
+	FIRST_RUN = false;
 
 	//document.getElementById("leg_si").innerHTML = 1e9 * BB.legs.leg_self_inductance;
     //document.getElementById("er_si").innerHTML = 1e9 * BB.endrings.er_self_inductance;
@@ -209,6 +220,9 @@ function get_gui_args() {
 
 
 
+
+/* Input Parsing/Getting User Inputs from GUI */
+
 function get_coil_config() {
 	/* Return the value (str) of the Coil Config Radio Buttons
 	 * (Hi/Low/Bandpass)
@@ -232,6 +246,7 @@ function get_coil_config() {
 	}
 }
 
+
 function get_leg_geom() {
 	/* Get Leg Geometry Type 
 	 *
@@ -250,6 +265,7 @@ function get_leg_geom() {
 
 }
 
+
 function get_endring_geom() {
 	/* Get Endring Geometry Type 
 	 *
@@ -267,6 +283,39 @@ function get_endring_geom() {
 	}
 
 }
+
+
+
+
+/* Input Handling/GUI Updates */
+
+function mark_results_stale() {
+	/* Call this any time an input is changed.
+	 * Sets a global flag to show that the displayed results, if any, are possibly expired
+	 * due to new user input/changing an input value.
+	 *
+	 * This flag should be cleared when "Calculate" is called as the results should now
+	 * correctly reflect the new inputs
+	 */
+
+	RESULTS_STALE = true;
+
+	if (!FIRST_RUN) {
+		// TODO - update GUI w/ literal red flag (but not on the first run)
+		document.getElementById("stale_div").innerHTML = "Warning: Inputs changed from last run - click 'Calculate' again to update.";
+
+	}
+}
+
+function clear_results_stale() {
+	/* Call this when "Calculate" is called & results are properly updated. 
+	 * see mark_results_stale() for details
+	 */
+
+	RESULTS_STALE = false;
+	document.getElementById("stale_div").innerHTML = "";
+}
+
 
 /* update form inputs for rectangular/tube legs & endrings
  * Just gray out/disable & enable the appropriate input fields
@@ -288,7 +337,13 @@ function update_leg_geom_inputs(radiobtn) {
 	else {
 		debug("BBGuiHandler update_leg_geom_inputs: invalid leg type input");
 	}
+
+
+	mark_results_stale();
 }
+
+
+
 
 
 function update_er_geom_inputs(radiobtn) {
@@ -307,6 +362,8 @@ function update_er_geom_inputs(radiobtn) {
 	else {
 		debug("BBGuiHandler update_er_geom_inputs: invalid er type input");
 	}
+
+	mark_results_stale();
 }
 
 
@@ -322,6 +379,7 @@ function update_coil_config(radiobtn) {
 		// OR TODO can 'disabled' CSS take precedence over input validation error CSS?
 	}
 
+	mark_results_stale();
 }
 
 

@@ -137,7 +137,7 @@
         <!-- Defaults set to match Android app for quick testing -->
 
         <label for="num_legs">Number of Legs:</label>
-        <select name="num_legs" id="num_legs">
+        <select name="num_legs" id="num_legs" onChange="mark_results_stale()">
           <!-- NOTE: User can edit this list/add custom values if needed (must be multiples of 4) -->
           <option value="4">4</option>
           <option selected="selected" value="8">8</option>
@@ -174,10 +174,10 @@
         </select>
         <br>
 
-        <input type="number" id="center_freq" step="any" value="21.28"> Frequency (MHz)</input><br>
-        <input type="number" id="coil_radius" step="any" value="10"> Coil Radius (cm)</input><br>
-        <input type="number" id="shield_radius" step="any" value="0"> Shield Radius (cm)</input><br>
-        <input type="number" id="leg_len" step="any" value="10"> Leg Length (cm)</input><br>
+        <input type="number" id="center_freq" step="any" value="21.28" onChange="mark_results_stale()"> Frequency (MHz)</input><br>
+        <input type="number" id="coil_radius" step="any" value="10" onChange="mark_results_stale()"> Coil Radius (cm)</input><br>
+        <input type="number" id="shield_radius" step="any" value="0" onChange="mark_results_stale()"> Shield Radius (cm)</input><br>
+        <input type="number" id="leg_len" step="any" value="10" onChange="mark_results_stale()"> Leg Length (cm)</input><br>
         <br>
 
         <input type="radio" id="config_lp" name="config" value="lowpass" onChange="update_coil_config(this)" checked />
@@ -192,7 +192,7 @@
         <input type="radio" id="config_bp_er" name="config" value="bandpass_er" onChange="update_coil_config(this) "/>
         <label for="config_bp_er">Band Pass (Fixed Caps on ER)</label><br>
 
-            <input type="number" id="bp_predcap" step="any" value="-1" disabled="disabled"> Fixed Capacitor (pF)</input><br>
+            <input type="number" id="bp_predcap" step="any" value="-1" disabled="disabled" onChange="mark_results_stale()"> Fixed Capacitor (pF)</input><br>
         <!--          TODO - one choice for BP, then dropdown for Legs/ER?<br> -->
       </fieldset>
       <br>
@@ -201,18 +201,18 @@
       <fieldset>
         <legend>Leg Type</legend>
 
-        <input type="radio" id="leg_rect" name="leg_type" value="leg_rect" onchange="update_leg_geom_inputs(this)" checked />
+        <input type="radio" id="leg_rect" name="leg_type" value="leg_rect" onChange="update_leg_geom_inputs(this)" checked />
         <label for="leg_rect">Rectangular</label>
         <br>
 
-        <input type="number" id="leg_width" step="any" value="2"> Leg Width (cm)</input><br>
+        <input type="number" id="leg_width" step="any" value="2" onChange="mark_results_stale()"> Leg Width (cm)</input><br>
         <br>
         <input type="radio" id="leg_tube" name="leg_type" value="leg_tube" onChange="update_leg_geom_inputs(this)" />
         <label for="leg_tube">Tubular</label>
         <br>
 
-          <input type="number" id="leg_ID" step="any" value="0" disabled="disabled"> Leg Inner Diam. (cm)</input><br>
-          <input type="number" id="leg_OD" step="any" value="0" disabled="disabled"> Leg Outer Diam. (cm)</input><br>
+          <input type="number" id="leg_ID" step="any" value="0" disabled="disabled" onChange="mark_results_stale()"> Leg Inner Diam. (cm)</input><br>
+          <input type="number" id="leg_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()"> Leg Outer Diam. (cm)</input><br>
 
         <br>
 
@@ -225,14 +225,14 @@
 
         <input type="radio" id="er_rect" name="er_type" value="er_rect" onChange="update_er_geom_inputs(this)" checked />
         <label for="er_rect">Rectangular</label><br>
-          <input type="number" id="er_width" step="any" value="1"> End Ring Width (cm)</input><br>
+          <input type="number" id="er_width" step="any" value="1" onChange="mark_results_stale()"> End Ring Width (cm)</input><br>
         <br>
 
         <input type="radio" id="er_tube" name="er_type" value="er_tube" onChange="update_er_geom_inputs(this)" />
         <label for="er_tube">Tubular</label>
         <br>
-          <input type="number" id="er_ID" step="any" value="0" disabled="disabled"> ER Inner Diam. (cm)</input><br>
-          <input type="number" id="er_OD" step="any" value="0" disabled="disabled"> ER Outer Diam. (cm)</input><br>
+          <input type="number" id="er_ID" step="any" value="0" disabled="disabled" onChange="mark_results_stale()"> ER Inner Diam. (cm)</input><br>
+          <input type="number" id="er_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()"> ER Outer Diam. (cm)</input><br>
 
       </fieldset>
       <br>
@@ -261,6 +261,7 @@
     <!-- TODO - delete/deprecate the output_clear function -->
     <!-- <p id="output_test1">This field intentionally blank.</p> -->
     <!-- <p id="output_main"></p> -->
+    <div class="warning_div" id="stale_div"></div>
 
     <table>
       <tr>
