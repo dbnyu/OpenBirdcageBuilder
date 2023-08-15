@@ -61,6 +61,10 @@
         color: #ccc;
       }
 
+      input:invalid {
+          border: 2px dashed red;
+      }
+
       button {
         background-color: #580f8b;
         border-color: #580f8b;
@@ -142,7 +146,7 @@
         <!-- Defaults set to match Android app for quick testing -->
 
         <label for="num_legs">Number of Legs:</label>
-        <select name="num_legs" id="num_legs" onChange="mark_results_stale()">
+        <select name="num_legs" id="num_legs" onChange="mark_results_stale()" required >
           <!-- NOTE: User can edit this list/add custom values if needed (must be multiples of 4) -->
           <option value="4">4</option>
           <option selected="selected" value="8">8</option>
@@ -179,13 +183,13 @@
         </select>
         <br>
 
-        <input type="number" id="center_freq" step="any" value="21.28" onChange="mark_results_stale()"> Frequency (MHz)</input><br>
-        <input type="number" id="coil_radius" step="any" value="10" onChange="mark_results_stale()"> Coil Radius (cm)</input><br>
-        <input type="number" id="shield_radius" step="any" value="0" onChange="mark_results_stale()"> Shield Radius (cm)</input><br>
-        <input type="number" id="leg_len" step="any" value="10" onChange="mark_results_stale()"> Leg Length (cm)</input><br>
+        <input type="number" id="center_freq" step="any" value="21.28" onChange="mark_results_stale()" required > Frequency (MHz)</input><br>
+        <input type="number" id="coil_radius" step="any" value="10" onChange="mark_results_stale()" required > Coil Radius (cm)</input><br>
+        <input type="number" id="shield_radius" step="any" value="0" onChange="mark_results_stale()" required > Shield Radius (cm)</input><br>
+        <input type="number" id="leg_len" step="any" value="10" onChange="mark_results_stale()" required > Leg Length (cm)</input><br>
         <br>
 
-        <input type="radio" id="config_lp" name="config" value="lowpass" onChange="update_coil_config(this)" checked />
+        <input type="radio" id="config_lp" name="config" value="lowpass" onChange="update_coil_config(this)" required checked />
         <label for="config_lp">Low Pass</label><br>
 
         <input type="radio" id="config_hp" name="config" value="highpass" onChange="update_coil_config(this)" />
@@ -196,9 +200,9 @@
 
         <input type="radio" id="config_bp_er" name="config" value="bandpass_er" onChange="update_coil_config(this) "/>
         <label for="config_bp_er">Band Pass (Fixed Caps on ER)</label><br>
-
-            <input type="number" id="bp_predcap" step="any" value="-1" disabled="disabled" onChange="mark_results_stale()"> Fixed Capacitor (pF)</input><br>
-        <!--          TODO - one choice for BP, then dropdown for Legs/ER?<br> -->
+            
+            <!-- note: required fields are skipped over for validation if disabled -->
+            <input type="number" id="bp_predcap" step="any" value="-1" disabled="disabled" onChange="mark_results_stale()" required > Fixed Capacitor (pF)</input><br>
       </fieldset>
       <br>
 
@@ -206,18 +210,18 @@
       <fieldset>
         <legend>Leg Type</legend>
 
-        <input type="radio" id="leg_rect" name="leg_type" value="leg_rect" onChange="update_leg_geom_inputs(this)" checked />
+        <input type="radio" id="leg_rect" name="leg_type" value="leg_rect" onChange="update_leg_geom_inputs(this)" required checked />
         <label for="leg_rect">Rectangular</label>
         <br>
 
-        <input type="number" id="leg_width" step="any" value="2" onChange="mark_results_stale()"> Leg Width (cm)</input><br>
+        <input type="number" id="leg_width" step="any" value="2" onChange="mark_results_stale()" required > Leg Width (cm)</input><br>
         <br>
-        <input type="radio" id="leg_tube" name="leg_type" value="leg_tube" onChange="update_leg_geom_inputs(this)" />
+        <input type="radio" id="leg_tube" name="leg_type" value="leg_tube" onChange="update_leg_geom_inputs(this)" required />
         <label for="leg_tube">Tubular</label>
         <br>
 
-          <input type="number" id="leg_ID" step="any" value="0" disabled="disabled" onChange="mark_results_stale()"> Leg Inner Diam. (cm)</input><br>
-          <input type="number" id="leg_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()"> Leg Outer Diam. (cm)</input><br>
+          <input type="number" id="leg_ID" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > Leg Inner Diam. (cm)</input><br>
+          <input type="number" id="leg_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > Leg Outer Diam. (cm)</input><br>
 
         <br>
 
@@ -228,16 +232,16 @@
       <fieldset>
         <legend>End Ring Type</legend>
 
-        <input type="radio" id="er_rect" name="er_type" value="er_rect" onChange="update_er_geom_inputs(this)" checked />
+        <input type="radio" id="er_rect" name="er_type" value="er_rect" onChange="update_er_geom_inputs(this)" required checked />
         <label for="er_rect">Rectangular</label><br>
-          <input type="number" id="er_width" step="any" value="1" onChange="mark_results_stale()"> End Ring Width (cm)</input><br>
+          <input type="number" id="er_width" step="any" value="1" onChange="mark_results_stale()" required > End Ring Width (cm)</input><br>
         <br>
 
-        <input type="radio" id="er_tube" name="er_type" value="er_tube" onChange="update_er_geom_inputs(this)" />
+        <input type="radio" id="er_tube" name="er_type" value="er_tube" onChange="update_er_geom_inputs(this)" required />
         <label for="er_tube">Tubular</label>
         <br>
-          <input type="number" id="er_ID" step="any" value="0" disabled="disabled" onChange="mark_results_stale()"> ER Inner Diam. (cm)</input><br>
-          <input type="number" id="er_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()"> ER Outer Diam. (cm)</input><br>
+          <input type="number" id="er_ID" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > ER Inner Diam. (cm)</input><br>
+          <input type="number" id="er_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > ER Outer Diam. (cm)</input><br>
 
       </fieldset>
       <br>
@@ -253,7 +257,11 @@
       <!-- TODO maybe bootstrap or other library has nicer inputs? don't waste too much time making it pretty -->
 
 
+      <!-- TODO - may need to revert back to a 'submit' button for input validation to work... -->
+
+
       <button type="button" onclick="calculate(); return false">Calculate!</button>
+      <!-- <button type="submit" onclick="calculate(); return false">Calculate!</button> -->
       <!-- 'return false' is necessary to avoid automatic page refresh (for type="submit") -->
       <!-- NOTE: changed buttons to type "button" instead of "submit"; is return false still necessary? -->
 
