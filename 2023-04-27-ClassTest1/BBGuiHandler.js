@@ -233,6 +233,44 @@ function get_gui_args() {
 
 
 
+/* Input Validation (Client Side in HTML form only) 
+ * All "simple" input validation should be done in pure HTML (ie. min value for field)
+ * These are for the more complex/interdependent input checks only.
+ */
+
+function validate_shield_radius() {
+	/* this should be called onChange for shield_radius and probably also coil_radius (TODO)
+	 *
+	 * Make sure that the constraints are satisfied:
+	 * - The coil radius must be positive and nonzero (currently done in pure HTML, not here)
+	 * - The shield radius can EITHER be zero OR it must be greater than the coil radius otherwise.
+	 *
+	 * This is very similar to the inner/outer diamter constraint for the Tube legs/endrings
+	 * BUT the logic is slightly different.
+	 *
+	 * Sets the shield_radius status to invalid if false;
+	 * TODO currently not changing the coil_radius valid status because that's handled by pure HTML; but the popup error message should be clear.
+	 */
+
+	var cr = Number(document.getElementById("coil_radius").value);
+	var sr = Number(document.getElementById("shield_radius").value);
+
+	// TODO == or ===?
+	// TODO relies on coil radius to enforce positive value... revisit logic
+	// TODO there may be a Firefox but with setCustomValidity - see:
+	// https://stackoverflow.com/questions/7357192/how-to-clear-remove-or-reset-html5-form-validation-state-after-setcustomvalid
+	// https://stackoverflow.com/questions/24191482/setcustomvalidity-will-not-reset-after-triggering
+	if (shield_radius === 0 || shield_radius > cr) {
+		document.getElementById("shield_radius").setCustomValidity(""); // empty string -> valid
+	}
+	else {
+		document.getElementById("shield_radius").setCustomValidity("Shield Radius must be greater than Coil Radius (or 0 for no shield)."); // non-empty string sets field as invalid
+	}
+
+	mark_results_stale();
+}
+
+
 
 /* Input Parsing/Getting User Inputs from GUI */
 

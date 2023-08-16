@@ -132,11 +132,11 @@
   <body>
     <header>
     <h1>BirdcageBuilderJS</h1>
-    v0.0.6<br>
+    v0.0.u<br>
     <br>
     </header>
 
-    <h2>Responsive Mobile DIY Tests</h2>
+    <h2>DIY Responsive Mobile & User Facing Input Validation Tests</h2>
 
     <form id="main_form"> 
 
@@ -188,9 +188,13 @@
 
         <input type="number" id="center_freq"   step="any" value="21.28" min="0.000001" onChange="mark_results_stale()" required > Frequency (MHz)</input><br>
         <input type="number" id="coil_radius"   step="any" value="10"    min="0.000001" onChange="mark_results_stale()" required > Coil Radius (cm)</input><br>
-        <input type="number" id="shield_radius" step="any" value="0"     min="0"        onChange="mark_results_stale()" required > Shield Radius (cm)</input><br>
+        <!-- <input type="number" id="shield_radius" step="any" value="0"     min="0"        onChange="mark_results_stale()" required > Shield Radius (cm)</input><br> -->
+        <input type="number" id="shield_radius" step="any" value="0"     onChange="validate_shield_radius()" required > Shield Radius (cm)</input><br>
         <input type="number" id="leg_len"       step="any" value="10"    min="0.000001" onChange="mark_results_stale()" required > Leg Length (cm)</input><br>
         <br>
+
+
+        <!-- Begin Coil Config Radio Buttons -->
 
         <input type="radio" id="config_lp" name="config" value="lowpass" onChange="update_coil_config(this)" required checked />
         <label for="config_lp">Low Pass</label><br>
@@ -206,6 +210,9 @@
             
             <!-- note: "required" fields are skipped over for validation if disabled -->
             <input type="number" id="bp_predcap" step="any" value="-1" min="0.000001" disabled="disabled" onChange="mark_results_stale()" required > Fixed Capacitor (pF)</input><br>
+
+        <!-- End Coil Config Radio Buttons -->
+
       </fieldset>
       <br>
 
