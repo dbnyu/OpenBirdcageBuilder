@@ -138,7 +138,7 @@
 
     <h2>Responsive Mobile DIY Tests</h2>
 
-    <form> 
+    <form id="main_form"> 
 
       <fieldset>
         <legend>Configuration</legend>
@@ -183,10 +183,13 @@
         </select>
         <br>
 
-        <input type="number" id="center_freq" step="any" value="21.28" onChange="mark_results_stale()" required > Frequency (MHz)</input><br>
-        <input type="number" id="coil_radius" step="any" value="10" onChange="mark_results_stale()" required > Coil Radius (cm)</input><br>
-        <input type="number" id="shield_radius" step="any" value="0" onChange="mark_results_stale()" required > Shield Radius (cm)</input><br>
-        <input type="number" id="leg_len" step="any" value="10" onChange="mark_results_stale()" required > Leg Length (cm)</input><br>
+        <!-- NOTE: for input validation, using "a very small number" for inputs that have to be positive and nonzero, to take advantage of builtin validation without javascript -->
+        <!-- TODO shield radius must be greader than coil radius, or zero? - probably need javascript? -->
+
+        <input type="number" id="center_freq"   step="any" value="21.28" min="0.000001" onChange="mark_results_stale()" required > Frequency (MHz)</input><br>
+        <input type="number" id="coil_radius"   step="any" value="10"    min="0.000001" onChange="mark_results_stale()" required > Coil Radius (cm)</input><br>
+        <input type="number" id="shield_radius" step="any" value="0"     min="0"        onChange="mark_results_stale()" required > Shield Radius (cm)</input><br>
+        <input type="number" id="leg_len"       step="any" value="10"    min="0.000001" onChange="mark_results_stale()" required > Leg Length (cm)</input><br>
         <br>
 
         <input type="radio" id="config_lp" name="config" value="lowpass" onChange="update_coil_config(this)" required checked />
@@ -201,8 +204,8 @@
         <input type="radio" id="config_bp_er" name="config" value="bandpass_er" onChange="update_coil_config(this) "/>
         <label for="config_bp_er">Band Pass (Fixed Caps on ER)</label><br>
             
-            <!-- note: required fields are skipped over for validation if disabled -->
-            <input type="number" id="bp_predcap" step="any" value="-1" disabled="disabled" onChange="mark_results_stale()" required > Fixed Capacitor (pF)</input><br>
+            <!-- note: "required" fields are skipped over for validation if disabled -->
+            <input type="number" id="bp_predcap" step="any" value="-1" min="0.000001" disabled="disabled" onChange="mark_results_stale()" required > Fixed Capacitor (pF)</input><br>
       </fieldset>
       <br>
 
@@ -220,6 +223,7 @@
         <label for="leg_tube">Tubular</label>
         <br>
 
+          <!-- TODO- javascript validation that OD > ID and nonzero (ID can be zero if it's solid though?) -->
           <input type="number" id="leg_ID" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > Leg Inner Diam. (cm)</input><br>
           <input type="number" id="leg_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > Leg Outer Diam. (cm)</input><br>
 
@@ -234,12 +238,14 @@
 
         <input type="radio" id="er_rect" name="er_type" value="er_rect" onChange="update_er_geom_inputs(this)" required checked />
         <label for="er_rect">Rectangular</label><br>
-          <input type="number" id="er_width" step="any" value="1" onChange="mark_results_stale()" required > End Ring Width (cm)</input><br>
+          <input type="number" id="er_width" step="any" value="1" min="0.000001" onChange="mark_results_stale()" required > End Ring Width (cm)</input><br>
         <br>
 
         <input type="radio" id="er_tube" name="er_type" value="er_tube" onChange="update_er_geom_inputs(this)" required />
         <label for="er_tube">Tubular</label>
         <br>
+
+          <!-- TODO- javascript validation that OD > ID and nonzero (ID can be zero if it's solid though?) -->
           <input type="number" id="er_ID" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > ER Inner Diam. (cm)</input><br>
           <input type="number" id="er_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > ER Outer Diam. (cm)</input><br>
 
@@ -260,8 +266,8 @@
       <!-- TODO - may need to revert back to a 'submit' button for input validation to work... -->
 
 
-      <button type="button" onclick="calculate(); return false">Calculate!</button>
-      <!-- <button type="submit" onclick="calculate(); return false">Calculate!</button> -->
+      <!-- <button type="button" onclick="calculate(); return false">Calculate!</button> -->
+      <button type="submit" onclick="calculate(); return false">Calculate!</button> 
       <!-- 'return false' is necessary to avoid automatic page refresh (for type="submit") -->
       <!-- NOTE: changed buttons to type "button" instead of "submit"; is return false still necessary? -->
 
@@ -275,6 +281,7 @@
     <!-- <p id="output_test1">This field intentionally blank.</p> -->
     <!-- <p id="output_main"></p> -->
     <div class="warning_div" id="stale_div"></div>
+    <div class="warning_div" id="input_error_div"></div> <!-- warnings for invalid input (temp? disable submit button instead? have not found simple cross browser method yet...) -->
 
     <table>
       <tr>

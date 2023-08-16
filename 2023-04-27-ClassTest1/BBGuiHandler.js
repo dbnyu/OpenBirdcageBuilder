@@ -48,6 +48,19 @@ RESULTS_STALE = false; // set to true if user input changes & reset to false whe
 function calculate() {
 
 	reset_output_table("--"); // clear old results (if any)
+
+	if (!document.getElementById("main_form").reportValidity()) {
+	//if (!document.getElementById("main_form").checkValidity()) {
+		// display error and skip calculations
+		document.getElementById("input_error_div").innerHTML = "Warning: Invalid input - please check inputs and try again.";
+		console.log("Input Error; Skipping calculation");
+		return;
+	} 
+	else {
+		// clear error, if any, and proceed
+		document.getElementById("input_error_div").innerHTML = "";
+	}
+
 	
 	BB = get_gui_args();
 	cap = BB.calc_capacitor();
