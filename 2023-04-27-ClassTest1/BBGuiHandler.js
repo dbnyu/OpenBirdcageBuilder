@@ -252,20 +252,26 @@ function validate_shield_radius() {
 	 * TODO currently not changing the coil_radius valid status because that's handled by pure HTML; but the popup error message should be clear.
 	 */
 
+	var sr_field = document.getElementById("shield_radius");
+	var sr = Number(sr_field.value);
+
 	var cr = Number(document.getElementById("coil_radius").value);
-	var sr = Number(document.getElementById("shield_radius").value);
+	
 
 	// TODO == or ===?
 	// TODO relies on coil radius to enforce positive value... revisit logic
 	// TODO there may be a Firefox but with setCustomValidity - see:
 	// https://stackoverflow.com/questions/7357192/how-to-clear-remove-or-reset-html5-form-validation-state-after-setcustomvalid
 	// https://stackoverflow.com/questions/24191482/setcustomvalidity-will-not-reset-after-triggering
-	if (shield_radius === 0 || shield_radius > cr) {
-		document.getElementById("shield_radius").setCustomValidity(""); // empty string -> valid
+	if (sr === 0 || sr > cr) {
+		sr_field.setCustomValidity(''); // empty string -> valid
 	}
 	else {
-		document.getElementById("shield_radius").setCustomValidity("Shield Radius must be greater than Coil Radius (or 0 for no shield)."); // non-empty string sets field as invalid
+		// non-empty string sets field as invalid
+		sr_field.setCustomValidity("Shield Radius must be greater than Coil Radius (or 0 for no shield).");
 	}
+
+	//sr_field.reportValidity(); // TODO not sure if this is needed; see https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/setCustomValidity
 
 	mark_results_stale();
 }
