@@ -224,15 +224,16 @@
         <label for="leg_rect">Rectangular</label>
         <br>
 
-        <input type="number" id="leg_width" step="any" value="2" onChange="mark_results_stale()" required > Leg Width (cm)</input><br>
+        <input type="number" id="leg_width" step="any" value="2" min="0.000001" onChange="mark_results_stale()" required > Leg Width (cm)</input><br>
         <br>
         <input type="radio" id="leg_tube" name="leg_type" value="leg_tube" onChange="update_leg_geom_inputs(this)" required />
         <label for="leg_tube">Tubular</label>
         <br>
 
           <!-- TODO- javascript validation that OD > ID and nonzero (ID can be zero if it's solid though?) -->
-          <input type="number" id="leg_ID" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > Leg Inner Diam. (cm)</input><br>
-          <input type="number" id="leg_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > Leg Outer Diam. (cm)</input><br>
+          <input type="number" id="leg_ID" step="any" value="0" min="0" disabled="disabled" onChange="validate_tube_outer_diam('leg_ID', 'leg_OD')" required > Leg Inner Diam. (cm)</input><br>
+          <!-- <input type="number" id="leg_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > Leg Outer Diam. (cm)</input><br> -->
+          <input type="number" id="leg_OD" step="any" value="0" disabled="disabled" onChange="validate_tube_outer_diam('leg_ID', 'leg_OD')" required > Leg Outer Diam. (cm)</input><br>
 
         <br>
 
@@ -253,8 +254,8 @@
         <br>
 
           <!-- TODO- javascript validation that OD > ID and nonzero (ID can be zero if it's solid though?) -->
-          <input type="number" id="er_ID" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > ER Inner Diam. (cm)</input><br>
-          <input type="number" id="er_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > ER Outer Diam. (cm)</input><br>
+          <input type="number" id="er_ID" step="any" value="0" min="0" disabled="disabled" onChange="validate_tube_outer_diam('er_ID', 'er_OD')" required > ER Inner Diam. (cm)</input><br>
+          <input type="number" id="er_OD" step="any" value="0" disabled="disabled" onChange="validate_tube_outer_diam('er_ID', 'er_OD')" required > ER Outer Diam. (cm)</input><br>
 
       </fieldset>
       <br>

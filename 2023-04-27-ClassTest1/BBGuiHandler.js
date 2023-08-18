@@ -260,7 +260,7 @@ function validate_shield_radius() {
 
 	// TODO == or ===?
 	// TODO relies on coil radius to enforce positive value... revisit logic
-	// TODO there may be a Firefox but with setCustomValidity - see:
+	// there may be a Firefox but with setCustomValidity - see:
 	// https://stackoverflow.com/questions/7357192/how-to-clear-remove-or-reset-html5-form-validation-state-after-setcustomvalid
 	// https://stackoverflow.com/questions/24191482/setcustomvalidity-will-not-reset-after-triggering
 	if (sr === 0 || sr > cr) {
@@ -275,6 +275,41 @@ function validate_shield_radius() {
 
 	mark_results_stale();
 }
+
+
+function validate_tube_outer_diam(id_field, od_field) {
+	/* Generic function to make sure outer diamter is > inner diameter
+	 * Inner Diamter should be verified as >= 0 in pure HTML; this assumes that's already done & valid. 
+	 * Called by the HTML form onChange function for the tube ID & OD inputs (leg/endring)
+	 * Only the outer diamter field is checked here & its validity status is manipulated here.
+	 *
+	 *
+	 * id_field = the HTML ID of the inner diameter field (string)
+	 *		Not checked or manipulated, only used to validate outer diamter.
+	 *
+	 * od_field = the HTML ID of the outer diameter field (string)
+	 *		of the OD field, so you can just pass "this" for convenience.
+	 *
+	 *
+	 * Sets the validity status of the outer diamter field that's passed in.
+	 */
+
+
+	id = Number(document.getElementById(id_field).value);
+
+	od_dom = document.getElementById(od_field);
+	od = Number(od_dom.value);
+
+	if (od > id) {
+		od_dom.setCustomValidity(''); // everything ok
+	}
+	else {
+		od_dom.setCustomValidity('Outer Diameter must be greater than Inner Diameter');
+	}
+
+	mark_results_stale();
+}
+
 
 
 
