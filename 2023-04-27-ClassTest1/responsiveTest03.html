@@ -34,7 +34,7 @@
         font-size: 2em;
       } */
 
-      header {
+      header, footer {
         background-color: #580f8b;
         color: #ffffff;
         width: 100%;
@@ -43,6 +43,22 @@
         padding-left: 20px;
         padding-right: 20px;
       }
+
+      a:link {
+          color: #ffffff;
+      }
+
+      a:visited {
+          color: #dddddd;
+      }
+
+      a:hover {
+          color: hotpink;
+      }
+      a:active {
+          color: #dddddd;
+      } 
+       
 
       legend {
         background-color: #580f8b;
@@ -98,6 +114,12 @@
         background-color: #ffdddd;
         /* color: #ff0000; */
       }
+
+
+      img {
+        max-width: 100%;
+      }
+
   
 
      @media only screen and (max-width: 300px) {
@@ -132,7 +154,7 @@
   <body>
     <header>
     <h1>BirdcageBuilderJS</h1>
-    v0.0.u<br>
+    v0.0.7<br>
     <br>
     </header>
 
@@ -321,6 +343,23 @@
     <!-- <h2>Debug</h2> -->
     <!-- <button type="button" onclick="debug_clear(); return false">Clear Debug</button> -->
     <!-- <p id="debug1"></p> -->
+
+    <br>
+    <footer>
+      <a href="">Documentation & Code</a><br> <!-- TODO github repo link -->
+      <br>
+      <a href="">Project Page (cai2r site)</a><br>
+      <br>
+      <a href="https://cai2r.net">NYU CAI<sup>2</sup>R</a><br>
+      <br>
+      TODO Copyright &amp; License info?<br>
+      TODO citation request?<br>
+      <br>
+      <img src="NYUL-Health_logo_White_RGB_72ppi_25pct.png"><br>
+      <img src="CAI2R_PURPLE_INVERT_RGB_288x94.png"><br>
+      <img src="CBI_Logo_Final_RGB-01_250x63.png">
+
+    </footer>
 
 
   </body>
