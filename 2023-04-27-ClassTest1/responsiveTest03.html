@@ -37,11 +37,15 @@
       header, footer {
         background-color: #580f8b;
         color: #ffffff;
-        width: 100%;
+        /*width: 100%;*/  /* this makes it too wide with added padding */
         padding-top: 10px;
         padding-bottom: 10px;
         padding-left: 20px;
         padding-right: 20px;
+      }
+
+      .header-h1 {
+        max-width: 80%; /* h1 indent looks bad on narrow screens; TODO WIP */
       }
 
       a:link {
@@ -129,6 +133,11 @@
       } */
       <!-- TODO set max width (of what/which element?) to 100% to prevent scrolling offscreen? possible to limit text size based on that (while still allowing user to scroll in?) -->
       
+      * {
+          box-sizing: border-box;
+      }
+
+      
       /* .fonts {
         font-size: 5vw;
       }  */
@@ -153,12 +162,12 @@
 
   <body>
     <header>
-    <h1>BirdcageBuilderJS</h1>
+    <h1 class="header-h1">BirdcageBuilderJS</h1>
     v0.0.7<br>
     <br>
     </header>
 
-    <h2>DIY Responsive Mobile & User Facing Input Validation Tests</h2>
+    <br>
 
     <form id="main_form"> 
 
