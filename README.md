@@ -1,10 +1,10 @@
-# BirdcageBuilderJS
+# BirdcageBuilder2023
 Douglas Brantner<sup>1</sup>, Giuseppe Carluccio<sup>1</sup>, Chih-Liang Chin<sup>2</sup>, Christopher Collins<sup>1</sup>  
 <sup>1</sup>NYU Langone Health [CAI2R](https://cai2r.net) + CBI  
-<sup>2</sup>??? TODO
+<sup>2</sup>TODO
 
-TODO date  
-TODO version
+12 October 2023
+Version 0.0.7 BETA WIP
 
 
 ## Intro/Background
@@ -68,7 +68,7 @@ These "pure code" files (BirdcageBuilder.js, BCLegs.js, BCEndRings.js) should be
 ### Planning/Releasing/TODOs
 - TODO - License
 - TODO - Documentation
-- TODO - probably copy *only* the relevant files to a new repo before making anything public
+- TODO - publish github page
   - May also be able to squash/rebase the git logs, or just start fresh with a new repo...
 - TODO - web page/links & usage tracking
   - Ideally this would be as non-invasive as possible (no google, etc. tracking; in-house if possible)
