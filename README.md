@@ -54,3 +54,7 @@ TODO
 ### Other References
 - https://en.wikipedia.org/wiki/Method_of_images
 - https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#the_viewport_meta_tag
+
+
+---
+All NYU, CBI, CAI2R names & logos are trademarks of NYU and may not be used without written permission.
