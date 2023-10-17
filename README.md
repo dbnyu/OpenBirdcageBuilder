@@ -23,6 +23,7 @@ Updated version of Birdcage Builder Android app, to run in any web browser, on a
 - WIP to be continued...
 
 ## Usage
+All documentation is very much BETA WIP and very much under construction! Thank you for your patience!
 
 ### Webapp Usage
 - Enter all required values (including any necessary optional values for bandpass predefined caps or tubular leg dimensions)
