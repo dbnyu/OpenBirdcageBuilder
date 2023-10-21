@@ -10,7 +10,8 @@ Version 0.0.7 BETA WIP
 ## Intro/Background
 Estimates the capacitor value for building cylindrical [Birdcage Coils](https://mriquestions.com/birdcage-coil.html).  
 Updated version of Birdcage Builder Android app, to run in any web browser, on any device (desktop or mobile).  
-This is the first fully open-source, cross-platform/cross-device version of BirdcageBuilder (2023).
+This is the first fully open-source, cross-platform/cross-device version of BirdcageBuilder (2023).  
+- Runs in your web browser - no app to download.  
 
 ### Prior Versions
 - This new JavaScript version (2023) is based largely on the Java codebase from the Android version, available here:
