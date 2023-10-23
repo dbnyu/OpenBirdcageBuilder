@@ -1,17 +1,20 @@
 # BirdcageBuilder2023
+Open Source capacitor calculator for tuning Birdcage RF Coils.
+
 Douglas Brantner<sup>1</sup>, Giuseppe Carluccio<sup>1</sup>, Chih-Liang Chin<sup>2</sup>, Christopher Collins<sup>1</sup>  
 <sup>1</sup>NYU Langone Health [CAI2R](https://cai2r.net) + CBI  
 <sup>2</sup>Merck
-
-18 October 2023  
-Version 0.0.7 BETA WIP
-
+- [Live Calculator Webapp (Beta WIP)](https://dbnyu.github.io/BirdcageBuilder2023/)
+  - Runs in your web browser - no app to download or install!
+  - Version 0.0.7 Beta WIP, 18 October 2023
+- [Code & Documentation (Github)](https://github.com/dbnyu/BirdcageBuilder2023)
+ 
 
 ## Intro/Background
 Estimates the capacitor value for building cylindrical [Birdcage Coils](https://mriquestions.com/birdcage-coil.html).  
 Updated version of Birdcage Builder Android app, to run in any web browser, on any device (desktop or mobile).  
 This is the first fully open-source, cross-platform/cross-device version of BirdcageBuilder (2023).  
-- Runs in your web browser - no app to download.  
+
 
 ### Prior Versions
 - This new JavaScript version (2023) is based largely on the Java codebase from the Android version, available here:
