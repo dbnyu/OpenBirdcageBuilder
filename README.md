@@ -33,6 +33,7 @@ All documentation is very much BETA WIP and very much under construction! Thank 
 ### Webapp Usage
 - Enter all required values (including any necessary optional values for bandpass predefined caps or tubular leg dimensions)
 - For "No Shield" enter zero for the shield radius
+- For solid wire Legs or End Rings, select "Tubular" and set the Inner Diameter to 0.
 - Click "Calculate!"
 
 ### Code API
