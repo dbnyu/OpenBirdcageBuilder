@@ -4,10 +4,14 @@ Open Source capacitor calculator for tuning Birdcage RF Coils.
 Douglas Brantner<sup>1</sup>, Giuseppe Carluccio<sup>1</sup>, Chih-Liang Chin<sup>2</sup>, Christopher Collins<sup>1</sup>  
 <sup>1</sup>NYU Langone Health [CAI2R](https://cai2r.net) + CBI  
 <sup>2</sup>Merck
-- [Live Calculator Webapp (Beta WIP)](https://dbnyu.github.io/BirdcageBuilder2023/)
+- [Live Webapp (Beta)](https://dbnyu.github.io/OpenBirdcageBuilder/)
   - Runs in your web browser - no app to download or install!
+  - Version 0.0.8 Beta WIP, 02 November 2023 (new official repo & name change, no major functionality changes, as submitted to ISMRM 2024)
   - Version 0.0.7 Beta WIP, 18 October 2023 (first public soft release at [NYU CAI<sup>2</sup>R i2i Conference 2023](https://cai2r.net/training/i2i-workshop/))
-- [Code & Documentation (Github)](https://github.com/dbnyu/BirdcageBuilder2023)
+- [Code & Documentation (Github)](https://github.com/dbnyu/OpenBirdcageBuilder)
+- This is the official project repo; the previous [BirdcageBuilder2023](https://github.com/dbnyu/BirdcageBuilder2023) repo is now just a placeholder and to preserve previous issue history.
+- Please check [here](https://github.com/dbnyu/BirdcageBuilder2023/issues) before submitting a new issue
+- All new issues should be submitted to this repo (OpenBirdcageBuilder).
  
 
 ## Intro/Background
@@ -33,6 +37,7 @@ under_construction.gif
 
 ### Webapp Usage
 - Enter all required values (including any necessary optional values for bandpass predefined caps or tubular leg dimensions)
+- If a larger number of legs is needed, it is a simple exercise in HTML hacking to achieve any number of legs (must be a multiple of 4)
 - For "No Shield" enter zero for the shield radius
 - For solid wire Legs or End Rings, select "Tubular" and set the Inner Diameter to 0.
 - Click "Calculate!"
