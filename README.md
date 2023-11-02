@@ -1,4 +1,4 @@
-# BirdcageBuilder2023
+# Open BirdcageBuilder
 Open Source capacitor calculator for tuning Birdcage RF Coils.
 
 Douglas Brantner<sup>1</sup>, Giuseppe Carluccio<sup>1</sup>, Chih-Liang Chin<sup>2</sup>, Christopher Collins<sup>1</sup>  
@@ -6,7 +6,7 @@ Douglas Brantner<sup>1</sup>, Giuseppe Carluccio<sup>1</sup>, Chih-Liang Chin<su
 <sup>2</sup>Merck
 - [Live Calculator Webapp (Beta WIP)](https://dbnyu.github.io/BirdcageBuilder2023/)
   - Runs in your web browser - no app to download or install!
-  - Version 0.0.7 Beta WIP, 18 October 2023
+  - Version 0.0.7 Beta WIP, 18 October 2023 (first public soft release at [NYU CAI<sup>2</sup>R i2i Conference 2023](https://cai2r.net/training/i2i-workshop/))
 - [Code & Documentation (Github)](https://github.com/dbnyu/BirdcageBuilder2023)
  
 
@@ -28,7 +28,8 @@ This is the first fully open-source, cross-platform/cross-device version of Bird
 - WIP to be continued...
 
 ## Usage
-All documentation is very much BETA WIP and very much under construction! Thank you for your patience!
+All documentation is very much BETA WIP and very much under construction! Thank you for your patience!  
+under_construction.gif
 
 ### Webapp Usage
 - Enter all required values (including any necessary optional values for bandpass predefined caps or tubular leg dimensions)
