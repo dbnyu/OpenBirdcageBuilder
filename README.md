@@ -49,7 +49,7 @@ Custom usage/code extendability etc.
 - Customize # of legs etc. (basic html editing)
 
 ## Citation
-If you use this webapp or our code, please cite:  
+In work utilizing this webapp or associated source code, please cite:  
 Chin CL, Collins CM, Li S, Dardzinski BJ, Smith MB. BirdcageBuilder: Design of specified-geometry birdcage coils with desired current pattern and resonant frequency. Concepts Magn Reson. 2002;15(2):156-163. doi:10.1002/cmr.10030  
 [PubMed Free Full Text](https://pubmed.ncbi.nlm.nih.gov/23316109/)
 
