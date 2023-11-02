@@ -48,16 +48,19 @@ Custom usage/code extendability etc.
 - See freqshifttest.html
 - Customize # of legs etc. (basic html editing)
 
+
+### Unit Tests
+- WIP
+- [QUnit.js](https://qunitjs.com) in-browser unit testing framework
+- Testing against 2002 paper results and Android app values (run on Android and desktop Java)
+
+
 ## Citation
 In work utilizing this webapp or associated source code, please cite:  
 Chin CL, Collins CM, Li S, Dardzinski BJ, Smith MB. BirdcageBuilder: Design of specified-geometry birdcage coils with desired current pattern and resonant frequency. Concepts Magn Reson. 2002;15(2):156-163. doi:10.1002/cmr.10030  
 [PubMed Free Full Text](https://pubmed.ncbi.nlm.nih.gov/23316109/)
 
 
-### Unit Tests
-- WIP
-- [QUnit.js](https://qunitjs.com) in-browser unit testing framework
-- Testing against 2002 paper results and Android app values (run on Android and desktop Java)
 
 ## License
 [GNU AGPL 3.0](https://www.gnu.org/licenses/agpl-3.0.en.html)
