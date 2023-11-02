@@ -92,10 +92,12 @@ function calculate() {
 	}
 
 	// fill in Results table:
-	document.getElementById("leg_si").innerHTML = disp_leg_self_ind;
-    document.getElementById("er_si").innerHTML =  disp_er_self_ind;
-	document.getElementById("leg_mi").innerHTML = disp_leg_mut_ind;
-	document.getElementById("er_mi").innerHTML =  disp_er_mut_ind;
+	// REMOVED IN v0.0.8 - Only displaying final capacitor results for now
+	// KEEP THIS FOR DEBUGGING!!!
+	//document.getElementById("leg_si").innerHTML = disp_leg_self_ind;
+    //document.getElementById("er_si").innerHTML =  disp_er_self_ind;
+	//document.getElementById("leg_mi").innerHTML = disp_leg_mut_ind;
+	//document.getElementById("er_mi").innerHTML =  disp_er_mut_ind;
 	document.getElementById("calc_cap").innerHTML = disp_calc_cap;
 
 	clear_results_stale();
@@ -496,10 +498,13 @@ function reset_output_table(s) {
 	 * s = string to overwrite table data with
 	 *
 	 * */
-	document.getElementById("leg_si").innerHTML = s;
-    document.getElementById("er_si").innerHTML =  s;
-	document.getElementById("leg_mi").innerHTML = s;
-	document.getElementById("er_mi").innerHTML =  s;
+
+	// REMOVED IN v0.0.8 - Only displaying final capacitor results for now
+	// KEEP THIS FOR DEBUGGING!!!
+	//document.getElementById("leg_si").innerHTML = s;
+    //document.getElementById("er_si").innerHTML =  s;
+	//document.getElementById("leg_mi").innerHTML = s;
+	//document.getElementById("er_mi").innerHTML =  s;
 	document.getElementById("calc_cap").innerHTML = s;
 }
 
