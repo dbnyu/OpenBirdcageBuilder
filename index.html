@@ -147,12 +147,20 @@
     </style>
 
 
+  <!-- Release Notes -->
+  <!-- v0.0.8 Beta (Second Public Release :) -->
+  <!-- - mostly just a name change & new github repo link (OpenBirdcageBuilder)   -->
+  <!-- - deleting inductance table from results for clarity -->
+
+
+
 
   <!-- Birdcage Builder -->
   <!-- v0.0.7 Beta (First Public Release) -->
   <!-- Doug Brantner 10/18/2023 -->
   <!-- NYU Langone Health CAI2R -->
   <!-- cai2r.net -->
+
 
   </head>
 
@@ -163,7 +171,7 @@
   <body>
     <header>
     <h1 class="header-h1">Open BirdcageBuilder</h1>
-    v0.0.7 Beta WIP<br>
+    v0.0.8 Beta WIP<br>
     <br>
     </header>
 
@@ -217,7 +225,7 @@
         <!-- NOTE: for input validation, using "a very small number" for inputs that have to be positive and nonzero, to take advantage of builtin validation without javascript -->
         <!-- TODO shield radius must be greader than coil radius, or zero? - probably need javascript? -->
 
-        <input type="number" id="center_freq"   step="any" value="21.28" min="0.000001" onChange="mark_results_stale()" required > Frequency (MHz)</input><br>
+        <input type="number" id="center_freq"   step="any" value="128" min="0.000001" onChange="mark_results_stale()" required > Frequency (MHz)</input><br>
         <input type="number" id="coil_radius"   step="any" value="10"    min="0.000001" onChange="mark_results_stale()" required > Coil Radius (cm)</input><br>
         <!-- <input type="number" id="shield_radius" step="any" value="0"     min="0"        onChange="mark_results_stale()" required > Shield Radius (cm)</input><br> -->
         <input type="number" id="shield_radius" step="any" value="0"     onChange="validate_shield_radius()" required > Shield Radius (cm)</input><br>
