@@ -6,8 +6,7 @@ Douglas Brantner<sup>1</sup>, Giuseppe Carluccio<sup>1</sup>, Chih-Liang Chin<su
 <sup>2</sup>Merck
 - Try it now! [Live Webapp (Beta)](https://dbnyu.github.io/OpenBirdcageBuilder/)
   - Runs in your web browser - no app to download or install!
-  - Version 0.0.8 Beta WIP, 02 November 2023 (new official repo & name change, no major functionality changes, as submitted to ISMRM 2024)
-  - Version 0.0.7 Beta WIP, 18 October 2023 (first public soft release at [NYU CAI<sup>2</sup>R i2i Conference 2023](https://cai2r.net/training/i2i-workshop/))
+
 - [Code & Documentation (Github)](https://github.com/dbnyu/OpenBirdcageBuilder) (this page)
 - This is the official project repo; the previous [BirdcageBuilder2023](https://github.com/dbnyu/BirdcageBuilder2023) repo is now just a placeholder and to preserve previous issue history.
   - Please check [here](https://github.com/dbnyu/BirdcageBuilder2023/issues) before submitting a new issue
@@ -19,6 +18,11 @@ Estimates the capacitor value for building cylindrical [Birdcage Coils](https://
 Updated version of Birdcage Builder Android app, to run in any web browser, on any device (desktop or mobile).  
 This is the first fully open-source, cross-platform/cross-device version of BirdcageBuilder (2023).  
 
+### Version Notes
+- Version 1.0.0, 29 April 2024 - Updated for ISMRM 2024, minor clean ups, fixed unit tests- All Tests Passing.
+- Version 0.0.8 Beta WIP, 02 November 2023 (new official repo & name change, no major functionality changes, as submitted to ISMRM 2024)
+- Version 0.0.7 Beta WIP, 18 October 2023 (first public soft release at [NYU CAI<sup>2</sup>R i2i Conference 2023](https://cai2r.net/training/i2i-workshop/))
+
 
 ### Prior Versions
 - This new JavaScript version (2023) is based largely on the Java codebase from the Android version, available here:
@@ -27,12 +31,13 @@ This is the first fully open-source, cross-platform/cross-device version of Bird
   - See Chin, Collins, et al. 2002 referenced below
 
 ### Caveats/Limitations
+- First pass capacitor prediction only
 - Does not take into account high frequency effects (Biot-Savart only)
 - Does not consider capacitive coupling (only mutual inductance)
-- WIP to be continued...
+- Currently only for cylindrical birdcage coils
 
 ## Usage
-All documentation is very much BETA WIP and very much under construction! Thank you for your patience!  
+Documentation is under construction! Thank you for your patience!  
 under_construction.gif
 
 ### Webapp Usage
@@ -44,7 +49,7 @@ under_construction.gif
 
 ### Code API
 Custom usage/code extendability etc.
-- WIP - See freqshifttest.html (requires Plotly)
+- WIP - See freqshifttest.html for an example of a different way to use the code (requires Plotly)
 
 
 ### Unit Tests
@@ -52,12 +57,11 @@ Testing against 2002 paper results (1) and Android app values (run both on Andro
 - Unit Tests require the [QUnit.js](https://qunitjs.com) in-browser testing framework
 
 #### Unit Test Setup
-Try to mimick the following folder setup, so you won't have to adjust the QUnit include paths in the HTML files:
-```   .
+Set up your working folder to match this folder structure, so that you won't have to adjust the import paths for the QUnit files (alternatively, you can use the CDN links without downloading QUnit; but please do not commit any path changes here).
+```
    <parent folder>
    │
-   │
-   ├── OpenBirdcageBuilder
+   ├── OpenBirdcageBuilder    (this repo)
    │   │
    │   └── OpenBirdcageBuilder
    │       ├── BBGuiHandler.js
@@ -81,7 +85,6 @@ Try to mimick the following folder setup, so you won't have to adjust the QUnit 
    │   ├── qunit-2.19.4.js
    │   └── ...
    │
-   │
    ├── qunit-assert-close-git
    │   │
    │   └── qunit-assert-close
@@ -89,8 +92,7 @@ Try to mimick the following folder setup, so you won't have to adjust the QUnit 
    │       ├── qunit-assert-close.js
    │       └── ...
    │
-   │
-   └── qunit-composite
+   └── qunit-composite    (optional - WIP)
        │
        └── qunit-composite
            │
@@ -98,15 +100,21 @@ Try to mimick the following folder setup, so you won't have to adjust the QUnit 
            ├── qunit-composite.js
            └── ...
 ```
-
+See the ```qunit_...[.]html``` files for the current version of QUnit we are testing against, and file path structure.
 
 1. Clone this repository onto your local machine, following the above folder structure.
-2. Create additional folders (see file tree above) for QUnit files and clone the repositories:
+2. Create additional folders (see file tree above) for QUnit files and clone these repositories:
   - [QUnit.js](https://github.com/qunitjs/qunit)
   - [QUnit Assert-Close Plugin](https://github.com/JamesMGreene/qunit-assert-close) for floating-point approximate tests
   - (Optional - WIP) [QUnit Composite](https://github.com/JamesMGreene/qunit-composite)
-See the ```qunit_...[.]html``` files for the current version of QUnit we are testing against.
-3. See [qunit_test_all_math.html](qunit_test_all_math.html) 
+3. The unit tests should now run if the file paths are correct. 
+  - ```qunit_overview.html``` simply links to each of the 4 main unit test files
+  - (WIP - get QUnit composite working to run all tests automatically)
+4. Load and run each test page to ensure all tests are passing.
+  - qunit_test_all_math.html - Validate output values
+  - qunit_test_endrings.html - Test EndRing class
+  - qunit_test_helpers.html - Test helper functions
+  - qunit_test_legs.html - Test Leg class
 
 See [In-Browser QUnit Documentation](https://qunitjs.com/intro/#in-the-browser) for more details.
 
