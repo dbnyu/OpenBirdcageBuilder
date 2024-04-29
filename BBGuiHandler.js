@@ -169,7 +169,6 @@ function get_gui_args() {
 
 	
 	// convert units (BCJ.MA)
-	// TODO double check all unit conversions
 	freq = mhz2hz(freq);
 	r_coil = cm2meters(r_coil);
 	r_shield = cm2meters(r_shield);
@@ -322,7 +321,6 @@ function get_coil_config() {
 	 * (Hi/Low/Bandpass)
 	 */
 
-	// TODO do we need a 4th category for bandpass for cap on leg/ER?
 	if (document.getElementById('config_lp').checked) {
 		return 'lowpass';
 	}

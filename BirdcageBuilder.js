@@ -15,10 +15,10 @@
 class BirdcageBuilder {
 
 	constructor(n, f, rc, rs, config) {
-		this.n_legs = Number(n);	// number of legs
+		this.n_legs = Number(n);	// number of legs (int, must be multiple of 4)
 		this.freq = Number(f);		// target frequency (Hz)
-		this.r_coil = Number(rc);	// radius of the birdcage TODO - units = meters?
-		this.r_shield = Number(rs); // radius of shield TODO units
+		this.r_coil = Number(rc);	// radius of the birdcage (meters)
+		this.r_shield = Number(rs); // radius of shield (meters)
 		this.coil_config = config;  // string: 'highpass', 'lowpass', 'bandpass_leg', or 'bandpass_er'
 		this.predcap = -1; // predetermined capacitor for bandpass coils (not used for LP/HP)
 
@@ -87,7 +87,6 @@ class BirdcageBuilder {
 		var k = n/4 - 1; // index for most leg currents/mutual inductance
 		var vol, extravol;
 
-		//var predcap = 67e-12; // TODO is this right/fixed/does it need user intput??? MOVING TO CONSTRUCTOR
 		var cap, kk, jj; // TODO rename kk, jj if possible?
 
 
