@@ -16,8 +16,8 @@ class BCEndRings {
 	//constructor(n, legs) {
 	constructor(n) {
 		// TODO is n input redundant? since we require BCLegs to be setup already?
-		this.n_legs = Number(n); // TODO is this the number of legs or number of ring segments?
-		//this.legs = legs; // BCLegs object (MUST be fully set up!)
+		this.n_legs = Number(n);
+
 		// NOTE for now keeping the objects separate; functions that require leg info must be passed the leg object as an input arg
 
 		this.er_shape = 'null'; // 'rect' or 'tube'
@@ -25,16 +25,10 @@ class BCEndRings {
 		// TODO units for all!
 
 		// for rectangular end ring copper:
-		// TODO delete arbitrary defaults?
-		//this.er_arclen = 0.1;	// arc length of each endring segment (circumference/N) TODO units
-		//this.er_width = 0.02;	// TODO what is this? thickness of the copper?
 		this.er_arclen = -1;	// arc length of each endring segment (circumference/N) TODO units
 		this.er_width = -1;	// TODO what is this? thickness of the copper?
 
 		// for tubular endrings:
-		// TODO delete arbitrary defaults?
-		//this.er_r_inner = 0;	// tube endring inner radius
-		//this.er_r_outer = 0.02;	// tube endring outer radius
 		this.er_r_inner = -1;	// tube endring inner radius
 		this.er_r_outer = -1;	// tube endring outer radius
 
@@ -42,9 +36,6 @@ class BCEndRings {
 		this.er_mutual_inductance = new Array(n);
 
 		this.er_currents = new Array(n);	// TODO end ring currents?
-		// TODO are these used?
-		//this.er_x = new Array(n);	// end ring x position (TODO or legs?)
-		//this.er_y = new Array(n);
 
 		// USER MUST CALL:
 		// init_endrings() (called automatically in BircageBuilder constructor
