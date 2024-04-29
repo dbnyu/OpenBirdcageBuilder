@@ -44,13 +44,71 @@ under_construction.gif
 
 ### Code API
 Custom usage/code extendability etc.
-- WIP - See freqshifttest.html
+- WIP - See freqshifttest.html (requires Plotly)
 
 
 ### Unit Tests
-- WIP
-- [QUnit.js](https://qunitjs.com) in-browser unit testing framework
-- Testing against 2002 paper results and Android app values (run on Android and desktop Java)
+Testing against 2002 paper results (1) and Android app values (run both on Android and desktop Java)
+- Unit Tests require the [QUnit.js](https://qunitjs.com) in-browser testing framework
+
+#### Unit Test Setup
+Try to mimick the following folder setup, so you won't have to adjust the QUnit include paths in the HTML files:
+```   .
+   <parent folder>
+   │
+   │
+   ├── OpenBirdcageBuilder
+   │   │
+   │   └── OpenBirdcageBuilder
+   │       ├── BBGuiHandler.js
+   │       ├── BCEndRings.js
+   │       ├── BCLegs.js
+   │       ├── BirdcageBuilder.js
+   │       ├── helpers.js
+   │       ├── index.html
+   │       ├── qunit_full_dom_tests.js
+   │       ├── qunit_overview.html
+   │       ├── qunit_test_all_math.html
+   │       ├── qunit_test_endrings.html
+   │       ├── qunit_test_helpers.html
+   │       ├── qunit_test_legs.html
+   │       ├── README.md
+   │       └── ...
+   │
+   ├── qunit-2.19.4
+   │   │
+   │   ├── qunit-2.19.4.css
+   │   ├── qunit-2.19.4.js
+   │   └── ...
+   │
+   │
+   ├── qunit-assert-close-git
+   │   │
+   │   └── qunit-assert-close
+   │       │
+   │       ├── qunit-assert-close.js
+   │       └── ...
+   │
+   │
+   └── qunit-composite
+       │
+       └── qunit-composite
+           │
+           ├── qunit-composite.css
+           ├── qunit-composite.js
+           └── ...
+```
+
+
+1. Clone this repository onto your local machine, following the above folder structure.
+2. Create additional folders (see file tree above) for QUnit files and clone the repositories:
+  - [QUnit.js](https://github.com/qunitjs/qunit)
+  - [QUnit Assert-Close Plugin](https://github.com/JamesMGreene/qunit-assert-close) for floating-point approximate tests
+  - (Optional - WIP) [QUnit Composite](https://github.com/JamesMGreene/qunit-composite)
+See the ```qunit_...[.]html``` files for the current version of QUnit we are testing against.
+3. See [qunit_test_all_math.html](qunit_test_all_math.html) 
+
+See [In-Browser QUnit Documentation](https://qunitjs.com/intro/#in-the-browser) for more details.
 
 
 ## Citation
