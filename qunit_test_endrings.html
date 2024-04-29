@@ -52,7 +52,6 @@
 
     QUnit.test('Rectangular Self Inductance', function(assert) {
       //var bb = new BirdcageBuilder(16, 128e6, 10, 12);
-      // TODO - change to new BCLegs subclass if only testing legs (search/replace all if possible)
       var er = new BCEndRings(16);
 
       assert.true(Number.isNaN(er.calc_er_self_inductance_rect(0, 1)));
