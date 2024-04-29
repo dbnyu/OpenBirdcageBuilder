@@ -16,8 +16,8 @@ class BCLegs {
 
 	constructor(n, rc, rs) {
 		this.n_legs = Number(n);	// number of legs
-		this.r_coil = Number(rc);	// radius of the birdcage TODO - units = meters?
-		this.r_shield = Number(rs); // radius of shield TODO units
+		this.r_coil = Number(rc);	// radius of the birdcage (meters)
+		this.r_shield = Number(rs); // radius of shield (meters)
 
 		this.theta = new Array(n); // angles of legs (radians)
 
@@ -32,6 +32,7 @@ class BCLegs {
 		this.init_legs(this.n_legs, this.r_coil); // sets currents & x,y positions
 		this.init_shield(this.n_legs, this.r_coil, this.r_shield);
 
+		// all lengths = meters
 		this.leg_shape = 'null'; // 'rect' or 'tube'
 		this.leg_length = -1; 
 		this.leg_width = -1;   // for rectangle legs
@@ -60,6 +61,8 @@ class BCLegs {
 		 * They MUST also set their own self_inductance
 		 * and MUST call set_mutual_inductance() 
 		 * as well
+		 *
+		 * All lengths = meters
 		 */
 		this.leg_shape = 'rect';
 		this.leg_length = Number(l);
@@ -69,7 +72,10 @@ class BCLegs {
 	}
 
 	set_legs_tube(l, ir, or) {
-		/* see above - Tube shaped legs */
+		/* see above - Tube shaped legs 
+		 *
+		 * All lengths = meters
+		 * */
 		this.leg_shape_rect = 'tube';
 		this.leg_length = Number(l);
 		this.leg_r_inner = Number(ir);
