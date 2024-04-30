@@ -26,7 +26,7 @@
     // TODO - double check all NaN results are correct; try to make some better/more meaningful tests
 
     QUnit.test('Unit Conversion', function(assert) {
-      /* Confirming general Javascript Math/IEEE-754 assumptions */
+      /* Test Unit Conversion Functions */
 
       assert.equal(cm2meters(100), 1);
       assert.equal(cm2meters(10),  0.1);
@@ -38,11 +38,11 @@
 
     });
 
-    // TODO keep this here or leave it in Endrings?
+
     QUnit.test('General Math', function(assert) {
       /* Confirming general Javascript Math/IEEE-754 assumptions */
 
-      /* Make sure Math.log is the same as Java (Natural log) */
+      /* Make sure JavaScript Math.log is the same as Java (Natural log) */
       assert.close(Math.log(2.71), 0.9969486348916096, 1e-15, 'Natural log of truncated e (2.71)');
       assert.equal(Math.log(Math.E), 1.0, 'Natural log of Math.E (exact)'); 
       assert.equal(Math.log(1), 0);
