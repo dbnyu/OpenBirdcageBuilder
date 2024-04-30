@@ -119,16 +119,16 @@ See the ```qunit_...[.]html``` files for the current version of QUnit we are tes
 
 1. Clone this repository onto your local machine, following the above folder structure.
 2. Create additional folders (see file tree above) for QUnit files and clone these repositories:
-  - [QUnit.js](https://github.com/qunitjs/qunit)
-  - [QUnit Assert-Close Plugin](https://github.com/JamesMGreene/qunit-assert-close) for floating-point approximate tests
-  - (Optional - WIP) [QUnit Composite](https://github.com/JamesMGreene/qunit-composite)
+    - [QUnit.js](https://github.com/qunitjs/qunit)
+    - [QUnit Assert-Close Plugin](https://github.com/JamesMGreene/qunit-assert-close) for floating-point approximate tests
+    - (Optional - WIP) [QUnit Composite](https://github.com/JamesMGreene/qunit-composite)
 3. The unit tests should now run if the file paths are correct. 
-  - ```qunit_overview.html``` simply links to each of the 4 main unit test files
+    - ```qunit_overview.html``` simply links to each of the 4 main unit test files
 4. Click and run each test page to ensure all tests are passing.
-  - qunit_test_all_math.html - Validate output values
-  - qunit_test_endrings.html - Test EndRing class
-  - qunit_test_helpers.html - Test helper functions
-  - qunit_test_legs.html - Test Leg class
+    - qunit_test_all_math.html - Validate output values
+    - qunit_test_endrings.html - Test EndRing class
+    - qunit_test_helpers.html - Test helper functions
+    - qunit_test_legs.html - Test Leg class
 - (Automated testing - see ```_qunit_composite_wip.html``` - WIP, not working yet)
 
 See [In-Browser QUnit Documentation](https://qunitjs.com/intro/#in-the-browser) for more details.
