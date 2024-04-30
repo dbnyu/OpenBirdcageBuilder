@@ -88,8 +88,8 @@ class BCLegs {
 
 	init_legs(n, r) {
 		/* Initialize leg arrays
-		 *		n = number of legs
-		 *		r = radius of birdcage coil TODO units
+		 *		n = number of legs (int, must be multiple of 4)
+		 *		r = radius of birdcage coil (meters)
 		 *
 		 *	This directly modifies the global arrays:
 		 *		leg_currents
@@ -130,9 +130,9 @@ class BCLegs {
 
 	init_shield(n, rc, rs) {
 		/* Initialize shield image legs
-		 *	n = number of legs
-		 *	rc = coil radius 
-		 *	rs = shield radius
+		 *	n = number of legs  (int, must be multiple of 4)
+		 *	rc = coil radius (meters)
+		 *	rs = shield radius (meters)
 		 *
 		 *	Accesses:
 		 *	this.leg_currents 
@@ -188,7 +188,7 @@ class BCLegs {
 		//this.leg_mutual_inductance = this.leg_self_inductance + this.calc_leg_mutual_inductance(this.leg_length) + this.calc_shield_mutual_inductance(this.leg_length);
 
 
-		// set correct units TODO double check this
+		// set correct units 
 		this.leg_self_inductance *= 1e-7;
 		this.leg_mutual_inductance *= 1e-7;
 	}
@@ -197,14 +197,14 @@ class BCLegs {
 	calc_leg_self_inductance_rect(len, width) {
 		/* Calculate self-inductance of Rectangular leg
 		 *
-		 * len = leg length TODO units
-		 * width = leg width
+		 * len = leg length (meters)
+		 * width = leg width (meters)
 		 *
 		 * Returns self inductance value TODO units
 		 * BC2J.78
 		 */
 	
-		// TODO - java & javascript both seem to use natural log as default - double check this!
+		// java & javascript both seem to use natural log as default - double check (working)
 		return 2.0 * len * (Math.log(2.0 * len/width) + 0.5);
 	}
 	
@@ -212,15 +212,14 @@ class BCLegs {
 	calc_leg_self_inductance_tube(len, r_in, r_out) {
 		/* Calculate self-inductance of Tubular leg
 		 *
-		 * len = leg length TODO units
-		 * r_in = inner radius of tube  TODO what does zero mean see below?
-		 * r_out = outer radius of tube 
+		 * len = leg length (meters)
+		 * r_in = inner radius of tube (meters, set to zero for solid wire)
+		 * r_out = outer radius of tube  (meters)
 		 *
 		 * Returns self inductance value TODO units
 		 * BC2J.81
 		 */
 	
-		// TODO - if inner radius is zero, does that mean a solid core conductor/wire?
 		// TODO what are these constants in r>0 case? can they be expanded for better precision?
 	
 		if (r_in > 0) { 
@@ -367,12 +366,8 @@ class BCLegs {
 			this._shield_mutual_inductances[k] = Lmn * this.shield_currents[k] / this.leg_currents[0];
 			//this._shield_mutual_inductances[k] = mi + Lmn * this.shield_currents[k] / this.leg_currents[0];
 
-			// TODO double check LMN again; maybe it's different? check indexes too...
+			// NOTE in below formula in Reverse.doc, the shield current is negative; is this taken care of by negating the leg currents in init_shield?
 
-			// TODO NOTE in below formula in Reverse.doc, the shield current is negative; is this taken care of by negating the leg currents in init_shield?
-			// TODO try -shield currents???
-			//
-			//mi += mi + Lmn * this.shield_currents[k] / this.leg_currents[0]; // WRONG! += and adding mi = adding mi to itself twice!!!!
 			mi += Lmn * this.shield_currents[k] / this.leg_currents[0];
 
 			//debug('mi: ' + mi);
