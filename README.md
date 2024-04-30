@@ -28,7 +28,7 @@ This is the first fully open-source, cross-platform/cross-device version of Bird
 
 ### Prior Versions
 - This new JavaScript version (2023) is based largely on the Java codebase from the Android version, available here:
-  - [Birdcage Builder Mobile](https://cai2r.net/resources/birdcagebuilder-mobile/) (for Android)
+  - [Birdcage Builder Mobile](https://cai2r.net/resources/birdcagebuilder-mobile/) (for Android, 2013)
 - The original version was written in Visual Basic and released in 2002 for Windows
   - See Chin, Collins, et al. 2002 referenced below
 
