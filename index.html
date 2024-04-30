@@ -239,10 +239,10 @@
         <br>
 
         <!-- NOTE: for input validation, using "a very small number" for inputs that have to be positive and nonzero, to take advantage of builtin validation without javascript -->
-        <!-- TODO shield radius must be greader than coil radius, or zero? - probably need javascript? -->
 
         <input type="number" id="center_freq"   step="any" value="128" min="0.000001" onChange="mark_results_stale()" required > Frequency (MHz)</input><br>
         <input type="number" id="coil_radius"   step="any" value="10"    min="0.000001" onChange="mark_results_stale()" required > Coil Radius (cm)</input><br>
+        <!-- Shield radius must be larger than coil radius (or zero) -->
         <!-- <input type="number" id="shield_radius" step="any" value="0"     min="0"        onChange="mark_results_stale()" required > Shield Radius (cm)</input><br> -->
         <input type="number" id="shield_radius" step="any" value="0"     onChange="validate_shield_radius()" required > Shield Radius (cm)</input><br>
         <input type="number" id="leg_len"       step="any" value="10"    min="0.000001" onChange="mark_results_stale()" required > Leg Length (cm)</input><br>
@@ -285,7 +285,7 @@
         <label for="leg_tube">Tubular</label>
         <br>
 
-          <!-- TODO- javascript validation that OD > ID and nonzero (ID can be zero if it's solid though?) -->
+          <!-- javascript validation that OD > ID and nonzero (ID can be zero if it's solid though) -->
           <input type="number" id="leg_ID" step="any" value="0" min="0" disabled="disabled" onChange="validate_tube_outer_diam('leg_ID', 'leg_OD')" required > Leg Inner Diam. (cm)</input><br>
           <!-- <input type="number" id="leg_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > Leg Outer Diam. (cm)</input><br> -->
           <input type="number" id="leg_OD" step="any" value="0" disabled="disabled" onChange="validate_tube_outer_diam('leg_ID', 'leg_OD')" required > Leg Outer Diam. (cm)</input><br>
@@ -320,38 +320,27 @@
 
 
 
-      <!-- TODO input verification regex -->
-      <!-- TODO input verification min/max (maybe just min=0?) -->
-      <!-- TODO display 0.0 literal for float inputs? (maybe just min=0?) -->
-      <!-- TODO maybe bootstrap or other library has nicer inputs? don't waste too much time making it pretty -->
-
-
-      <!-- TODO - may need to revert back to a 'submit' button for input validation to work... -->
-
-
+      <!-- needed to revert back to a 'submit' button for input validation to work -->
       <!-- <button type="button" onclick="calculate(); return false">Calculate!</button> -->
       <button type="submit" onclick="calculate(); return false">Calculate!</button> 
       <!-- 'return false' is necessary to avoid automatic page refresh (for type="submit") -->
-      <!-- NOTE: changed buttons to type "button" instead of "submit"; is return false still necessary? -->
 
     </form>
 
-    <!-- <hr> -->
-    <!-- <h2>Results</h2> -->
 
     <br>
 
-      <fieldset>
-        <legend>Result</legend>
+    <fieldset>
+      <legend>Result</legend>
 
-    <!-- <button type="button" onclick="output_clear(); return false">Clear Results</button> -->
-    <!-- TODO - delete/deprecate the output_clear function -->
-    <!-- <p id="output_test1">This field intentionally blank.</p> -->
-    <!-- <p id="output_main"></p> -->
-    <div class="warning_div" id="stale_div"></div>
-    <div class="warning_div" id="input_error_div"></div> <!-- warnings for invalid input (temp? disable submit button instead? have not found simple cross browser method yet...) -->
+      <!-- <button type="button" onclick="output_clear(); return false">Clear Results</button> -->
+      <!-- TODO - delete/deprecate the output_clear function -->
+      <!-- <p id="output_test1">This field intentionally blank.</p> -->
+      <!-- <p id="output_main"></p> -->
+      <div class="warning_div" id="stale_div"></div>
+      <div class="warning_div" id="input_error_div"></div> <!-- warnings for invalid input (temp? disable submit button instead? have not found simple cross browser method yet...) -->
 
-    <table>
+      <table>
 
       <!-- REMOVED IN v0.0.8 - Only displaying final capacitor results for now -->
 	    <!-- KEEP THIS FOR DEBUGGING!!! -->
@@ -371,6 +360,7 @@
       <!--   <td>ER Mutual Inductance (nH)</td> -->
       <!--   <td id="er_mi">--</td> -->
       <!-- </tr> -->
+
       <tr>
         <!-- <td style="font-weight: bold">Capacitor (pF)</td> -->
         <!-- <td style="font-weight: bold" id="calc_cap">--</td> -->
@@ -380,7 +370,7 @@
 
     </table>
 
-    </fieldset>
+  </fieldset>
 
     <!-- Uncomment this & enable debug output to DOM/BOTH to see debug output in page: -->
     <!-- <hr> -->
@@ -388,35 +378,35 @@
     <!-- <button type="button" onclick="debug_clear(); return false">Clear Debug</button> -->
     <!-- <p id="debug1"></p> -->
 
+  <br>
+  <footer>
+    <a href="https://github.com/dbnyu/OpenBirdcageBuilder">Documentation & Code (Github)</a><br>
     <br>
-    <footer>
-      <a href="https://github.com/dbnyu/OpenBirdcageBuilder">Documentation & Code (Github)</a><br>
-      <br>
 
-      <a href="https://github.com/dbnyu/OpenBirdcageBuilder/blob/main/LICENSE.txt">License (GNU AGPL 3.0)</a><br>
-      
-      <p>
-      In work utilizing this webapp or associated source code, please cite:<br>
-      Chin CL, Collins CM, Li S, Dardzinski BJ, Smith MB. <i>BirdcageBuilder: Design of specified-geometry birdcage coils with desired current pattern and resonant frequency.</i> Concepts Magn Reson. 2002;15(2):156-163. doi:10.1002/cmr.10030  
-<br>
-<a href="https://pubmed.ncbi.nlm.nih.gov/23316109/">PubMed Free Full Text</a><br>
-      </p>
+    <a href="https://github.com/dbnyu/OpenBirdcageBuilder/blob/main/LICENSE.txt">License (GNU AGPL 3.0)</a><br>
+    
+    <p>
+    In work utilizing this webapp or associated source code, please cite:<br>
+    Chin CL, Collins CM, Li S, Dardzinski BJ, Smith MB. <i>BirdcageBuilder: Design of specified-geometry birdcage coils with desired current pattern and resonant frequency.</i> Concepts Magn Reson. 2002;15(2):156-163. doi:10.1002/cmr.10030  
+    <br>
+    <a href="https://pubmed.ncbi.nlm.nih.gov/23316109/">PubMed Free Full Text</a><br>
+    </p>
 
-      <br>
-      <a href="https://cai2r.net">NYU CAI<sup>2</sup>R</a><br>
+    <br>
+    <a href="https://cai2r.net">NYU CAI<sup>2</sup>R</a><br>
 
-      <img src="img/NYUL-Health_logo_White_RGB_72ppi_25pct.png"><br>
-      <img src="img/CAI2R_PURPLE_INVERT_RGB_288x94.png"><br>
-      <img src="img/CBI_Logo_Final_RGB-01_250x63.png"><br>
+    <img src="img/NYUL-Health_logo_White_RGB_72ppi_25pct.png"><br>
+    <img src="img/CAI2R_PURPLE_INVERT_RGB_288x94.png"><br>
+    <img src="img/CBI_Logo_Final_RGB-01_250x63.png"><br>
       
     <p>
     All NYU, CBI, CAI2R names & logos are trademarks of NYU and may not be used without written permission.
     </p>
 
-    </footer>
+  </footer>
 
 
-  </body>
+</body>
 
 
 </html>
