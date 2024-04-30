@@ -12,16 +12,13 @@
 
 // v0.0.2 - Testing Class based functionality separated from GUI handling (2 files)
 
-// TODO - how to split this up? one file? 
-// GUI parser/translation separate from math code?
-// how to structure this???
 
-// Anything related to HTML/DOM/GUI id's or anything else should happen HERE
+// Anything related to HTML/DOM/GUI id's, input/output, or anything else should happen HERE
 // All other code should be completely agnostic of GUI
 
 
-/* Debug Settings */
-// these are declared in debug.js but set here 
+/* Debug & Other Settings */
+// these are declared in debug.js w/ defaults but override here:
 DEBUG_ENABLE = true; // bool; enable or disable debug printing to DOM
 DEBUG_OUTPUT = 'CONSOLE'; // set to CONSOLE only for production; BOTH or DOM for testing is ok
 DEBUG_ID = 'debug1'; // DOM ID for debug output (not used in production)
@@ -31,7 +28,7 @@ PLOTLY_ENABLE = false;
 
 
 
-/* Globals */
+/* Internal Globals (do not edit these) */
 FIRST_RUN = true; // set to false after first time "calculate" is called.
 RESULTS_STALE = false; // set to true if user input changes & reset to false when "Calculate" is called.
 
@@ -68,6 +65,7 @@ function calculate() {
 	debug("n_legs = " + BB.n_legs);
 
 	// convert units for final output:
+	// TODO make unit conversion functions
 	var disp_leg_self_ind = 1e9 * BB.legs.leg_self_inductance;
 	var disp_er_self_ind  = 1e9 * BB.endrings.er_self_inductance;
 	var disp_leg_mut_ind  = 1e9 * BB.legs.leg_mutual_inductance;
@@ -83,7 +81,7 @@ function calculate() {
 	debug(''); // keep a blank line at the end
 
 	if (ROUND_OUTPUT) {
-		// NOTE: this converts numbers to STRINGS:
+		// NOTE: this also converts numbers to STRINGS:
 		disp_leg_self_ind = disp_leg_self_ind.toFixed(ROUND_N_DIGITS);
 		disp_er_self_ind  = disp_er_self_ind.toFixed(ROUND_N_DIGITS);
 		disp_leg_mut_ind  = disp_leg_mut_ind.toFixed(ROUND_N_DIGITS);
@@ -137,9 +135,6 @@ function get_gui_args() {
 	 * Returns populated BB object.
 	 */
 
-	// TODO - input sanitize & sanity check
-	// TODO		- ideally this would be baked into the HTML so user can't submit invalid values
-	// TODO		- and highlight wrong inputs in red or something so they can fix it
 
 	// TODO var or let?
 	var n_legs = Number(document.getElementById('num_legs').value);
@@ -393,7 +388,7 @@ function mark_results_stale() {
 	RESULTS_STALE = true;
 
 	if (!FIRST_RUN) {
-		// TODO - update GUI w/ literal red flag (but not on the first run)
+		// update GUI w/ literal red flag that output is stale (but not on the first run)
 		document.getElementById("stale_div").innerHTML = "Warning: Inputs changed from last run - click 'Calculate' again to update.";
 
 	}
