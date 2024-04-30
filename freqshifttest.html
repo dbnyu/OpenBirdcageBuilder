@@ -32,30 +32,39 @@
     v0.0.3<br>
     <br>
 
-    <h2>Cap vs. Frequency Shift Example</h2>
-    TODO - could redo form for inputs ie. center freq &amp; shift bandwidth, etc.<br>
+    <h2>Capacitor vs. Frequency Shift Example</h2>
+    Demonstrate usage of Open BirdcageBuilder code &amp; extension possibilities. (Click "View Source" in your browser or check the <a href="https://github.com/dbnyu/OpenBirdcageBuilder/blob/main/freqshifttest.html">Github source code</a> for this page)<br>
+    Also demonstrate plotting results with <a href="https://plotly.com/javascript/">Plotly.js</a><br>
+    <!-- TODO - could redo form for inputs ie. center freq &amp; shift bandwidth, etc.<br> -->
 
 
     <div id="plotly_capVsFreq" style="width:100%;max-width:700px"></div>
 
+    <br>
     <form>
+    Click "Go!"<br>
     <button type="submit" onclick="freqcapplot(); return false">Go!</button>
     </form>
 
     <!-- <script defer="defer"> -->
     <script> 
-      /* Plot Capacitor vs. Frequency for a certain bandwitdh (ie. for unstable magnet wrt temperature) */
+      /* Plot Capacitor vs. Frequency for a certain bandwidth 
+       * (ie. for unstable magnet with respect to temperature) 
+       */
+
+      /* See BirdcageBuilder javascript imports above in <head> of this file */
 
       DEBUG_ENABLE = true; // bool; enable or disable debug printing to DOM
-      DEBUG_ID = 'debug1'; // DOM ID for debug output
-
+      DEBUG_ID = 'debug1'; // DOM field ID for debug output 
       console.log(DEBUG_ID);
 
 
-      var ctr_freq = 21.25e6; // center frequency
+      var ctr_freq = 21.25e6; // center frequency (Hz)
       var drift_bw = 10e3; // bandwidth around center freq to plot
       var N_points = 100; // number of points to plot
       
+
+
       var freq_start = ctr_freq - drift_bw;
       var freq_end = ctr_freq + drift_bw;
 
@@ -66,8 +75,10 @@
 
           TODO - one with a guaranteed center value would be nice
         */
+
         
         // TODO this is off by one... (only goes up to N-1 so doesn't include 'end')
+        // TODO - move to helpers.js once this is fixed
         var step = (end - start) / N;
         var out = new Array(N);
         for (var i = 0; i < N; i++) {
@@ -79,50 +90,56 @@
 
 
 
-      /* Birdcage Setup (this should be user input) */
-      // TODO - this should be user input - 
-      // TODO - this could be the same as the original form w/ extra bandwith & N-points inputs
-      // TODO - try to reuse as much code as possible; for now just repeating it here
-
-        // Test Case A from 2002 paper:
-       //testcase(0, 12, 21.25, 3.8, 100, 10, 0.6, -1, -1, -1, 0.6, 269.54, 0.5e-3);
-
-      // from qunit_test_all.html test case A:
-
       function freqcapplot() {
 
+        /* Demonstrate Open BirdcageBuilder code usage */
 
-      var freqs = linspace(freq_start, freq_end, N_points);
-      var caps = new Array(N_points); // output for capacitor values
-
-
-	    bb = new BirdcageBuilder(12, ctr_freq, 3.8e-2, 100e-2, 'lowpass');
-		  bb.legs.set_legs_rect(10e-2, 0.6e-2); // TODO assuming rectangular? 'a' superscript?
-      //assert.step('NOTE - Custom endring arclength');
-      bb.endrings.er_arclen = 1.98e-2; // custom endring arc length
-		  bb.endrings.set_endrings_rect(0.6e-2);  // TODO - paper specifies endring SEGMENT LENGTH??
-	    bb.endrings.calc_er_mutual_inductance(bb.legs);
-      //var cap = 1e12 * bb.calc_capacitor()
-
-      // TODO - double check, but inductances/legs/endrings should be 100% independent of frequency; so shouldn't need to recompute inductances:
-
-      for (var i = 0; i < N_points; i++) {
-        bb.freq = freqs[i];
-        caps[i] = 1e12 * bb.calc_capacitor();
-      }
-
-      var data = [{x: freqs,
-                   y: caps,
-                   mode: "lines+markers",
-                  }];
-
-      var layout = {xaxis: {title: "Frequency (Hz)"},
-                    yaxis: {title: "Capacitor (pF)"},
-                    title: "Capacitor vs. Frequency Drift",
-      };
+        var freqs = linspace(freq_start, freq_end, N_points); // frequencies to plot
+        var caps = new Array(N_points); // output for capacitor values
 
 
-	    Plotly.newPlot("plotly_capVsFreq", data, layout);
+        // Set up BirdcageBuilder object (see BirdcageBuider.js)
+	      bb = new BirdcageBuilder(12, ctr_freq, 3.8e-2, 100e-2, 'lowpass');
+
+        // Set up Rectangular Legs object  (see BCLegs.js)
+        // Note - this object is already stored in the above BirdcageBuilder object & just needs to be initialized
+        // Alternatively, call set_legs_tube() for tubular legs
+		    bb.legs.set_legs_rect(10e-2, 0.6e-2);
+
+        // Set up End Rings
+        // Like the legs, this object is already created & stored in the main BirdcageBuilder object
+        // and just needs to be initialized here
+		    bb.endrings.set_endrings_rect(0.6e-2);
+
+        // User must call this function to set endring mutual inductance, after setting up endrings:
+	      bb.endrings.calc_er_mutual_inductance(bb.legs);
+
+
+        // Now the capacitor can be calculated & converted to picoFarads
+        // (shown here for completeness; but moved down to the loop & run multiple times in this example)
+        //var cap = 1e12 * bb.calc_capacitor()
+
+
+        // Loop over frequencies & calculate capacitor value at each frequency
+        // inductances/legs/endrings should be independent of frequency; so shouldn't need to recompute inductances
+        for (var i = 0; i < N_points; i++) {
+          bb.freq = freqs[i];
+          caps[i] = 1e12 * bb.calc_capacitor();
+        }
+
+
+        // Set up data for plotting (see plotly library documentation & examples)
+        var data = [{x: freqs,
+                     y: caps,
+                     mode: "lines+markers",
+                    }];
+
+        var layout = {xaxis: {title: "Frequency (Hz)"},
+                      yaxis: {title: "Capacitor (pF)"},
+                      title: "Capacitor vs. Frequency Drift",
+        };
+
+	      Plotly.newPlot("plotly_capVsFreq", data, layout);
       }
 
 
