@@ -45,9 +45,13 @@ This is the first fully open-source, cross-platform/cross-device version of Bird
 - For "No Shield" enter zero for the shield radius
 - For solid wire Legs or End Rings, select "Tubular" and set the Inner Diameter to 0.
 - If a larger number of legs is needed, it is a simple exercise in HTML hacking to achieve any number of legs (must be a multiple of 4)
+- Input errors will be highlighted in red.
 - Click "Calculate!"
 
 ## Code Documentation
+
+See ```freqshifttest.html``` for a simple commented example of how the code works.
+- This also demonstrates code extendability and plotting with [Plotly.js](https://plotly.com/javascript/)
 
 ### Main Files
 - ```index.html``` - Main GUI for webapp
@@ -59,10 +63,7 @@ This is the first fully open-source, cross-platform/cross-device version of Bird
   - ```helpers.js``` - Math & unit conversion helper functions.
   - ```debug.js``` - Handles debug output to browser console and/or HTML DOM.
 
-Custom usage/code extendability etc.
-- WIP - See ```freqshifttest.html``` for an example of a different way to use the code (requires Plotly)
-
-Future Possibilities include:
+#### Future Possibilities include:
 - Prediction of all resonances of a given coil design
 - Design of non-cylindrical birdcage coils
 - 3D CAD model output
