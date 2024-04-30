@@ -4,7 +4,7 @@ Open Source capacitor calculator for tuning Birdcage RF Coils.
 Douglas Brantner<sup>1</sup>, Giuseppe Carluccio<sup>1</sup>, Chih-Liang Chin<sup>2</sup>, Christopher Collins<sup>1</sup>  
 <sup>1</sup>NYU Langone Health [CAI2R](https://cai2r.net/resources/open-birdcagebuilder/) + CBI  
 <sup>2</sup>Merck
-- Try it now! [Live Webapp (Beta)](https://dbnyu.github.io/OpenBirdcageBuilder/)
+- Try it now! [Live Webapp](https://dbnyu.github.io/OpenBirdcageBuilder/)
   - Runs in your web browser - no app to download or install!
 
 - [Code & Documentation (Github)](https://github.com/dbnyu/OpenBirdcageBuilder) (this page)
@@ -56,6 +56,7 @@ See ```freqshifttest.html``` for a simple commented example of how the code work
 ### Main Files
 - ```index.html``` - Main GUI for webapp
   - ```BBGuiHandler.js``` - Handles all input/output & main functionality for ```index.html``` interactive webapp
+  - Try it live here: [Live Webapp](https://dbnyu.github.io/OpenBirdcageBuilder/)
 - ```BirdcageBuilder.js``` - Main class for capacitor math - see ```calc_capacitor()``` function
 - ```BCLegs.js``` - Class for Birdcage Legs, self- and mutual inductance
 - ```BCEndRings.js``` - Class for Birdcage End Rings, self- and mutual inductance
