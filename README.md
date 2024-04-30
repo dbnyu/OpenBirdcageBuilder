@@ -124,12 +124,12 @@ See the ```qunit_...[.]html``` files for the current version of QUnit we are tes
   - (Optional - WIP) [QUnit Composite](https://github.com/JamesMGreene/qunit-composite)
 3. The unit tests should now run if the file paths are correct. 
   - ```qunit_overview.html``` simply links to each of the 4 main unit test files
-    - (WIP - get QUnit composite working to run all tests automatically)
-4. Load and run each test page to ensure all tests are passing.
+4. Click and run each test page to ensure all tests are passing.
   - qunit_test_all_math.html - Validate output values
   - qunit_test_endrings.html - Test EndRing class
   - qunit_test_helpers.html - Test helper functions
   - qunit_test_legs.html - Test Leg class
+- (Automated testing - see ```_qunit_composite_wip.html``` - WIP, not working yet)
 
 See [In-Browser QUnit Documentation](https://qunitjs.com/intro/#in-the-browser) for more details.
 
