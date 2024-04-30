@@ -51,7 +51,7 @@ This is the first fully open-source, cross-platform/cross-device version of Bird
 
 ### Main Files
 - ```index.html``` - Main GUI for webapp
-  - ```BBGuiHandler.js``` - Handles all input/output & main functionality for index.html interactive webapp
+  - ```BBGuiHandler.js``` - Handles all input/output & main functionality for ```index.html``` interactive webapp
 - ```BirdcageBuilder.js``` - Main class for capacitor math - see ```calc_capacitor()``` function
 - ```BCLegs.js``` - Class for Birdcage Legs, self- and mutual inductance
 - ```BCEndRings.js``` - Class for Birdcage End Rings, self- and mutual inductance
@@ -125,10 +125,10 @@ See the ```qunit_...[.]html``` files for the current version of QUnit we are tes
 3. The unit tests should now run if the file paths are correct. 
     - ```qunit_overview.html``` simply links to each of the 4 main unit test files
 4. Click and run each test page to ensure all tests are passing.
-    - qunit_test_all_math.html - Validate output values
-    - qunit_test_endrings.html - Test EndRing class
-    - qunit_test_helpers.html - Test helper functions
-    - qunit_test_legs.html - Test Leg class
+    - ```qunit_test_all_math.html``` - Validate output values
+    - ```qunit_test_endrings.html``` - Test EndRing class
+    - ```qunit_test_helpers.html``` - Test helper functions
+    - ```qunit_test_legs.html``` - Test Leg class
 - (Automated testing - see ```_qunit_composite_wip.html``` - WIP, not working yet)
 
 See [In-Browser QUnit Documentation](https://qunitjs.com/intro/#in-the-browser) for more details.
