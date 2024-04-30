@@ -8,6 +8,8 @@ Douglas Brantner<sup>1</sup>, Giuseppe Carluccio<sup>1</sup>, Chih-Liang Chin<su
   - Runs in your web browser - no app to download or install!
 
 - [Code & Documentation (Github)](https://github.com/dbnyu/OpenBirdcageBuilder) (this page)
+- [NYU CAI2R Page](https://cai2r.net/resources/open-birdcagebuilder/)
+- Listed on [Open Source Imaging](https://www.opensourceimaging.org/project/open-birdcagebuilder/)
 - This is the official project repo; the previous [BirdcageBuilder2023](https://github.com/dbnyu/BirdcageBuilder2023) repo is now just a placeholder and to preserve previous issue history.
   - Please check [here](https://github.com/dbnyu/BirdcageBuilder2023/issues) before submitting a new issue
 - All new issues should be submitted to this repo (OpenBirdcageBuilder).
