@@ -18,24 +18,25 @@ class BCEndRings {
 		// TODO is n input redundant? since we require BCLegs to be setup already?
 		this.n_legs = Number(n);
 
-		// NOTE for now keeping the objects separate; functions that require leg info must be passed the leg object as an input arg
+		// NOTE for now keeping the Leg & EndRing objects separate; 
+		// functions that require leg info must be given the leg object as an input arg
 
 		this.er_shape = 'null'; // 'rect' or 'tube'
 		
 		// TODO units for all!
 
 		// for rectangular end ring copper:
-		this.er_arclen = -1;	// arc length of each endring segment (circumference/N) TODO units
-		this.er_width = -1;	// TODO what is this? thickness of the copper?
+		this.er_arclen = -1;	// arc length of each endring segment (circumference/N) (meters)
+		this.er_width = -1;	    // meters
 
 		// for tubular endrings:
-		this.er_r_inner = -1;	// tube endring inner radius
-		this.er_r_outer = -1;	// tube endring outer radius
+		this.er_r_inner = -1;	// tube endring inner radius (meters)
+		this.er_r_outer = -1;	// tube endring outer radius (meters)
 
 		this.er_self_inductance = -1;
 		this.er_mutual_inductance = new Array(n);
 
-		this.er_currents = new Array(n);	// TODO end ring currents?
+		this.er_currents = new Array(n);	// end ring currents
 
 		// USER MUST CALL:
 		// init_endrings() (called automatically in BircageBuilder constructor
@@ -69,7 +70,7 @@ class BCEndRings {
 	set_endrings_rect(w) {
 		/* Set up rectangular endring segments
 		 *
-		 * w = end ring width (TODO what about thickness? assuming this is the width of copper strip?
+		 * w = end ring width (meters)
 		 *
 		 */
 
@@ -85,8 +86,8 @@ class BCEndRings {
 	set_endrings_tube(ir, or) {
 		/* Set up tubular endring segments
 		 *
-		 *	ir = inner radius of tube
-		 *	or = outer radius of tube
+		 *	ir = inner radius of tube (meters)
+		 *	or = outer radius of tube (meters)
 		 */
 
 		this.er_shape = 'tube';
@@ -100,8 +101,8 @@ class BCEndRings {
 	calc_er_self_inductance_rect(arclen, width) {
 		/* Calculate self inductance for Rectangular endrings
 		 *
-		 * arclen = length of each segment
-		 * width = width of each segment
+		 * arclen = arc length of each segment (meters)
+		 * width = width of each segment (meters)
 		 *
 		 * Returns self inductance value.
 		 *
@@ -118,11 +119,11 @@ class BCEndRings {
 	calc_er_self_inductance_tube(arclen, r_in, r_out) {
 		/* Calculate the self inductance for Tube legs
 		 *
-		 * arclen = length of each segment
-		 * r_in = inner radius of tube
-		 * r_out = outer radius of tube
+		 * arclen = arc length of each segment (meters)
+		 * r_in = inner radius of tube (meters)
+		 * r_out = outer radius of tube (meters)
 		 *
-		 * Returns the self inductnce value
+		 * Returns the self inductance value
 		 *
 		 * BCJ.185
 		 */
@@ -144,8 +145,10 @@ class BCEndRings {
 	}
 
 	calc_er_mutual_inductance(legs) {
-		/* TODO - this is mostly transliterated directly from the Java code (ie. black box)
+		/* Calculate End Ring Mutual Inductance
 		 *
+		 * - This is a bit of a black box, mostly translated directly from the Java code
+		 * - TODO could use more clarification / descriptive variable names
 		 *
 		 * legs = BCLegs object (must be fully setup!)
 		 *
