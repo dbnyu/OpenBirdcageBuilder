@@ -11,7 +11,8 @@
     <script src="BCEndRings.js"></script>
     <script src="BirdcageBuilder.js"></script>
     <script src="BBGuiHandler.js"></script>
-    <script src="../../plotly/v1.58.5/plotly-latest.min.js"></script>
+    <!-- <script src="../../plotly/v1.58.5/plotly-latest.min.js"></script> -->
+    <script src="https://cdn.plot.ly/plotly-2.31.1.min.js" charset="utf-8"></script>
 
 
 
@@ -43,7 +44,7 @@
     <br>
     <form>
     Click "Go!"<br>
-    <button type="submit" onclick="freqcapplot(); return false">Go!</button>
+    <button type="submit" onclick="freq_cap_plot(); return false">Go!</button>
     </form>
 
     <!-- <script defer="defer"> -->
@@ -54,8 +55,9 @@
 
       /* See BirdcageBuilder javascript imports above in <head> of this file */
 
-      DEBUG_ENABLE = true; // bool; enable or disable debug printing to DOM
+      DEBUG_ENABLE = true; // bool; enable or disable debug output
       DEBUG_ID = 'debug1'; // DOM field ID for debug output 
+      DEBUG_OUTPUT = "CONSOLE"; // set to "CONSOLE", "DOM", or "BOTH" (DOM is not recommended in a loop)
       console.log(DEBUG_ID);
 
 
@@ -90,9 +92,11 @@
 
 
 
-      function freqcapplot() {
+      function freq_cap_plot() {
 
         /* Demonstrate Open BirdcageBuilder code usage */
+        /* This example loops over many frequency values & resulting capacitor values */
+
 
         var freqs = linspace(freq_start, freq_end, N_points); // frequencies to plot
         var caps = new Array(N_points); // output for capacitor values
@@ -146,123 +150,6 @@
     </script>
 
 
-<script>/*
-  // OLD CODE - can probably delete eventually
-    <form> 
-
-      <fieldset>
-        <legend>Leg Type</legend>
-        <ul>
-          <li>
-            <label for="leg_rect">Rectangular</label>
-            <input type="radio" id="leg_rect" name="leg_type" value="leg_rect" checked />
-          </li>
-          <li>
-            <label for="leg_tube">Tubular</label>
-            <input type="radio" id="leg_tube" name="leg_type" value="leg_tube" />
-          </li>
-        </ul>
-      </fieldset>
-
-      <fieldset>
-        <legend>End Ring Type</legend>
-        <ul>
-          <li>
-            <label for="er_rect">Rectangular</label>
-            <input type="radio" id="er_rect" name="er_type" value="er_rect" checked />
-          </li>
-          <li>
-            <label for="er_tube">Tubular</label>
-            <input type="radio" id="er_tube" name="er_type" value="er_tube" />
-<!-- TODO: need a popup/grayed out box for tube inner/outer radius!!!  -->
-          </li>
-        </ul>
-      </fieldset>
-
-
-      <fieldset>
-        <legend>Configuration</legend>
-        <ul>
-          <li>
-            <label for="config_lp">Low Pass</label>
-            <input type="radio" id="config_lp" name="config" value="lowpass" checked />
-          </li>
-          <li>
-            <label for="config_hp">High Pass</label>
-            <input type="radio" id="config_hp" name="config" value="highpass" />
-          </li>
-          <li>
-            <label for="config_bp">Band Pass</label>
-            <input type="radio" id="config_bp" name="config" value="bandpass" />
-<!-- TODO: need a popup/grayed out box for extra capacitor value if using Bandpass! -->
-          </li>
-      </fieldset>
-
-      <fieldset>
-      <label for="num_legs">Number of Legs:</label>
-      <select name="num_legs" id="num_legs">
-        <option value="4">4</option>
-        <option selected="selected" value="8">8</option>
-        <option value="16">16</option>
-        <option value="32">32</option>
-        <option value="64">64</option>
-        <option value="128">128</option>
-        <!-- TODO - other options? user could also edit HTML easily enough to add custom option? -->
-        <!-- this expects some knowledge of programming/HTML but is not too intense... -->
-      </select>
-      </fieldset>
-
-      <!-- Defaults set to match Android app for quick testing -->
-      <input type="number" id="center_freq" step="any" value="21.28"> Frequency (MHz)</input><br>
-      <input type="number" id="coil_radius" step="any" value="10"> Coil Radius (cm)</input><br>
-      <input type="number" id="shield_radius" step="any" value="0"> Shield Radius (cm)</input><br>
-      <input type="number" id="leg_len" step="any" value="10"> Leg Length (cm)</input><br>
-      <input type="number" id="leg_width" step="any" value="2"> Leg Width (cm)</input><br>
-      <input type="number" id="er_width" step="any" value="1"> End Ring Width (cm)</input><br>
-
-      <!-- TODO input verification regex -->
-      <!-- TODO input verification min/max (maybe just min=0?) -->
-      <!-- TODO display 0.0 literal for float inputs? (maybe just min=0?) -->
-      <!-- TODO maybe bootstrap or other library has nicer inputs? don't waste too much time making it pretty -->
-
-
-      <!-- <button type="submit" onclick="calculate(); return false">Calculate!</button> -->
-      <button type="submit" disabled="disabled" onclick="calculate(); return false">Calculate!</button>
-      IGNORE THIS FORM FOR NOW.
-      <!-- 'return false' is necessary to avoid automatic page refresh -->
-
-    </form>
-
-    <hr>
-    <h2>Output</h2>
-
-    <button type="submit" onclick="output_clear(); return false">Clear Results</button>
-
-    <p id="output_test1">This field intentionally blank.</p>
-    <p id="output_main"></p>
-
-    <hr>
-    <h2>Plotly Tests</h2>
-    <h3>Leg & Shield Positions</h3>
-    <s>TODO: Seems like shield radius is wrong (too far from center?)</s><br>
-    The "legs" of the "shield" are using the Method of Images [1], and <i>should</i> be farther out than the shield radius.<br>
-    The <b>Electric Field</b> should be zero at the shield radius, negated by the image of the shield "virtual legs".<br>
-    <div id="plotly_crossSection" style="width:100%;max-width:700px"></div>
-
-    <h3>Leg & Shield Currents</h3>
-    <div id="plotly_ILegs" style="width:100%;max-width:700px"></div>
-
-    <h3>Leg Self & Mutual Inductance</h3>
-    <div id="plotly_leg_inductance" style="width:100%;max-width:700px"></div>
-
-    <h3>End Ring Currents & Mutual Inductance</h3>
-    <div id="plotly_Iendrings" style="width:100%;max-width:700px"></div>
-// end of giant comment block/fake script
-*/</script>
-
-
-
-
 
 
     <hr>
@@ -275,7 +162,7 @@
 
     <hr>
     <h2>References</h2>
-    1. <a href="https://en.wikipedia.org/wiki/Method_of_images">Method of Images</a><br>
+    1. <a href="https://plotly.com/javascript/">Plotly.js</a><br>
 
   </body>
 
