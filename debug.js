@@ -8,12 +8,17 @@
  * cai2r.net
  */
 
-// set these in GUI handler:
 // TODO make this a class?
+
+// set these in GUI handler:
+// these get overridden by BBGuiHandler.js - these are just default values
+// set the actual values in BBGuiHandler.js
 var DEBUG_ENABLE = false; // bool; enable or disable debug printing to DOM
 var DEBUG_ID; // DOM ID for debug output
 var DEBUG_OUTPUT = "CONSOLE"; // 'CONSOLE' or 'DOM' or 'BOTH'
-	// adding console option for production
+	// CONSOLE = use console.log (hidden from users - use for production!)
+	// DOM = populate DEBUG_ID field in actual HTML page (debugging only)
+
 
 function debug(s) {
 	/* Append a string s to the DEBUG_ID DOM element if global DEBUG_ENABLE is true
