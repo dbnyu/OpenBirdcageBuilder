@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <title>Test Suite</title>
+
+<!-- Using local copies of QUnit: -->
 <link rel="stylesheet" href="../../qunit-2.19.4/qunit-2.19.4.css">
 <!-- <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.19.4.css"> -->
+
 <body>
   <div id="qunit"></div>
   <div id="qunit-fixture"></div>
+  <!-- Using local copies of QUnit: -->
   <!-- <script src="https://code.jquery.com/qunit/qunit-2.19.4.js"></script> -->
   <script src="../../qunit-2.19.4/qunit-2.19.4.js"></script>
   <script src="../../qunit-assert-close-git/qunit-assert-close/qunit-assert-close.js"></script>
@@ -28,7 +32,7 @@
 
     QUnit.test('Rectangular Self Inductance', function(assert) {
       var bb = new BirdcageBuilder(16, 128e6, 10, 12);
-  // TODO - change to new BCLegs subclass if only testing legs (search/replace all if possible)
+      // TODO - change to new BCLegs subclass if only testing legs (search/replace all if possible)
 
       assert.equal(bb.n_legs, 16);
 
@@ -115,6 +119,9 @@
       // TODO continue tests
       // TODO test final mutual inductance result
     });
+
+
+
 
     QUnit.test('Shield Mutual Inductance', function(assert) {
       var bb = new BirdcageBuilder(1, 128e6, 1, 2);
