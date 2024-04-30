@@ -50,9 +50,19 @@ under_construction.gif
 - Click "Calculate!"
 
 ### Code API
-Custom usage/code extendability etc.
-- WIP - See freqshifttest.html for an example of a different way to use the code (requires Plotly)
 
+#### Main Files
+- ```index.html``` - Main GUI for webapp
+  - ```BBGuiHandler.js``` - Handles all input/output & main functionality for index.html interactive webapp
+- ```BirdcageBuilder.js``` - Main class for capacitor math - see ```calc_capacitor()``` function
+- ```BCLegs.js``` - Class for Birdcage Legs, self- and mutual inductance
+- ```BCEndRings.js``` - Class for Birdcage End Rings, self- and mutual inductance
+- Other files:
+  - ```helpers.js``` - Math & unit conversion helper functions.
+  - ```debug.js``` - Handles debug output to browser console and/or HTML DOM.
+
+Custom usage/code extendability etc.
+- WIP - See ```freqshifttest.html``` for an example of a different way to use the code (requires Plotly)
 
 ### Unit Tests
 Testing against 2002 paper results (1) and Android app values (run both on Android and desktop Java)
