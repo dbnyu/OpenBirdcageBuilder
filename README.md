@@ -39,8 +39,6 @@ This is the first fully open-source, cross-platform/cross-device version of Bird
 - Currently only for cylindrical birdcage coils
 
 ## Usage
-Documentation is under construction! Thank you for your patience!  
-under_construction.gif
 
 ### Webapp Usage
 - Enter all required values (including any necessary optional values for bandpass predefined capacitors or tubular leg dimensions)
@@ -49,9 +47,9 @@ under_construction.gif
 - If a larger number of legs is needed, it is a simple exercise in HTML hacking to achieve any number of legs (must be a multiple of 4)
 - Click "Calculate!"
 
-### Code API
+## Code Documentation
 
-#### Main Files
+### Main Files
 - ```index.html``` - Main GUI for webapp
   - ```BBGuiHandler.js``` - Handles all input/output & main functionality for index.html interactive webapp
 - ```BirdcageBuilder.js``` - Main class for capacitor math - see ```calc_capacitor()``` function
@@ -63,6 +61,11 @@ under_construction.gif
 
 Custom usage/code extendability etc.
 - WIP - See ```freqshifttest.html``` for an example of a different way to use the code (requires Plotly)
+
+Future Possibilities include:
+- Prediction of all resonances of a given coil design
+- Design of non-cylindrical birdcage coils
+- 3D CAD model output
 
 ### Unit Tests
 Testing against 2002 paper results (1) and Android app values (run both on Android and desktop Java)
