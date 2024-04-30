@@ -2,7 +2,7 @@
 Open Source capacitor calculator for tuning Birdcage RF Coils.
 
 Douglas Brantner<sup>1</sup>, Giuseppe Carluccio<sup>1</sup>, Chih-Liang Chin<sup>2</sup>, Christopher Collins<sup>1</sup>  
-<sup>1</sup>NYU Langone Health [CAI2R](https://cai2r.net) + CBI  
+<sup>1</sup>NYU Langone Health [CAI2R](https://cai2r.net/resources/open-birdcagebuilder/) + CBI  
 <sup>2</sup>Merck
 - Try it now! [Live Webapp (Beta)](https://dbnyu.github.io/OpenBirdcageBuilder/)
   - Runs in your web browser - no app to download or install!
@@ -16,7 +16,7 @@ Douglas Brantner<sup>1</sup>, Giuseppe Carluccio<sup>1</sup>, Chih-Liang Chin<su
 ## Intro/Background
 Estimates the capacitor value for building cylindrical [Birdcage Coils](https://mriquestions.com/birdcage-coil.html).  
 Updated version of Birdcage Builder Android app, to run in any web browser, on any device (desktop or mobile).  
-This is the first fully open-source, cross-platform/cross-device version of BirdcageBuilder (2023).  
+This is the first fully open-source, cross-platform/cross-device version of BirdcageBuilder, released in 2023.
 
 ### Version Notes
 - Version 1.0.0, 29 April 2024 - Updated for ISMRM 2024, minor clean ups, fixed unit tests- All Tests Passing.
@@ -41,7 +41,7 @@ Documentation is under construction! Thank you for your patience!
 under_construction.gif
 
 ### Webapp Usage
-- Enter all required values (including any necessary optional values for bandpass predefined caps or tubular leg dimensions)
+- Enter all required values (including any necessary optional values for bandpass predefined capacitors or tubular leg dimensions)
 - For "No Shield" enter zero for the shield radius
 - For solid wire Legs or End Rings, select "Tubular" and set the Inner Diameter to 0.
 - If a larger number of legs is needed, it is a simple exercise in HTML hacking to achieve any number of legs (must be a multiple of 4)
@@ -109,7 +109,7 @@ See the ```qunit_...[.]html``` files for the current version of QUnit we are tes
   - (Optional - WIP) [QUnit Composite](https://github.com/JamesMGreene/qunit-composite)
 3. The unit tests should now run if the file paths are correct. 
   - ```qunit_overview.html``` simply links to each of the 4 main unit test files
-  - (WIP - get QUnit composite working to run all tests automatically)
+    - (WIP - get QUnit composite working to run all tests automatically)
 4. Load and run each test page to ensure all tests are passing.
   - qunit_test_all_math.html - Validate output values
   - qunit_test_endrings.html - Test EndRing class
@@ -132,11 +132,12 @@ Chin CL, Collins CM, Li S, Dardzinski BJ, Smith MB. BirdcageBuilder: Design of s
 ## References
 1. Chin CL, Collins CM, Li S, Dardzinski BJ, Smith MB. BirdcageBuilder: Design of specified-geometry birdcage coils with desired current pattern and resonant frequency. Concepts Magn Reson. 2002;15(2):156-163. doi:10.1002/cmr.10030  
 [PubMed Free Full Text](https://pubmed.ncbi.nlm.nih.gov/23316109/)
+2. Brantner D, Carluccio G, Collins CM. Open BirdcageBuilder. ISMRM 2024. Poster #1569.
 
 ### Other References
 - https://en.wikipedia.org/wiki/Method_of_images
 - https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#the_viewport_meta_tag
-
+- https://www.smashingmagazine.com/2012/06/introduction-to-javascript-unit-testing/
 
 ---
 All NYU, CBI, CAI2R names & logos are trademarks of NYU and may not be used without written permission.
