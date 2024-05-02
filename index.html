@@ -159,8 +159,14 @@
 
   <!-- Release Notes -->
 
+  <!-- v1.0.1 -->
+  <!-- Updated 1 May 2024 - Doug Brantner -->
+  <!-- Change initial O.D. for tube legs/ER's to valid nonzero value -->
+  <!-- Cleaning & updating unit tests & documentation -->
+
+
   <!-- v1.0.0 -->
-  <!-- Updated 4/29/2024 - Doug Brantner -->
+  <!-- Updated 29 April 2024 - Doug Brantner -->
   <!-- for ISMRM 2024 -->
   <!-- Clean up unit tests -->
   <!-- Fix unit tests - ALL TESTS PASSING -->
@@ -202,7 +208,6 @@
 
         <label for="num_legs">Number of Legs:</label>
         <select name="num_legs" id="num_legs" onChange="mark_results_stale()" required >
-          <!-- NOTE: User can edit this list/add custom values if needed (must be multiples of 4) -->
           <option value="4">4</option>
           <option selected="selected" value="8">8</option>
           <option value="12">12</option>
@@ -235,10 +240,11 @@
           <option value="120">120</option>
           <option value="124">124</option>
           <option value="128">128</option>
+          <!-- NOTE: User can edit this list to add custom values if needed (must be multiples of 4) -->
         </select>
         <br>
 
-        <!-- NOTE: for input validation, using "a very small number" for inputs that have to be positive and nonzero, to take advantage of builtin validation without javascript -->
+        <!-- NOTE: for input validation minimum values, using "a very small number" for inputs that have to be positive and nonzero, to take advantage of builtin validation without javascript -->
 
         <input type="number" id="center_freq"   step="any" value="128" min="0.000001" onChange="mark_results_stale()" required > Frequency (MHz)</input><br>
         <input type="number" id="coil_radius"   step="any" value="10"    min="0.000001" onChange="mark_results_stale()" required > Coil Radius (cm)</input><br>
@@ -285,10 +291,9 @@
         <label for="leg_tube">Tubular</label>
         <br>
 
-          <!-- javascript validation that OD > ID and nonzero (ID can be zero if it's solid though) -->
+          <!-- Note javascript validation that OD > ID and nonzero (ID can be zero if it's solid though) -->
           <input type="number" id="leg_ID" step="any" value="0" min="0" disabled="disabled" onChange="validate_tube_outer_diam('leg_ID', 'leg_OD')" required > Leg Inner Diam. (cm)</input><br>
-          <!-- <input type="number" id="leg_OD" step="any" value="0" disabled="disabled" onChange="mark_results_stale()" required > Leg Outer Diam. (cm)</input><br> -->
-          <input type="number" id="leg_OD" step="any" value="0" disabled="disabled" onChange="validate_tube_outer_diam('leg_ID', 'leg_OD')" required > Leg Outer Diam. (cm)</input><br>
+          <input type="number" id="leg_OD" step="any" value="0.25" disabled="disabled" onChange="validate_tube_outer_diam('leg_ID', 'leg_OD')" required > Leg Outer Diam. (cm)</input><br>
 
         <br>
 
@@ -308,9 +313,9 @@
         <label for="er_tube">Tubular</label>
         <br>
 
-          <!-- TODO- javascript validation that OD > ID and nonzero (ID can be zero if it's solid though?) -->
+          <!-- Note - javascript validation that OD > ID and nonzero (ID can be zero if it's solid though?) -->
           <input type="number" id="er_ID" step="any" value="0" min="0" disabled="disabled" onChange="validate_tube_outer_diam('er_ID', 'er_OD')" required > ER Inner Diam. (cm)</input><br>
-          <input type="number" id="er_OD" step="any" value="0" disabled="disabled" onChange="validate_tube_outer_diam('er_ID', 'er_OD')" required > ER Outer Diam. (cm)</input><br>
+          <input type="number" id="er_OD" step="any" value="0.25" disabled="disabled" onChange="validate_tube_outer_diam('er_ID', 'er_OD')" required > ER Outer Diam. (cm)</input><br>
 
       </fieldset>
       <br>
@@ -320,7 +325,7 @@
 
 
 
-      <!-- needed to revert back to a 'submit' button for input validation to work -->
+      <!-- reverted back to a 'submit' button for so that validation would work -->
       <!-- <button type="button" onclick="calculate(); return false">Calculate!</button> -->
       <button type="submit" onclick="calculate(); return false">Calculate!</button> 
       <!-- 'return false' is necessary to avoid automatic page refresh (for type="submit") -->
@@ -393,7 +398,7 @@
     </p>
 
     <br>
-    <a href="https://cai2r.net">NYU CAI<sup>2</sup>R</a><br>
+    <a href="https://cai2r.net/resources/open-birdcagebuilder">NYU CAI<sup>2</sup>R</a><br>
 
     <img src="img/NYUL-Health_logo_White_RGB_72ppi_25pct.png"><br>
     <img src="img/CAI2R_PURPLE_INVERT_RGB_288x94.png"><br>
