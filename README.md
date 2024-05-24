@@ -50,7 +50,11 @@ This is the first fully open-source, cross-platform/cross-device version of Bird
 
 ## Code Documentation
 
+### Workflow
 See ```freqshifttest.html``` for a simple commented example of how the code works.
+- Live demo: [freqshifttest.html](https://dbnyu.github.io/OpenBirdcageBuilder/freqshifttest.html)
+- This demonstrates the basic class setup & code structure
+  - The code in this demo runs in a loop to calculate multiple capacitor values, for changing center frequency (ie. to simulate B0 drift)
 - This also demonstrates code extendability and plotting with [Plotly.js](https://plotly.com/javascript/)
 
 ### Main Files
